@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "Newmodel.h"
-#include "ui_Newmodel.h"
+#include "naujasmodelis.h"
+#include "ui_naujasmodelis.h"
 #include "naujasklientas.h"
 #include "ui_naujasklientas.h"
 #include "settings.h"
@@ -30,7 +30,7 @@ MainWindow::~MainWindow()
 void MainWindow::on_actionNaujas_modelis_triggered()
 {
     //Iškviečia Newmodel forma
-    Newmodel nModel(this, dbm);
+    NaujasModelis nModel(this, dbm);
     nModel.setModal(true);
     nModel.exec();
 }
