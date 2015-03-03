@@ -1,5 +1,4 @@
 #include "databasemanager.h"
-
 #include "settings.h"
 
 #include <QSqlDatabase>
@@ -10,16 +9,19 @@
 #include <QString>
 #include <QMap>
 
+//Prideda duomenų bazę
 DatabaseManager::DatabaseManager()
 {
     db = QSqlDatabase::addDatabase(Settings::DB_TYPE);
 }
 
+//Uždaro duomenų bazę
 DatabaseManager::~DatabaseManager()
 {
     db.close();
 }
 
+//Sukuria/paima duomenų bazės lenteles
 void DatabaseManager::init()
 {
     db.setDatabaseName(Settings::DB_LOCATION);
@@ -30,6 +32,7 @@ void DatabaseManager::init()
     createTables();
 }
 
+//Sukuria programoje duomenų bazė programoje
 void DatabaseManager::createTables()
 {
     QSqlQuery query;
@@ -44,6 +47,7 @@ void DatabaseManager::createTables()
     }
 }
 
+//Parašo duomenų bazės klaidą
 void DatabaseManager::dbError(const QSqlError &error)
 {
     qDebug() << "text:" << error.text();
@@ -51,6 +55,7 @@ void DatabaseManager::dbError(const QSqlError &error)
     qFatal(error.text().toStdString().c_str());
 }
 
+//Iš gautų duomenų sukuria QMap
 QMap<QString, QString> DatabaseManager::genResultMap(const QSqlQuery &query)
 {
     QSqlRecord record = query.record();
@@ -80,6 +85,7 @@ QMap<QString, QString> DatabaseManager::genResultMap(const QSqlQuery &query)
 //    return results;
 //}
 
+//Išrenka duomenis iš duomenų bazės modelio lentelės
 QMap<QString, QMap<QString, QString>> DatabaseManager::getModels()
 {
     QString sql = "SELECT * FROM `" + Settings::MODEL_TABLE + "`;";
@@ -97,6 +103,7 @@ QMap<QString, QMap<QString, QString>> DatabaseManager::getModels()
     return results;
 }
 
+//Įrašo informacija į duomenų bazės modelio lentelę
 void DatabaseManager::insertModel(const QString &model_name, const QString &model_letters)
 {
     QString sql = "INSERT INTO `" + Settings::MODEL_TABLE + "` (`name`, `letters`) VALUES (:name, :letters);";
@@ -110,6 +117,43 @@ void DatabaseManager::insertModel(const QString &model_name, const QString &mode
     }
     query.clear();
 }
+
+QMap<QString, QMap<QString, QString>> DatabaseManager::getClient()
+{
+    QString sql = "SELECT * FROM `" + Settings::CLIENT_TABLE + "`;";
+    QSqlQuery query;
+    query.prepare(sql);
+    if (!query.exec())
+    {
+        dbError(query.lastError());
+    }
+    QMap<QString, QMap<QString, QString>> results;
+    for (int r = 0; query.next(); r++) {
+        results[QString::number(r)] = genResultMap(query);
+    }
+    query.clear();
+    return results;
+}
+
+void DatabaseManager::insertClient(const QString &client_name, const QString &client_code, const QString &client_vat,
+                                   const QString &client_address, const QString &client_telephone, const QString &client_additional_info)
+{
+    QString sql = "INSERT INTO `" + Settings::CLIENT_TABLE + "` (`name`, `code`, `vat`, `address`, `telephone`, `additional_info`) VALUES (:name, :code, :vat, :address, :telephone, :additional_info);";
+    QSqlQuery query;
+    query.prepare(sql);
+    query.bindValue(":name", client_name);
+    query.bindValue(":code", client_code);
+    query.bindValue(":vat", client_vat);
+    query.bindValue(":address", client_address);
+    query.bindValue(":telephone", client_telephone);
+    query.bindValue(":additional_info", client_additional_info);
+    if (!query.exec())
+    {
+        dbError(query.lastError());
+    }
+    query.clear();
+}
+
 
 //void DatabaseManager::deleteClient(const int &client_id) {
 //    QString sql = "DELETE FROM `" + Settings::DB_TABLE_CLIENT + "` WHERE `client_id` = ?;";

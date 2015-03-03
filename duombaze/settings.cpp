@@ -24,14 +24,14 @@ const QList<QString> Settings::DB_TABLES = {
       "`letters` VARCHAR(2)"
      ");",
 
-    "CREATE TABLE IF NOT EXISTS [client] ("
-      "[client_id] INTEGER PRIMARY KEY AUTOINCREMENT,"
-      "[name] VARCHAR(100) NOT NULL,"
-      "[code] INT(7),"
-      "[vat] VARCHAR(20),"
-      "[address] VARCHAR(100) NOT NULL,"
-      "[telephone] VARCHAR(15),"
-      "[additional_info] VARCHAR(255)"
+    "CREATE TABLE IF NOT EXISTS `client` ("
+      "`client_id` INTEGER PRIMARY KEY AUTOINCREMENT,"
+      "`name` VARCHAR(100) NOT NULL,"
+      "`code` INT(7),"
+      "`vat` VARCHAR(20),"
+      "`address` VARCHAR(100) NOT NULL,"
+      "`telephone` VARCHAR(15),"
+      "`additional_info` VARCHAR(255)"
      ");"
 };
 

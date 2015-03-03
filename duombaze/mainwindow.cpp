@@ -29,7 +29,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_actionNaujas_modelis_triggered()
 {
-    //Iškviečia Newmodel forma
+    //Iškviečia Naujasmodelis forma
     NaujasModelis nModel(this, dbm);
     nModel.setModal(true);
     nModel.exec();
@@ -44,7 +44,7 @@ void MainWindow::on_actionU_daryti_triggered()
 void MainWindow::on_actionNaujas_klientas_triggered()
 {
     //Iškviečia NaujasKlientas forma
-    NaujasKlientas nKlientas(this);
+    NaujasKlientas nKlientas(this, dbm);
     nKlientas.setModal(true);
     nKlientas.exec();
 }
