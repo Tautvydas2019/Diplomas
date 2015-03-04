@@ -5,8 +5,10 @@
 
 const QString Settings::TEXT_MAINWINDOW_NAME =
         "Pagrindinis";
+
 const QString Settings::TEXT_NAUJASKLIENTAS_NAME =
         "Naujas klientas";
+
 const QString Settings::TEXT_NAUJASMODELIS_NAME =
         "Naujas modelis";
 
@@ -35,6 +37,9 @@ const QList<QString> Settings::DB_TABLES = {
      ");"
 };
 
-const QString Settings::CLIENT_TABLE = "client";
-const QString Settings::MODEL_TABLE = "model";
+const QString Settings::CLIENT_TABLE =
+        "client";
+
+const QString Settings::MODEL_TABLE =
+        "model";
 

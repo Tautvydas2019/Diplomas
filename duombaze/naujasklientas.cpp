@@ -1,5 +1,6 @@
 #include "naujasklientas.h"
 #include "ui_naujasklientas.h"
+
 #include "settings.h"
 #include "databasemanager.h"
 
@@ -49,13 +50,13 @@ void NaujasKlientas::on_pushButton_clicked()
     QString client_addition_info = ui->linformaciha->text();
 
     QSqlRecord record = table_model->record();
-    //record.setValue(0, //cia reikia primary key suzinot arba kazkaip sutaisyt);
-    record.setValue(1, QVariant(client_name));
-    record.setValue(2, QVariant(client_code));
-    record.setValue(3, QVariant(client_vat));
-    record.setValue(4, QVariant(client_address));
-    record.setValue(5, QVariant(client_telephone));
-    record.setValue(6, QVariant(client_addition_info));
+    record.remove(0);
+    record.setValue(0, QVariant(client_name));
+    record.setValue(1, QVariant(client_code));
+    record.setValue(2, QVariant(client_vat));
+    record.setValue(3, QVariant(client_address));
+    record.setValue(4, QVariant(client_telephone));
+    record.setValue(5, QVariant(client_addition_info));
 
     table_model->insertRecord(-1, record);
 }

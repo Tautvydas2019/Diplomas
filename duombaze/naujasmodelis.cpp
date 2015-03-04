@@ -1,5 +1,6 @@
 #include "naujasmodelis.h"
 #include "ui_naujasmodelis.h"
+
 #include "settings.h"
 #include "databasemanager.h"
 
@@ -30,7 +31,6 @@ NaujasModelis::NaujasModelis(QWidget *parent, DatabaseManager *dbm) :
     ui->tableView->setModel(table_model);
 }
 
-
 NaujasModelis::~NaujasModelis()
 {
     delete ui;
@@ -42,9 +42,11 @@ void NaujasModelis::on_pushButton_clicked()
     QString model_letters = ui->lineEdit_2->text();
 
     QSqlRecord record = table_model->record();
-    //record.setValue(0, //cia reikia primary key suzinot arba kazkaip sutaisyt);
-    record.setValue(1, QVariant(model_name));
-    record.setValue(2, QVariant(model_letters));
+    record.remove(0);
+    record.setValue(0, QVariant(model_name));
+    record.setValue(1, QVariant(model_letters));
 
     table_model->insertRecord(-1, record);
+
+    table_model->dumpObjectTree();
 }
