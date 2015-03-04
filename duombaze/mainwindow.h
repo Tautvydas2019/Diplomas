@@ -23,6 +23,8 @@ private slots:
 
     void on_actionNaujas_klientas_triggered();
 
+    void on_actionNaujas_EKA_triggered();
+
 private:
     Ui::MainWindow *ui;
     DatabaseManager *dbm;

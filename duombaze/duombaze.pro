@@ -17,16 +17,19 @@ SOURCES += main.cpp\
     naujasmodelis.cpp \
     naujasklientas.cpp \
     settings.cpp \
-    databasemanager.cpp
+    databasemanager.cpp \
+    naujaseka.cpp
 
 HEADERS  += mainwindow.h \
     naujasmodelis.h \
     naujasklientas.h \
     settings.h \
-    databasemanager.h
+    databasemanager.h \
+    naujaseka.h
 
 FORMS    += mainwindow.ui \
     naujasmodelis.ui \
-    naujasklientas.ui
+    naujasklientas.ui \
+    naujaseka.ui
 
 CONFIG += c++11

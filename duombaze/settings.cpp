@@ -28,13 +28,31 @@ const QList<QString> Settings::DB_TABLES = {
 
     "CREATE TABLE IF NOT EXISTS `client` ("
       "`client_id` INTEGER PRIMARY KEY AUTOINCREMENT,"
-      "`name` VARCHAR(100) NOT NULL,"
+      "`name` VARCHAR(100),"
       "`code` INT(7),"
       "`vat` VARCHAR(20),"
-      "`address` VARCHAR(100) NOT NULL,"
+      "`address` VARCHAR(100),"
       "`telephone` VARCHAR(15),"
       "`additional_info` VARCHAR(255)"
-     ");"
+     ");",
+
+    "CREATE TABLE IF NOT EXISTS `eka` ("
+      "`eka_id` INTEGER PRIMARY KEY AUTOINCREMENT, "
+      "`serial_number` INTEGER(8),"
+      "`certificate` VARCHAR(20),"
+      "`count_of_use` INTEGER(1),"
+      "`reg_data` DATE,"
+      "`main_checkup` DATE,"
+      "`warranty` BOOLEAN,"
+      "`reg_warranty` DATE,"
+      "`rent` BOOLEAN,"
+      "`reg_rent` DATE,"
+      "`place_eka` VARCHAR(100),"
+      "`status` BOOLEAN,"
+      "`eka_model` VARCHAR(20),"
+      "`contract` VARCHAR(1),"
+      "`c_name` VARCHAR(100)"
+    ");"
 };
 
 const QString Settings::CLIENT_TABLE =

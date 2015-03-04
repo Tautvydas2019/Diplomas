@@ -6,6 +6,8 @@
 #include "naujasklientas.h"
 #include "ui_naujasklientas.h"
 #include "settings.h"
+#include "naujaseka.h"
+#include "ui_naujaseka.h"
 
 #include <QString>
 #include <QDebug>
@@ -48,4 +50,11 @@ void MainWindow::on_actionNaujas_klientas_triggered()
     NaujasKlientas nKlientas(this, dbm);
     nKlientas.setModal(true);
     nKlientas.exec();
+}
+
+void MainWindow::on_actionNaujas_EKA_triggered()
+{
+    NaujasEka nEka(this);
+    nEka.setModal(true);
+    nEka.exec();
 }
