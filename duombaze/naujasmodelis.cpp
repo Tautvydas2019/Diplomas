@@ -24,11 +24,12 @@ NaujasModelis::NaujasModelis(QWidget *parent, DatabaseManager *dbm) :
     table_model->setEditStrategy(QSqlTableModel::OnFieldChange);
     table_model->select();
 
-    table_model->setHeaderData(0, Qt::Horizontal, "Modelio ID");
+    //table_model->setHeaderData(0, Qt::Horizontal, "Modelio ID");
     table_model->setHeaderData(1, Qt::Horizontal, "Kliento pavadinimas");
     table_model->setHeaderData(2, Qt::Horizontal, "Modelio raidės");
 
     ui->tableView->setModel(table_model);
+    ui->tableView->hideColumn(0);
 }
 
 NaujasModelis::~NaujasModelis()
@@ -48,5 +49,4 @@ void NaujasModelis::on_pushButton_clicked()
 
     table_model->insertRecord(-1, record);
 
-    table_model->dumpObjectTree();
 }
