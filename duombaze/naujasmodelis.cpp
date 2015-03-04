@@ -4,7 +4,9 @@
 #include "databasemanager.h"
 
 #include <QString>
-#include <QMap>
+#include <QSqlTableModel>
+#include <QSqlRecord>
+#include <QSqlQuery>
 #include <QDebug>
 
 NaujasModelis::NaujasModelis(QWidget *parent, DatabaseManager *dbm) :
@@ -15,24 +17,17 @@ NaujasModelis::NaujasModelis(QWidget *parent, DatabaseManager *dbm) :
     ui->setupUi(this);
     QWidget::setWindowTitle(Settings::TEXT_NAUJASMODELIS_NAME);
 
-    ui->tableWidget->setColumnCount(2);
-    ui->tableWidget->setHorizontalHeaderItem(0, new QTableWidgetItem("Modelio pavadinimas"));
-    ui->tableWidget->setHorizontalHeaderItem(1, new QTableWidgetItem("Modelio ID"));
+    table_model = new QSqlTableModel(ui->tableView, dbm->getDatabase());
 
-    auto results = dbm->getModels();
-    ui->tableWidget->setRowCount(results.size());
-    int row_number = 0;
-    for (auto &row : results)
-    {
-        QTableWidgetItem *column1 = new QTableWidgetItem(row["name"]);
-        column1->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-        ui->tableWidget->setItem(row_number, 0, column1);
+    table_model->setTable(Settings::MODEL_TABLE);
+    table_model->setEditStrategy(QSqlTableModel::OnFieldChange);
+    table_model->select();
 
-        QTableWidgetItem *column2 = new QTableWidgetItem(row["letters"]);
-        column2->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-        ui->tableWidget->setItem(row_number, 1 , column2);
-        row_number++;
-    }
+    table_model->setHeaderData(0, Qt::Horizontal, "Modelio ID");
+    table_model->setHeaderData(1, Qt::Horizontal, "Kliento pavadinimas");
+    table_model->setHeaderData(2, Qt::Horizontal, "Modelio raidės");
+
+    ui->tableView->setModel(table_model);
 }
 
 
@@ -45,5 +40,11 @@ void NaujasModelis::on_pushButton_clicked()
 {
     QString model_name = ui->lineEdit->text();
     QString model_letters = ui->lineEdit_2->text();
-    dbm->insertModel(model_name, model_letters);
+
+    QSqlRecord record = table_model->record();
+    //record.setValue(0, //cia reikia primary key suzinot arba kazkaip sutaisyt);
+    record.setValue(1, QVariant(model_name));
+    record.setValue(2, QVariant(model_letters));
+
+    table_model->insertRecord(-1, record);
 }

@@ -147,12 +147,12 @@
     </item>
    </layout>
   </widget>
-  <widget class="QTableWidget" name="tableWidget">
+  <widget class="QTableView" name="tableView">
    <property name="geometry">
     <rect>
-     <x>20</x>
+     <x>10</x>
      <y>350</y>
-     <width>551</width>
+     <width>581</width>
      <height>192</height>
     </rect>
    </property>

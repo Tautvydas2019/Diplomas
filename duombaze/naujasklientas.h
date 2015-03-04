@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "databasemanager.h"
+#include <QSqlTableModel>
 
 namespace Ui {
 class NaujasKlientas;
@@ -22,6 +23,7 @@ private slots:
 private:
     DatabaseManager *dbm;
     Ui::NaujasKlientas *ui;
+    QSqlTableModel *table_model;
 };
 
 #endif // NAUJASKLIENTAS_H

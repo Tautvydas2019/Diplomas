@@ -17,6 +17,7 @@ protected:
 public:
     DatabaseManager();
     ~DatabaseManager();
+    QSqlDatabase getDatabase();
     void init();
     QMap<QString, QMap<QString, QString>> getModels();
     void insertModel(const QString &model_name, const QString &model_letters);

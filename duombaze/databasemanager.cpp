@@ -32,6 +32,12 @@ void DatabaseManager::init()
     createTables();
 }
 
+//Gražina duomenų bazę
+QSqlDatabase DatabaseManager::getDatabase()
+{
+    return db;
+}
+
 //Sukuria programoje duomenų bazė programoje
 void DatabaseManager::createTables()
 {

@@ -3,9 +3,11 @@
 #include "settings.h"
 #include "databasemanager.h"
 
-#include <QMap>
-#include <QDebug>
 #include <QString>
+#include <QSqlTableModel>
+#include <QSqlRecord>
+#include <QSqlQuery>
+#include <QDebug>
 
 NaujasKlientas::NaujasKlientas(QWidget *parent, DatabaseManager *dbm) :
     QDialog(parent),
@@ -15,51 +17,22 @@ NaujasKlientas::NaujasKlientas(QWidget *parent, DatabaseManager *dbm) :
     ui->setupUi(this);
     QWidget::setWindowTitle(Settings::TEXT_NAUJASKLIENTAS_NAME);
 
-    ui->tableWidget->setColumnCount(6);
-    ui->tableWidget->setHorizontalHeaderItem(0, new QTableWidgetItem("Kliento pavadinimas"));
-    ui->tableWidget->setHorizontalHeaderItem(1, new QTableWidgetItem("Kliento kodas"));
-    ui->tableWidget->setHorizontalHeaderItem(2, new QTableWidgetItem("Kliento PVM kodas"));
-    ui->tableWidget->setHorizontalHeaderItem(3, new QTableWidgetItem("Kliento adresas"));
-    ui->tableWidget->setHorizontalHeaderItem(4, new QTableWidgetItem("Kliento telefonas"));
-    ui->tableWidget->setHorizontalHeaderItem(5, new QTableWidgetItem("Kliento informacija"));
+    table_model = new QSqlTableModel(ui->tableView, dbm->getDatabase());
 
+    table_model->setTable(Settings::CLIENT_TABLE);
+    table_model->setEditStrategy(QSqlTableModel::OnFieldChange);
+    table_model->select();
 
-    auto results = dbm->getClient();
-    ui->tableWidget->setRowCount(results.size());
-    int row_number = 0;
-    for (auto &row : results)
-    {
-        qDebug() << row;
-        QTableWidgetItem *column1 = new QTableWidgetItem(row["name"]);
-        column1->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-        ui->tableWidget->setItem(row_number, 0, column1);
+    table_model->setHeaderData(0, Qt::Horizontal, "Kliento ID");
+    table_model->setHeaderData(1, Qt::Horizontal, "Kliento pavadinimas");
+    table_model->setHeaderData(2, Qt::Horizontal, "Kliento kodas");
+    table_model->setHeaderData(3, Qt::Horizontal, "Kliento PVM kodas");
+    table_model->setHeaderData(4, Qt::Horizontal, "Kliento adresas");
+    table_model->setHeaderData(5, Qt::Horizontal, "Kliento telefonas");
+    table_model->setHeaderData(6, Qt::Horizontal, "Kliento informacija");
 
-        QTableWidgetItem *column2 = new QTableWidgetItem(row["code"]);
-        column2->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-        ui->tableWidget->setItem(row_number, 1 , column2);
-
-        QTableWidgetItem *column3 = new QTableWidgetItem(row["vat"]);
-        column3->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-        ui->tableWidget->setItem(row_number, 2 , column3);
-
-        QTableWidgetItem *column4 = new QTableWidgetItem(row["address"]);
-        column4->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-        ui->tableWidget->setItem(row_number, 3 , column4);
-
-        QTableWidgetItem *column5 = new QTableWidgetItem(row["telephone"]);
-        column5->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-        ui->tableWidget->setItem(row_number, 4 , column5);
-
-        QTableWidgetItem *column6 = new QTableWidgetItem(row["additional_info"]);
-        column6->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-        ui->tableWidget->setItem(row_number, 5 , column6);
-        row_number++;
-    }
-
-
+    ui->tableView->setModel(table_model);
 }
-
-
 
 NaujasKlientas::~NaujasKlientas()
 {
@@ -74,5 +47,15 @@ void NaujasKlientas::on_pushButton_clicked()
     QString client_address = ui->ladresas->text();
     QString client_telephone = ui->ltelefonas->text();
     QString client_addition_info = ui->linformaciha->text();
-    dbm->insertClient(client_name, client_code, client_vat, client_address, client_telephone, client_addition_info);
+
+    QSqlRecord record = table_model->record();
+    //record.setValue(0, //cia reikia primary key suzinot arba kazkaip sutaisyt);
+    record.setValue(1, QVariant(client_name));
+    record.setValue(2, QVariant(client_code));
+    record.setValue(3, QVariant(client_vat));
+    record.setValue(4, QVariant(client_address));
+    record.setValue(5, QVariant(client_telephone));
+    record.setValue(6, QVariant(client_addition_info));
+
+    table_model->insertRecord(-1, record);
 }

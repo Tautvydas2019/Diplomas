@@ -114,12 +114,12 @@
     <string>Uždaryti</string>
    </property>
   </widget>
-  <widget class="QTableWidget" name="tableWidget">
+  <widget class="QTableView" name="tableView">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>160</y>
-     <width>256</width>
+     <x>15</x>
+     <y>140</y>
+     <width>341</width>
      <height>192</height>
     </rect>
    </property>
