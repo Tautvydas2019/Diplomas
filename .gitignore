@@ -41,3 +41,10 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# Temp project files
+duombaze/duombaze.pro.user.*
+*.autosave
+
+# User project file
+duombaze/duombaze.pro.user
