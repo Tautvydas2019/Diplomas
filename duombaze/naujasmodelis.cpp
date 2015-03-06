@@ -62,12 +62,6 @@ void NaujasModelis::on_pushButton_clicked()
         QString message = "Turite įvesti modelio pavadinimą ir modelio ID!";
         QMessageBox::warning(this, title, message);
     }
-    else if (model_name == model_name)
-    {
-        QString title = "Vienodi duomenys";
-        QString message = "Turite įvesti skirtinga modelio pavadinimą ir modelio ID!";
-        QMessageBox::information(this, title, message);
-    }
     else
     {
         QSqlRecord record = table_model->record();
