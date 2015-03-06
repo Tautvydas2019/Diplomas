@@ -54,7 +54,7 @@ void MainWindow::on_actionNaujas_klientas_triggered()
 
 void MainWindow::on_actionNaujas_EKA_triggered()
 {
-    NaujasEka nEka(this);
+    NaujasEka nEka(this, dbm);
     nEka.setModal(true);
     nEka.exec();
 }

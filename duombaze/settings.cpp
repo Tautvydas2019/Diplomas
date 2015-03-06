@@ -12,6 +12,9 @@ const QString Settings::TEXT_NAUJASKLIENTAS_NAME =
 const QString Settings::TEXT_NAUJASMODELIS_NAME =
         "Naujas modelis";
 
+const QString Settings::TEXT_NAUJASEKA_NAME =
+        "Naujas EKA";
+
 const QString Settings::DB_TYPE =
         "QSQLITE";
 
@@ -61,4 +64,7 @@ const QString Settings::CLIENT_TABLE =
 
 const QString Settings::MODEL_TABLE =
         "model";
+
+const QString Settings::EKA_TABLE =
+        "eka";
 
