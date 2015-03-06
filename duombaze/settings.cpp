@@ -22,8 +22,13 @@ const QList<QString> Settings::DB_TABLES = {
 
     "CREATE TABLE IF NOT EXISTS `model` ("
       "`model_id` INTEGER PRIMARY KEY AUTOINCREMENT,"
+<<<<<<< HEAD
       "`name` VARCHAR(20) UNIQUE,"
       "`letters` VARCHAR(2) UNIQUE"
+=======
+      "`name` VARCHAR(20) NOT NULL UNIQUE,"
+      "`letters` VARCHAR(2) NOT NULL UNIQUE"
+>>>>>>> origin/master
      ");",
 
     "CREATE TABLE IF NOT EXISTS `client` ("
