@@ -17,6 +17,7 @@
 #include <QAbstractItemView>
 #include <QHeaderView>
 #include <QMessageBox>
+#include <QSqlError>
 #include <QDebug>
 
 NaujasModelis::NaujasModelis(QWidget *parent, DatabaseManager *dbm) :
@@ -84,6 +85,11 @@ void NaujasModelis::on_pushButton_clicked()
                 QString message = error.text();
                 QMessageBox::critical(this, title, message);
             }
+        }
+        else
+        {
+            ui->lineEdit->setText("");
+            ui->lineEdit_2->setText("");
         }
     }
 }
