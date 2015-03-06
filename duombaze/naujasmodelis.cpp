@@ -68,7 +68,23 @@ void NaujasModelis::on_pushButton_clicked()
         record.setValue(0, QVariant(model_name));
         record.setValue(1, QVariant(model_letters));
 
-        table_model->insertRecord(-1, record);
+        bool inserted = table_model->insertRecord(-1, record);
+        if (!inserted)
+        {
+            QSqlError error = table_model->lastError();
+            if (error.number() == 19)
+            {
+                QString title = "Pasikartojantys duomenys";
+                QString message = "Įvedėte duomenis kurie jau yra duomenų bazėje";
+                QMessageBox::critical(this, title, message);
+            }
+            else
+            {
+                QString title = "Nežinoma klaida";
+                QString message = error.text();
+                QMessageBox::critical(this, title, message);
+            }
+        }
     }
 }
 
