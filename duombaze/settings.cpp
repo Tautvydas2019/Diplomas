@@ -12,6 +12,9 @@ const QString Settings::TEXT_NAUJASKLIENTAS_NAME =
 const QString Settings::TEXT_NAUJASMODELIS_NAME =
         "Naujas modelis";
 
+const QString Settings::TEXT_NAUJASEKA_NAME =
+        "Naujas EKA";
+
 const QString Settings::DB_TYPE =
         "QSQLITE";
 
@@ -24,6 +27,7 @@ const QList<QString> Settings::DB_TABLES = {
       "`model_id` INTEGER PRIMARY KEY AUTOINCREMENT,"
       "`name` VARCHAR(20) NOT NULL UNIQUE,"
       "`letters` VARCHAR(2) NOT NULL UNIQUE"
+
      ");",
 
     "CREATE TABLE IF NOT EXISTS `client` ("
@@ -60,4 +64,7 @@ const QString Settings::CLIENT_TABLE =
 
 const QString Settings::MODEL_TABLE =
         "model";
+
+const QString Settings::EKA_TABLE =
+        "eka";
 

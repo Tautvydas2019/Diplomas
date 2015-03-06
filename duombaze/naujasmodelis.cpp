@@ -56,6 +56,7 @@ void NaujasModelis::on_pushButton_clicked()
     QString model_name = ui->lineEdit->text();
     QString model_letters = ui->lineEdit_2->text();
 
+
     if (model_name.isEmpty() || model_letters.isEmpty())
     {
         QString title = "Neįvesti duomenys";

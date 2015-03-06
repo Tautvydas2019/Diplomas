@@ -74,23 +74,6 @@ QMap<QString, QString> DatabaseManager::genResultMap(const QSqlQuery &query)
     return results;
 }
 
-//QMap<QString, QMap<QString, QString>> DatabaseManager::getClients()
-//{
-//    QString sql = "SELECT * FROM `" + Settings::DB_TABLE_CLIENT + "` ORDER BY `date_added` ASC;";
-//    QSqlQuery query;
-//    query.prepare(sql);
-//    if (!query.exec())
-//    {
-//        dbError(query.lastError());
-//    }
-//    QMap<QString, QMap<QString, QString>> results;
-//    for (int r = 0; query.next(); r++) {
-//        results[QString::number(r)] = genResultMap(query);
-//    }
-//    query.clear();
-//    return results;
-//}
-
 //Išrenka duomenis iš duomenų bazės modelio lentelės
 QMap<QString, QMap<QString, QString>> DatabaseManager::getModels()
 {
@@ -144,7 +127,8 @@ QMap<QString, QMap<QString, QString>> DatabaseManager::getClient()
 void DatabaseManager::insertClient(const QString &client_name, const QString &client_code, const QString &client_vat,
                                    const QString &client_address, const QString &client_telephone, const QString &client_additional_info)
 {
-    QString sql = "INSERT INTO `" + Settings::CLIENT_TABLE + "` (`name`, `code`, `vat`, `address`, `telephone`, `additional_info`) VALUES (:name, :code, :vat, :address, :telephone, :additional_info);";
+    QString sql = "INSERT INTO `" + Settings::CLIENT_TABLE + "` (`name`, `code`, `vat`, `address`, `telephone`, `additional_info`) "
+                                                             "VALUES (:name, :code, :vat, :address, :telephone, :additional_info);";
     QSqlQuery query;
     query.prepare(sql);
     query.bindValue(":name", client_name);
@@ -160,7 +144,53 @@ void DatabaseManager::insertClient(const QString &client_name, const QString &cl
     query.clear();
 }
 
+QMap<QString, QMap<QString, QString>> DatabaseManager::getEka()
+{
+    QString sql = "SELECT * FROM `" + Settings::EKA_TABLE + "`;";
+    QSqlQuery query;
+    query.prepare(sql);
+    if (!query.exec())
+    {
+        dbError(query.lastError());
+    }
+    QMap<QString, QMap<QString, QString>> results;
+    for (int r = 0; query.next(); r++) {
+        results[QString::number(r)] = genResultMap(query);
+    }
+    query.clear();
+    return results;
+}
 
+void DatabaseManager::insertEka(const QString &eka_serial_number, const QString &eka_certificate, const QString &eka_count_of_use,
+                                const QString &eka_reg_data, const QString &eka_main_checkup, const QString &eka_warranty,
+                                const QString &eka_rent, const QString &eka_reg_rent, const QString &eka_place_eka,
+                                const QString &eka_eka_model, const QString &eka_contract, const QString &eka_c_name)
+{
+
+    QString sql = "INSERT INTO `" + Settings::EKA_TABLE + "` (`serial_number`, `certificate`, `count_of_use`, `reg_data`, `main_checkup`,"
+                                                          "`warranty`, `rent`, `reg_rent`, `place_eka`, `eka_model`, eka_contract, `c_name`"
+                                                          "VALUES (:serial_number, :certificate, :count_of_use, :reg_data, :main_checkup,"
+                                                          ":warranty, :rent, :reg_rent, :place_eka, :eka_model, :eka_contract, :c_name);";
+    QSqlQuery query;
+    query.prepare(sql);
+    query.bindValue(":serial_number", eka_serial_number);
+    query.bindValue(":certificate", eka_certificate);
+    query.bindValue(":count_of_use", eka_count_of_use);
+    query.bindValue(":reg_data", eka_reg_data);
+    query.bindValue(":main_checkup", eka_main_checkup);
+    query.bindValue(":warranty", eka_warranty);
+    query.bindValue(":rent", eka_rent);
+    query.bindValue(":reg_rent", eka_reg_rent);
+    query.bindValue(":place_eka", eka_place_eka);
+    query.bindValue(":eka_model", eka_eka_model);
+    query.bindValue(":eka_contract", eka_contract);
+    query.bindValue(":c_name", eka_c_name);
+    if (!query.exec())
+    {
+        dbError(query.lastError());
+    }
+    query.clear();
+}
 //void DatabaseManager::deleteClient(const int &client_id) {
 //    QString sql = "DELETE FROM `" + Settings::DB_TABLE_CLIENT + "` WHERE `client_id` = ?;";
 //    QSqlQuery query;
