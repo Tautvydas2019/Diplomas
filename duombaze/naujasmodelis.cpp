@@ -59,7 +59,7 @@ void NaujasModelis::on_pushButton_clicked()
     {
         QString title = "Neįvesti duomenys";
         QString message = "Turite įvesti modelio pavadinimą ir modelio ID!";
-        QMessageBox::information(this, title, message);
+        QMessageBox::warning(this, title, message);
     }
     else
     {
