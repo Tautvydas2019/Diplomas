@@ -23,7 +23,8 @@ private slots:
 private:
     Ui::NaujasEka *ui;
     DatabaseManager *dbm;
-    QSqlTableModel *table_model;
+    QSqlTableModel *models_model;
+    QSqlTableModel *eka_model;
 };
 
 #endif // NAUJASEKA_H

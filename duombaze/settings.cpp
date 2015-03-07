@@ -42,6 +42,7 @@ const QList<QString> Settings::DB_TABLES = {
 
     "CREATE TABLE IF NOT EXISTS `eka` ("
       "`eka_id` INTEGER PRIMARY KEY AUTOINCREMENT, "
+      "`model_id` INTEGER,"
       "`serial_number` INTEGER(8),"
       "`certificate` VARCHAR(20),"
       "`count_of_use` INTEGER(1),"
@@ -53,7 +54,6 @@ const QList<QString> Settings::DB_TABLES = {
       "`reg_rent` DATE,"
       "`place_eka` VARCHAR(100),"
       "`status` BOOLEAN,"
-      "`eka_model` VARCHAR(20),"
       "`contract` VARCHAR(1),"
       "`c_name` VARCHAR(100)"
     ");"
