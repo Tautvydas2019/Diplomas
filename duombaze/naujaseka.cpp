@@ -14,6 +14,7 @@
 #include <QComboBox>
 #include <QAbstractItemModel>
 #include <QMessageBox>
+#include <QDate>
 
 NaujasEka::NaujasEka(QWidget *parent, DatabaseManager *dbm) :
     QDialog(parent),
@@ -35,6 +36,15 @@ NaujasEka::NaujasEka(QWidget *parent, DatabaseManager *dbm) :
     eka_model->select();
 
     ui->tableView->setModel(eka_model);
+
+    QDate date = QDate::currentDate();
+    ui->dateEdit_reg->setDate(date);
+    ui->dateEdit_gar->setDate(date);
+    ui->dateEdit_nuom->setDate(date);
+    ui->dateEdit_prof->setDate(date);
+
+    ui->dateEdit_nuom->setEnabled(false);
+
 }
 
 NaujasEka::~NaujasEka()
@@ -54,10 +64,11 @@ void NaujasEka::on_pushButton_save_clicked()
 
     QString eka_serial_number = ui->lineEdit_ekanr->text();
     QString eka_certificate = ui->lineEdit_cert->text();
-    QString eka_count_of_use = ui->label_number->text();
+    QString eka_count_of_use = ui->lineEdit_number->text();
     QDate eka_reg_data = ui->dateEdit_reg->date();
     QDate eka_main_checkup = ui->dateEdit_prof->date();
     bool eka_warranty = ui->checkBox_gar->isChecked();
+
     QDate eka_reg_warranty = ui->dateEdit_gar->date();
     bool eka_rent = ui->checkBox_nuom->isChecked();
     QDate eka_reg_rent = ui->dateEdit_nuom->date();
@@ -90,5 +101,20 @@ void NaujasEka::on_pushButton_save_clicked()
         QString title = "Nežinoma klaida";
         QString message = error.text();
         QMessageBox::critical(this, title, message);
+    }
+}
+
+void NaujasEka::on_checkBox_nuom_stateChanged(int checked)
+{
+    if (checked)
+    {
+        ui->dateEdit_nuom->setEnabled(true);
+        ui->dateEdit_gar->setEnabled(false);
+
+    }
+    else
+    {
+        ui->dateEdit_nuom->setEnabled(false);
+        ui->dateEdit_gar->setEnabled(true);
     }
 }

@@ -191,26 +191,3 @@ void DatabaseManager::insertEka(const QString &eka_serial_number, const QString 
     }
     query.clear();
 }
-//void DatabaseManager::deleteClient(const int &client_id) {
-//    QString sql = "DELETE FROM `" + Settings::DB_TABLE_CLIENT + "` WHERE `client_id` = ?;";
-//    QSqlQuery query;
-//    query.prepare(sql);
-//    query.addBindValue(client_id);
-//    if (!query.exec())
-//    {
-//        dbError(query.lastError());
-//    }
-//    query.clear();
-//}
-
-//void DatabaseManager::deleteClient(const QString &client_id) {
-//    QString sql = "DELETE FROM `" + Settings::DB_TABLE_CLIENT + "` WHERE `client_id` = ?;";
-//    QSqlQuery query;
-//    query.prepare(sql);
-//    query.addBindValue(client_id);
-//    if (!query.exec())
-//    {
-//        dbError(query.lastError());
-//    }
-//    query.clear();
-//}

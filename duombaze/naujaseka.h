@@ -4,6 +4,7 @@
 #include <QDialog>
 #include "databasemanager.h"
 #include <QSqlTableModel>
+#include <QDate>
 
 namespace Ui {
 class NaujasEka;
@@ -20,7 +21,10 @@ public:
 private slots:
     void on_pushButton_save_clicked();
 
+    void on_checkBox_nuom_stateChanged(int arg1);
+
 private:
+
     Ui::NaujasEka *ui;
     DatabaseManager *dbm;
     QSqlTableModel *models_model;
