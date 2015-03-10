@@ -32,12 +32,13 @@ const QList<QString> Settings::DB_TABLES = {
 
     "CREATE TABLE IF NOT EXISTS `client` ("
       "`client_id` INTEGER PRIMARY KEY AUTOINCREMENT,"
-      "`name` VARCHAR(100),"
-      "`code` INT(7),"
+      "`name` VARCHAR(100) NOT NULL UNIQUE,"
+      "`code` INT(10)UNIQUE,"
       "`vat` VARCHAR(20),"
       "`address` VARCHAR(100),"
       "`telephone` VARCHAR(15),"
-      "`additional_info` VARCHAR(255)"
+      "`additional_info` VARCHAR(255),"
+      "`city` VARCHAR(20)"
      ");",
 
     "CREATE TABLE IF NOT EXISTS `eka` ("
@@ -55,7 +56,8 @@ const QList<QString> Settings::DB_TABLES = {
       "`place_eka` VARCHAR(100),"
       "`status` BOOLEAN,"
       "`contract` VARCHAR(1),"
-      "`c_name` VARCHAR(100)"
+      "`c_name` VARCHAR(100),"
+      "`place` BOOLEAN"
     ");"
 };
 

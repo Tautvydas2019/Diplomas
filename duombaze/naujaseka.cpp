@@ -110,7 +110,6 @@ void NaujasEka::on_checkBox_nuom_stateChanged(int checked)
     {
         ui->dateEdit_nuom->setEnabled(true);
         ui->dateEdit_gar->setEnabled(false);
-
     }
     else
     {

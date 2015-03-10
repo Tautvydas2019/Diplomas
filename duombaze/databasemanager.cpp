@@ -125,10 +125,11 @@ QMap<QString, QMap<QString, QString>> DatabaseManager::getClient()
 }
 
 void DatabaseManager::insertClient(const QString &client_name, const QString &client_code, const QString &client_vat,
-                                   const QString &client_address, const QString &client_telephone, const QString &client_additional_info)
+                                   const QString &client_address, const QString &client_telephone, const QString &client_additional_info,
+                                   const QString &client_city)
 {
-    QString sql = "INSERT INTO `" + Settings::CLIENT_TABLE + "` (`name`, `code`, `vat`, `address`, `telephone`, `additional_info`) "
-                                                             "VALUES (:name, :code, :vat, :address, :telephone, :additional_info);";
+    QString sql = "INSERT INTO `" + Settings::CLIENT_TABLE + "` (`name`, `code`, `vat`, `address`, `telephone`, `additional_info`, `city`) "
+                                                             "VALUES (:name, :code, :vat, :address, :telephone, :additional_info, :city);";
     QSqlQuery query;
     query.prepare(sql);
     query.bindValue(":name", client_name);
@@ -137,6 +138,7 @@ void DatabaseManager::insertClient(const QString &client_name, const QString &cl
     query.bindValue(":address", client_address);
     query.bindValue(":telephone", client_telephone);
     query.bindValue(":additional_info", client_additional_info);
+    query.bindValue(":city", client_city);
     if (!query.exec())
     {
         dbError(query.lastError());
