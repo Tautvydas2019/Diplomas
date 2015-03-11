@@ -1,10 +1,11 @@
 #ifndef NAUJASEKA_H
 #define NAUJASEKA_H
 
-#include <QDialog>
 #include "databasemanager.h"
+
+#include <QDialog>
+#include <QWidget>
 #include <QSqlTableModel>
-#include <QDate>
 
 namespace Ui {
 class NaujasEka;

@@ -2,7 +2,9 @@
 #define NAUJASMODELIS_H
 
 #include "databasemanager.h"
+
 #include <QDialog>
+#include <QWidget>
 #include <QSqlTableModel>
 
 namespace Ui {

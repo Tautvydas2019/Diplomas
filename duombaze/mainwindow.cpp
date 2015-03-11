@@ -9,7 +9,10 @@
 #include "naujaseka.h"
 #include "ui_naujaseka.h"
 
+#include <QWidget>
+#include <QMainWindow>
 #include <QString>
+
 #include <QDebug>
 
 

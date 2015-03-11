@@ -4,20 +4,20 @@
 #include "settings.h"
 #include "databasemanager.h"
 
-#include <Qt>
-#include <QDialog>
 #include <QWidget>
-#include <QString>
+#include <QDialog>
 #include <QSqlTableModel>
+#include <Qt>
+#include <QAbstractItemView>
+#include <QHeaderView>
+#include <QString>
+#include <QMessageBox>
 #include <QSqlRecord>
 #include <QVariant>
 #include <QModelIndexList>
-#include <QModelIndex>
 #include <QList>
-#include <QAbstractItemView>
-#include <QHeaderView>
-#include <QMessageBox>
-#include <QSqlError>
+#include <QModelIndex>
+
 #include <QDebug>
 
 NaujasModelis::NaujasModelis(QWidget *parent, DatabaseManager *dbm) :
@@ -73,19 +73,7 @@ void NaujasModelis::on_pushButton_clicked()
         bool inserted = table_model->insertRecord(-1, record);
         if (!inserted)
         {
-            QSqlError error = table_model->lastError();
-            if (error.number() == 19)
-            {
-                QString title = "Pasikartojantys duomenys";
-                QString message = "Įvedėte duomenis kurie jau yra duomenų bazėje";
-                QMessageBox::critical(this, title, message);
-            }
-            else
-            {
-                QString title = "Nežinoma klaida";
-                QString message = error.text();
-                QMessageBox::critical(this, title, message);
-            }
+            dbm->promptSqlErrorMessage(this, table_model->lastError());
         }
         else
         {

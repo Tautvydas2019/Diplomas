@@ -1,8 +1,10 @@
 #ifndef NAUJASKLIENTAS_H
 #define NAUJASKLIENTAS_H
 
-#include <QDialog>
 #include "databasemanager.h"
+
+#include <QDialog>
+#include <QWidget>
 #include <QSqlTableModel>
 
 namespace Ui {

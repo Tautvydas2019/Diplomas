@@ -4,12 +4,16 @@
 #include "settings.h"
 #include "databasemanager.h"
 
-#include <QString>
+#include <QWidget>
+#include <QDialog>
 #include <QSqlTableModel>
-#include <QSqlRecord>
-#include <QSqlQuery>
-#include <QDebug>
+#include <Qt>
+#include <QString>
 #include <QMessageBox>
+#include <QSqlRecord>
+
+#include <QDebug>
+
 
 NaujasKlientas::NaujasKlientas(QWidget *parent, DatabaseManager *dbm) :
     QDialog(parent),
@@ -22,7 +26,6 @@ NaujasKlientas::NaujasKlientas(QWidget *parent, DatabaseManager *dbm) :
     table_model = new QSqlTableModel(ui->tableView, dbm->getDatabase());
 
     table_model->setTable(Settings::CLIENT_TABLE);
-    table_model->setEditStrategy(QSqlTableModel::OnFieldChange);
     table_model->select();
 
     table_model->setHeaderData(0, Qt::Horizontal, "Kliento ID");
@@ -71,23 +74,10 @@ void NaujasKlientas::on_pushButton_clicked()
         record.setValue(5, QVariant(client_addition_info));
         record.setValue(6, QVariant(client_city));
 
-        //table_model->insertRecord(-1, record);
         bool inserted = table_model->insertRecord(-1, record);
         if (!inserted)
         {
-            QSqlError error = table_model->lastError();
-            if (error.number() == 19)
-            {
-                QString title = "Pasikartojantys duomenys";
-                QString message = "Įvedėte duomenis kurie jau yra duomenų bazėje";
-                QMessageBox::critical(this, title, message);
-            }
-            else
-            {
-                QString title = "Nežinoma klaida";
-                QString message = error.text();
-                QMessageBox::critical(this, title, message);
-            }
+            dbm->promptSqlErrorMessage(this, table_model->lastError());
         }
         else
         {

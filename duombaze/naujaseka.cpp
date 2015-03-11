@@ -1,20 +1,23 @@
 #include "naujaseka.h"
 #include "ui_naujaseka.h"
-#include "naujasmodelis.h"
-#include "ui_naujasmodelis.h"
 
 #include "settings.h"
 #include "databasemanager.h"
 
-#include <QString>
+#include <QWidget>
+#include <QDialog>
 #include <QSqlTableModel>
-#include <QSqlRecord>
-#include <QSqlQuery>
-#include <QDebug>
-#include <QComboBox>
-#include <QAbstractItemModel>
-#include <QMessageBox>
 #include <QDate>
+#include <QModelIndex>
+#include <QVariant>
+#include <QString>
+#include <QSqlRecord>
+#include <QSqlError>
+#include <QMessageBox>
+
+#include <QDebug>
+
+
 
 NaujasEka::NaujasEka(QWidget *parent, DatabaseManager *dbm) :
     QDialog(parent),
@@ -97,10 +100,7 @@ void NaujasEka::on_pushButton_save_clicked()
     bool inserted = eka_model->insertRecord(-1, record);
     if (!inserted)
     {
-        QSqlError error = eka_model->lastError();
-        QString title = "Nežinoma klaida";
-        QString message = error.text();
-        QMessageBox::critical(this, title, message);
+        dbm->promptSqlErrorMessage(this, eka_model->lastError());
     }
 }
 
