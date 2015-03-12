@@ -12,6 +12,7 @@ public:
    static const QString TEXT_NAUJASKLIENTAS_NAME;
    static const QString TEXT_NAUJASMODELIS_NAME;
    static const QString TEXT_NAUJASEKA_NAME;
+   static const QString TEXT_KLIENTUPAIESKA_NAME;
    static const QList<QString> DB_TABLES;
    static const QString CLIENT_TABLE;
    static const QString MODEL_TABLE;

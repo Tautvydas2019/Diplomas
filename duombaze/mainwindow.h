@@ -27,6 +27,8 @@ private slots:
 
     void on_actionNaujas_EKA_triggered();
 
+    void on_actionKlient_duomen_baz_triggered();
+
 private:
     Ui::MainWindow *ui;
     DatabaseManager *dbm;

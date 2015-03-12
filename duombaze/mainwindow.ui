@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>700</width>
+    <width>576</width>
     <height>400</height>
    </rect>
   </property>
@@ -19,7 +19,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>700</width>
+     <width>576</width>
      <height>21</height>
     </rect>
    </property>
@@ -33,7 +33,14 @@
     <addaction name="separator"/>
     <addaction name="actionU_daryti"/>
    </widget>
+   <widget class="QMenu" name="menuPer_i_ra">
+    <property name="title">
+     <string>Peržiūra</string>
+    </property>
+    <addaction name="actionKlient_duomen_baz"/>
+   </widget>
    <addaction name="menuFailas"/>
+   <addaction name="menuPer_i_ra"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -62,6 +69,11 @@
   <action name="actionU_daryti">
    <property name="text">
     <string>Uždaryti</string>
+   </property>
+  </action>
+  <action name="actionKlient_duomen_baz">
+   <property name="text">
+    <string>Klientų duomenų bazė</string>
    </property>
   </action>
  </widget>

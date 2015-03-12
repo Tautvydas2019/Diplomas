@@ -15,6 +15,9 @@ const QString Settings::TEXT_NAUJASMODELIS_NAME =
 const QString Settings::TEXT_NAUJASEKA_NAME =
         "Naujas EKA";
 
+const QString Settings::TEXT_KLIENTUPAIESKA_NAME =
+        "Klientų duomenų bazė";
+
 const QString Settings::DB_TYPE =
         "QSQLITE";
 

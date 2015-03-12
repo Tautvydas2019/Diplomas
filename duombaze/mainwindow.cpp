@@ -8,6 +8,8 @@
 #include "settings.h"
 #include "naujaseka.h"
 #include "ui_naujaseka.h"
+#include "klientupaieska.h"
+#include "ui_klientupaieska.h"
 
 #include <QWidget>
 #include <QMainWindow>
@@ -60,4 +62,11 @@ void MainWindow::on_actionNaujas_EKA_triggered()
     NaujasEka nEka(this, dbm);
     nEka.setModal(true);
     nEka.exec();
+}
+
+void MainWindow::on_actionKlient_duomen_baz_triggered()
+{
+    KlientuPaieska nPaieska(this, dbm);
+    nPaieska.setModal(true);
+    nPaieska.exec();
 }
