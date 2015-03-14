@@ -49,16 +49,14 @@ NaujasEka::NaujasEka(QWidget *parent, DatabaseManager *dbm) :
 
     ui->dateEdit_nuom->setEnabled(false);
 
-<<<<<<< HEAD
+
     QDate yy = QDate::currentDate();
     yy = yy.addYears(1);
     ui->dateEdit_gar->setDate(yy);
-=======
+
     ui->lineEdit_user->setReadOnly(true);
 
     client_record = QSqlRecord();
->>>>>>> origin/master
-
 }
 
 NaujasEka::~NaujasEka()
