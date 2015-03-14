@@ -57,26 +57,14 @@ KlientuPaieska::~KlientuPaieska()
 
 void KlientuPaieska::on_tableView_activated(const QModelIndex &index)
 {
-    QString sql = ui->tableView->model()->data(index).toString();
-    QSqlQuery qry;
-    qry.prepare("SELECT * FROM `client` WHERE name = '"+sql+"' or code = '"+sql+"' or city = '"+sql+"'");
+    int row = index.row();
+    QSqlRecord record = table_model->record(row);
 
-
-    if(qry.exec())
-    {
-        while(qry.next())
-        {
-        ui->line_pavadinimas->setText(qry.value(1).toString());
-        ui->lineEdit_kodas->setText(qry.value(2).toString());
-        ui->lineEdit_pvm->setText(qry.value(3).toString());
-        ui->lineEdit_adresas->setText(qry.value(4).toString());
-        ui->lineEdit_miestas->setText(qry.value(7).toString());
-        ui->lineEdit_telefonas->setText(qry.value(5).toString());
-        ui->lineEdit_informacija->setText(qry.value(6).toString());
-        }
-    }
-    else
-    {
-        QMessageBox::critical(this,tr("error::"),qry.lastError().text());
-    }
+    ui->line_pavadinimas->setText(record.value(1).toString());
+    ui->lineEdit_kodas->setText(record.value(2).toString());
+    ui->lineEdit_pvm->setText(record.value(3).toString());
+    ui->lineEdit_adresas->setText(record.value(4).toString());
+    ui->lineEdit_miestas->setText(record.value(7).toString());
+    ui->lineEdit_telefonas->setText(record.value(5).toString());
+    ui->lineEdit_informacija->setText(record.value(6).toString());
 }
