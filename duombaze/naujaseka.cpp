@@ -14,6 +14,7 @@
 #include <QSqlRecord>
 #include <QSqlError>
 #include <QMessageBox>
+#include <QDateTime>
 
 #include <QDebug>
 
@@ -42,11 +43,14 @@ NaujasEka::NaujasEka(QWidget *parent, DatabaseManager *dbm) :
 
     QDate date = QDate::currentDate();
     ui->dateEdit_reg->setDate(date);
-    ui->dateEdit_gar->setDate(date);
     ui->dateEdit_nuom->setDate(date);
     ui->dateEdit_prof->setDate(date);
 
     ui->dateEdit_nuom->setEnabled(false);
+
+    QDate yy = QDate::currentDate();
+    yy = yy.addYears(1);
+    ui->dateEdit_gar->setDate(yy);
 
 }
 
