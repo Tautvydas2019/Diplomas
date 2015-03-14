@@ -7,14 +7,14 @@
     <x>0</x>
     <y>0</y>
     <width>755</width>
-    <height>433</height>
+    <height>427</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_3">
-   <item>
+  <layout class="QGridLayout" name="gridLayout_2">
+   <item row="0" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -200,25 +200,26 @@
      </item>
     </layout>
    </item>
-   <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_3">
+   <item row="1" column="0">
+    <layout class="QHBoxLayout" name="horizontalLayout_4">
      <item>
-      <spacer name="horizontalSpacer_4">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+      <widget class="QPushButton" name="pushButton_3">
+       <property name="text">
+        <string>Naujas klientas</string>
        </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
+      </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="pushButton_5">
        <property name="text">
-        <string>Gerai</string>
+        <string>Ištrinti</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBox">
+       <property name="text">
+        <string>Redaguoti</string>
        </property>
       </widget>
      </item>
@@ -236,24 +237,22 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_2">
-       <property name="text">
-        <string>Atšaukti</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer_5">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <widget class="QPushButton" name="pushButton">
+         <property name="text">
+          <string>Gerai</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_2">
+         <property name="text">
+          <string>Atšaukti</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
     </layout>
    </item>
@@ -268,8 +267,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>501</x>
-     <y>383</y>
+     <x>662</x>
+     <y>415</y>
     </hint>
     <hint type="destinationlabel">
      <x>444</x>
@@ -284,8 +283,8 @@
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>640</x>
-     <y>382</y>
+     <x>743</x>
+     <y>415</y>
     </hint>
     <hint type="destinationlabel">
      <x>697</x>

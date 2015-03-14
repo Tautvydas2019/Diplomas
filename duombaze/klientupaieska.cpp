@@ -2,6 +2,8 @@
 #include "ui_klientupaieska.h"
 #include "settings.h"
 #include "databasemanager.h"
+#include "naujasklientas.h"
+#include "ui_naujasklientas.h"
 
 #include <QString>
 #include <QSqlTableModel>
@@ -9,6 +11,9 @@
 #include <QSqlQuery>
 #include <QDebug>
 #include <QMessageBox>
+#include <QModelIndexList>
+#include <QList>
+#include <QModelIndex>
 
 KlientuPaieska::KlientuPaieska(QWidget *parent, DatabaseManager *dbm) :
     QDialog(parent),
@@ -48,7 +53,8 @@ KlientuPaieska::KlientuPaieska(QWidget *parent, DatabaseManager *dbm) :
     ui->textEdit_informacija->setReadOnly(true);
     ui->lineEdit_telefonas->setReadOnly(true);
 
-    ui->pushButton->setEnabled(false);
+    //ui->pushButton->setEnabled(false);
+    ui->pushButton_5->setEnabled(false);
 
     current_record = QSqlRecord();
 
@@ -88,4 +94,11 @@ void KlientuPaieska::on_lpaieska_textChanged(const QString &search_keyword)
 QSqlRecord KlientuPaieska::getCurrentClient()
 {
     return current_record;
+}
+
+void KlientuPaieska::on_pushButton_3_clicked()
+{
+    NaujasKlientas nKlientas(this, dbm);
+    nKlientas.setModal(true);
+    nKlientas.exec();
 }
