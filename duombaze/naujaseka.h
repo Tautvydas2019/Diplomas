@@ -2,6 +2,7 @@
 #define NAUJASEKA_H
 
 #include "databasemanager.h"
+#include "klientupaieska.h"
 
 #include <QDialog>
 #include <QWidget>
@@ -24,12 +25,18 @@ private slots:
 
     void on_checkBox_nuom_stateChanged(int arg1);
 
+    void setClient();
+
+    void on_toolButton_clicked();
+
 private:
 
     Ui::NaujasEka *ui;
     DatabaseManager *dbm;
     QSqlTableModel *models_model;
     QSqlTableModel *eka_model;
+    KlientuPaieska *client_search_dialog;
+    QSqlRecord client_record;
 };
 
 #endif // NAUJASEKA_H
