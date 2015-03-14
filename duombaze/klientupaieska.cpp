@@ -70,9 +70,9 @@ void KlientuPaieska::on_tableView_activated(const QModelIndex &index)
         ui->lineEdit_kodas->setText(qry.value(2).toString());
         ui->lineEdit_pvm->setText(qry.value(3).toString());
         ui->lineEdit_adresas->setText(qry.value(4).toString());
-        ui->lineEdit_miestas->setText(qry.value(5).toString());
-        ui->lineEdit_telefonas->setText(qry.value(6).toString());
-        ui->lineEdit_informacija->setText(qry.value(7).toString());
+        ui->lineEdit_miestas->setText(qry.value(7).toString());
+        ui->lineEdit_telefonas->setText(qry.value(5).toString());
+        ui->lineEdit_informacija->setText(qry.value(6).toString());
         }
     }
     else
