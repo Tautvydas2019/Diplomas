@@ -21,7 +21,7 @@ KlientuPaieska::KlientuPaieska(QWidget *parent, DatabaseManager *dbm) :
     table_model = new QSqlTableModel(ui->tableView, dbm->getDatabase());
 
     table_model->setTable(Settings::CLIENT_TABLE);
-    table_model->setEditStrategy(QSqlTableModel::OnFieldChange);
+    table_model->setEditStrategy(QSqlTableModel::OnManualSubmit);
     table_model->select();
 
     table_model->setHeaderData(1, Qt::Horizontal, "Kliento pavadinimas");
@@ -40,13 +40,13 @@ KlientuPaieska::KlientuPaieska(QWidget *parent, DatabaseManager *dbm) :
     ui->tableView->hideColumn(5);
     ui->tableView->hideColumn(6);
 
-    ui->line_pavadinimas->setReadOnly("");
-    ui->lineEdit_kodas->setReadOnly("");
-    ui->lineEdit_pvm->setReadOnly("");
-    ui->lineEdit_adresas->setReadOnly("");
-    ui->lineEdit_miestas->setReadOnly("");
-    ui->lineEdit_informacija->setReadOnly("");
-    ui->lineEdit_telefonas->setReadOnly("");
+    ui->line_pavadinimas->setReadOnly(true);
+    ui->lineEdit_kodas->setReadOnly(true);
+    ui->lineEdit_pvm->setReadOnly(true);
+    ui->lineEdit_adresas->setReadOnly(true);
+    ui->lineEdit_miestas->setReadOnly(true);
+    ui->lineEdit_informacija->setReadOnly(true);
+    ui->lineEdit_telefonas->setReadOnly(true);
 
 }
 
@@ -67,4 +67,12 @@ void KlientuPaieska::on_tableView_activated(const QModelIndex &index)
     ui->lineEdit_miestas->setText(record.value(7).toString());
     ui->lineEdit_telefonas->setText(record.value(5).toString());
     ui->lineEdit_informacija->setText(record.value(6).toString());
+}
+
+void KlientuPaieska::on_lpaieska_textChanged(const QString &search_keyword)
+{
+    QString filter = "`name` LIKE '%" + search_keyword + "%' OR `code` LIKE '%" + search_keyword
+            + "%' OR `city` LIKE '%" + search_keyword + "%'";
+    table_model->setFilter(filter);
+    table_model->select();
 }

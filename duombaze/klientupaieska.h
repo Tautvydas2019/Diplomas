@@ -20,6 +20,8 @@ public:
 private slots:
     void on_tableView_activated(const QModelIndex &index);
 
+    void on_lpaieska_textChanged(const QString &arg1);
+
 private:
     Ui::KlientuPaieska *ui;
     DatabaseManager *dbm;
