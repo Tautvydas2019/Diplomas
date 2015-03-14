@@ -3,6 +3,7 @@
 
 #include "settings.h"
 #include "databasemanager.h"
+#include "klientupaieska.h"
 
 #include <QWidget>
 #include <QDialog>
@@ -48,17 +49,21 @@ NaujasEka::NaujasEka(QWidget *parent, DatabaseManager *dbm) :
 
     ui->dateEdit_nuom->setEnabled(false);
 
+<<<<<<< HEAD
     QDate yy = QDate::currentDate();
     yy = yy.addYears(1);
     ui->dateEdit_gar->setDate(yy);
+=======
+    ui->lineEdit_user->setReadOnly(true);
+
+    client_record = QSqlRecord();
+>>>>>>> origin/master
 
 }
 
 NaujasEka::~NaujasEka()
 {
     delete ui;
-    delete models_model;
-    delete eka_model;
 }
 
 void NaujasEka::on_pushButton_save_clicked()
@@ -67,6 +72,8 @@ void NaujasEka::on_pushButton_save_clicked()
     int row = ui->comboBox_model->currentIndex();
     QModelIndex index;
     index = models_model->index(row, 0);
+
+    QVariant eka_client_id = client_record.isEmpty() ? 0 : client_record.value(0);
     QVariant eka_model_id = models_model->data(index);
 
     QString eka_serial_number = ui->lineEdit_ekanr->text();
@@ -80,26 +87,30 @@ void NaujasEka::on_pushButton_save_clicked()
     bool eka_rent = ui->checkBox_nuom->isChecked();
     QDate eka_reg_rent = ui->dateEdit_nuom->date();
     QString eka_place_eka = ui->lineEdit_ekaplace->text();
-    bool eka_place = ui->checkBox_place->isChecked(); // nzn ar sitas
-    QString eka_contract = "N"; // nera
-    QString eka_c_name = ui->lineEdit_user->text();
+    bool eka_place = ui->checkBox_place->isChecked();
 
     QSqlRecord record = eka_model->record();
-    record.remove(0);
-    record.setValue(0, eka_model_id);
-    record.setValue(1, QVariant(eka_serial_number));
-    record.setValue(2, QVariant(eka_certificate));
-    record.setValue(3, QVariant(eka_count_of_use));
-    record.setValue(4, QVariant(eka_reg_data));
-    record.setValue(5, QVariant(eka_main_checkup));
-    record.setValue(6, QVariant(eka_warranty));
-    record.setValue(7, QVariant(eka_reg_warranty));
-    record.setValue(8, QVariant(eka_rent));
-    record.setValue(9, QVariant(eka_reg_rent));
-    record.setValue(10, QVariant(eka_place_eka));
-    record.setValue(12, QVariant(eka_contract));
-    record.setValue(13, QVariant(eka_c_name));
-    record.setValue(14, QVariant(eka_place));
+
+    record.remove(0); //eka_id
+    record.remove(12); //status
+    record.remove(12); //eka_contract
+
+    int i = 0;
+    record.setValue(i++, eka_model_id);
+    record.setValue(i++, eka_client_id);
+
+    record.setValue(i++, QVariant(eka_serial_number));
+    record.setValue(i++, QVariant(eka_certificate));
+    record.setValue(i++, QVariant(eka_count_of_use));
+    record.setValue(i++, QVariant(eka_reg_data));
+    record.setValue(i++, QVariant(eka_main_checkup));
+    record.setValue(i++, QVariant(eka_warranty));
+
+    record.setValue(i++, QVariant(eka_reg_warranty));
+    record.setValue(i++, QVariant(eka_rent));
+    record.setValue(i++, QVariant(eka_reg_rent));
+    record.setValue(i++, QVariant(eka_place_eka));
+    record.setValue(i++, QVariant(eka_place));
 
     bool inserted = eka_model->insertRecord(-1, record);
     if (!inserted)
@@ -120,4 +131,22 @@ void NaujasEka::on_checkBox_nuom_stateChanged(int checked)
         ui->dateEdit_nuom->setEnabled(false);
         ui->dateEdit_gar->setEnabled(true);
     }
+}
+
+void NaujasEka::setClient()
+{
+    QSqlRecord client = client_search_dialog->getCurrentClient();
+    if (!client.isEmpty())
+    {
+        client_record = client;
+        ui->lineEdit_user->setText(client.value(1).toString());
+    }
+}
+
+void NaujasEka::on_toolButton_clicked()
+{
+    client_search_dialog = new KlientuPaieska(this, dbm);
+    client_search_dialog->setModal(true);
+    connect(client_search_dialog, SIGNAL(accepted()), this, SLOT(setClient()));
+    client_search_dialog->exec();
 }

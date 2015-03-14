@@ -45,8 +45,12 @@ KlientuPaieska::KlientuPaieska(QWidget *parent, DatabaseManager *dbm) :
     ui->lineEdit_pvm->setReadOnly(true);
     ui->lineEdit_adresas->setReadOnly(true);
     ui->lineEdit_miestas->setReadOnly(true);
-    ui->lineEdit_informacija->setReadOnly(true);
+    ui->textEdit_informacija->setReadOnly(true);
     ui->lineEdit_telefonas->setReadOnly(true);
+
+    ui->pushButton->setEnabled(false);
+
+    current_record = QSqlRecord();
 
 }
 
@@ -60,13 +64,17 @@ void KlientuPaieska::on_tableView_activated(const QModelIndex &index)
     int row = index.row();
     QSqlRecord record = table_model->record(row);
 
+    current_record = record;
+
     ui->line_pavadinimas->setText(record.value(1).toString());
     ui->lineEdit_kodas->setText(record.value(2).toString());
     ui->lineEdit_pvm->setText(record.value(3).toString());
     ui->lineEdit_adresas->setText(record.value(4).toString());
     ui->lineEdit_miestas->setText(record.value(7).toString());
     ui->lineEdit_telefonas->setText(record.value(5).toString());
-    ui->lineEdit_informacija->setText(record.value(6).toString());
+    ui->textEdit_informacija->setText(record.value(6).toString());
+
+    ui->pushButton->setEnabled(true);
 }
 
 void KlientuPaieska::on_lpaieska_textChanged(const QString &search_keyword)
@@ -75,4 +83,9 @@ void KlientuPaieska::on_lpaieska_textChanged(const QString &search_keyword)
             + "%' OR `city` LIKE '%" + search_keyword + "%'";
     table_model->setFilter(filter);
     table_model->select();
+}
+
+QSqlRecord KlientuPaieska::getCurrentClient()
+{
+    return current_record;
 }
