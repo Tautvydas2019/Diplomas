@@ -76,7 +76,7 @@ void NaujasEka::on_pushButton_save_clicked()
     bool eka_rent = ui->checkBox_nuom->isChecked();
     QDate eka_reg_rent = ui->dateEdit_nuom->date();
     QString eka_place_eka = ui->lineEdit_ekaplace->text();
-    bool eka_status = ui->checkBox_place->isChecked(); // nzn ar sitas
+    bool eka_place = ui->checkBox_place->isChecked(); // nzn ar sitas
     QString eka_contract = "N"; // nera
     QString eka_c_name = ui->lineEdit_user->text();
 
@@ -93,9 +93,9 @@ void NaujasEka::on_pushButton_save_clicked()
     record.setValue(8, QVariant(eka_rent));
     record.setValue(9, QVariant(eka_reg_rent));
     record.setValue(10, QVariant(eka_place_eka));
-    record.setValue(11, QVariant(eka_status));
     record.setValue(12, QVariant(eka_contract));
     record.setValue(13, QVariant(eka_c_name));
+    record.setValue(14, QVariant(eka_place));
 
     bool inserted = eka_model->insertRecord(-1, record);
     if (!inserted)
