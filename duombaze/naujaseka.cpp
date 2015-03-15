@@ -71,7 +71,7 @@ void NaujasEka::on_pushButton_save_clicked()
     QModelIndex index;
     index = models_model->index(row, 0);
 
-    QVariant eka_client_id = client_record.isEmpty() ? QVariant : client_record.value(0);
+    QVariant eka_client_id = client_record.isEmpty() ? QVariant() : client_record.value(0);
     QVariant eka_model_id = models_model->data(index);
     QString eka_serial_number = ui->lineEdit_ekanr->text();
     QString eka_certificate = ui->lineEdit_cert->text();
