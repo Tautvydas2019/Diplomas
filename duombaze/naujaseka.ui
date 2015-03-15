@@ -114,13 +114,6 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="3">
-      <widget class="QCheckBox" name="checkBox_gar">
-       <property name="text">
-        <string>Garantija</string>
-       </property>
-      </widget>
-     </item>
      <item row="3" column="4">
       <widget class="QDateEdit" name="dateEdit_gar"/>
      </item>
@@ -138,13 +131,6 @@
       <widget class="QLabel" name="label_ekaplace">
        <property name="text">
         <string>Stovėjimo adresas</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="3">
-      <widget class="QCheckBox" name="checkBox_nuom">
-       <property name="text">
-        <string>Nuoma</string>
        </property>
       </widget>
      </item>
@@ -202,6 +188,20 @@
         </size>
        </property>
       </spacer>
+     </item>
+     <item row="3" column="3">
+      <widget class="QRadioButton" name="radioButton_gar">
+       <property name="text">
+        <string>Garantija</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="3">
+      <widget class="QRadioButton" name="radioButton_nuom">
+       <property name="text">
+        <string>Nuoma</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>

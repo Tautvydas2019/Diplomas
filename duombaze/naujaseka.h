@@ -23,11 +23,13 @@ public:
 private slots:
     void on_pushButton_save_clicked();
 
-    void on_checkBox_nuom_stateChanged(int arg1);
-
     void setClient();
 
     void on_toolButton_clicked();
+
+    void on_radioButton_gar_toggled(bool checked);
+
+    void on_radioButton_nuom_toggled(bool checked);
 
 private:
 

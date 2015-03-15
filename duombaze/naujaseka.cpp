@@ -48,7 +48,7 @@ NaujasEka::NaujasEka(QWidget *parent, DatabaseManager *dbm) :
     ui->dateEdit_prof->setDate(date);
 
     ui->dateEdit_nuom->setEnabled(false);
-
+    ui->radioButton_gar->setChecked(true);
 
     QDate yy = QDate::currentDate();
     yy = yy.addYears(1);
@@ -71,19 +71,21 @@ void NaujasEka::on_pushButton_save_clicked()
     QModelIndex index;
     index = models_model->index(row, 0);
 
-    QVariant eka_client_id = client_record.isEmpty() ? 0 : client_record.value(0);
+    QVariant eka_client_id = client_record.isEmpty() ? QVariant : client_record.value(0);
     QVariant eka_model_id = models_model->data(index);
-
     QString eka_serial_number = ui->lineEdit_ekanr->text();
     QString eka_certificate = ui->lineEdit_cert->text();
     QString eka_count_of_use = ui->lineEdit_number->text();
+
     QDate eka_reg_data = ui->dateEdit_reg->date();
     QDate eka_main_checkup = ui->dateEdit_prof->date();
-    bool eka_warranty = ui->checkBox_gar->isChecked();
 
-    QDate eka_reg_warranty = ui->dateEdit_gar->date();
-    bool eka_rent = ui->checkBox_nuom->isChecked();
-    QDate eka_reg_rent = ui->dateEdit_nuom->date();
+    bool eka_warranty = ui->radioButton_gar->isChecked();
+    QDate eka_reg_warranty = eka_warranty ? ui->dateEdit_gar->date() : QDate();
+
+    bool eka_rent = ui->radioButton_nuom->isChecked();
+    QDate eka_reg_rent = eka_rent ? ui->dateEdit_nuom->date() : QDate();
+
     QString eka_place_eka = ui->lineEdit_ekaplace->text();
     bool eka_place = ui->checkBox_place->isChecked();
 
@@ -102,11 +104,13 @@ void NaujasEka::on_pushButton_save_clicked()
     record.setValue(i++, QVariant(eka_count_of_use));
     record.setValue(i++, QVariant(eka_reg_data));
     record.setValue(i++, QVariant(eka_main_checkup));
-    record.setValue(i++, QVariant(eka_warranty));
 
+    record.setValue(i++, QVariant(eka_warranty));
     record.setValue(i++, QVariant(eka_reg_warranty));
+
     record.setValue(i++, QVariant(eka_rent));
     record.setValue(i++, QVariant(eka_reg_rent));
+
     record.setValue(i++, QVariant(eka_place_eka));
     record.setValue(i++, QVariant(eka_place));
 
@@ -114,20 +118,6 @@ void NaujasEka::on_pushButton_save_clicked()
     if (!inserted)
     {
         dbm->promptSqlErrorMessage(this, eka_model->lastError());
-    }
-}
-
-void NaujasEka::on_checkBox_nuom_stateChanged(int checked)
-{
-    if (checked)
-    {
-        ui->dateEdit_nuom->setEnabled(true);
-        ui->dateEdit_gar->setEnabled(false);
-    }
-    else
-    {
-        ui->dateEdit_nuom->setEnabled(false);
-        ui->dateEdit_gar->setEnabled(true);
     }
 }
 
@@ -147,4 +137,22 @@ void NaujasEka::on_toolButton_clicked()
     client_search_dialog->setModal(true);
     connect(client_search_dialog, SIGNAL(accepted()), this, SLOT(setClient()));
     client_search_dialog->exec();
+}
+
+void NaujasEka::on_radioButton_gar_toggled(bool checked)
+{
+    if (checked)
+    {
+        ui->dateEdit_gar->setEnabled(true);
+        ui->dateEdit_nuom->setEnabled(false);
+    }
+}
+
+void NaujasEka::on_radioButton_nuom_toggled(bool checked)
+{
+    if (checked)
+    {
+        ui->dateEdit_gar->setEnabled(false);
+        ui->dateEdit_nuom->setEnabled(true);
+    }
 }
