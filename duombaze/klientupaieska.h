@@ -25,6 +25,8 @@ private slots:
 
     void on_lpaieska_textChanged(const QString &arg1);
 
+    void on_pushButton_3_clicked();
+
 private:
     QSqlRecord current_record;
     Ui::KlientuPaieska *ui;

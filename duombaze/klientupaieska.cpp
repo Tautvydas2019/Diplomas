@@ -2,6 +2,8 @@
 #include "ui_klientupaieska.h"
 #include "settings.h"
 #include "databasemanager.h"
+#include "naujasklientas.h"
+#include "ui_naujasklientas.h"
 
 #include <QString>
 #include <QSqlTableModel>
@@ -88,4 +90,11 @@ void KlientuPaieska::on_lpaieska_textChanged(const QString &search_keyword)
 QSqlRecord KlientuPaieska::getCurrentClient()
 {
     return current_record;
+}
+
+void KlientuPaieska::on_pushButton_3_clicked()
+{
+    NaujasKlientas nKlientas(this, dbm);
+    nKlientas.setModal(true);
+    nKlientas.exec();
 }
