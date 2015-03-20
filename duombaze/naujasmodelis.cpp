@@ -32,6 +32,7 @@ NaujasModelis::NaujasModelis(QWidget *parent, DatabaseManager *dbm) :
 
     table_model->setTable(Settings::MODEL_TABLE);
     table_model->setEditStrategy(QSqlTableModel::OnFieldChange);
+    table_model->setSort(2, Qt::AscendingOrder);
     table_model->select();
 
     table_model->setHeaderData(1, Qt::Horizontal, "Modelio pavadinimas");
@@ -80,6 +81,7 @@ void NaujasModelis::on_pushButton_clicked()
             ui->lineEdit->setText("");
             ui->lineEdit_2->setText("");
         }
+        table_model->sort(2, Qt::AscendingOrder);
     }
 }
 

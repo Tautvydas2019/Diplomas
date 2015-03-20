@@ -97,4 +97,5 @@ void KlientuPaieska::on_pushButton_3_clicked()
     NaujasKlientas nKlientas(this, dbm);
     nKlientas.setModal(true);
     nKlientas.exec();
+    table_model->select();
 }

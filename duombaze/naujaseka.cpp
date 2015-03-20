@@ -31,6 +31,7 @@ NaujasEka::NaujasEka(QWidget *parent, DatabaseManager *dbm) :
 
     models_model = new QSqlTableModel(this, dbm->getDatabase());
     models_model->setTable(Settings::MODEL_TABLE);
+    models_model->setSort(2, Qt::AscendingOrder);
     models_model->select();
 
     ui->comboBox_model->setModel(models_model);
@@ -47,8 +48,7 @@ NaujasEka::NaujasEka(QWidget *parent, DatabaseManager *dbm) :
     ui->dateEdit_nuom->setDate(date);
     ui->dateEdit_prof->setDate(date);
 
-    ui->dateEdit_nuom->setEnabled(false);
-    ui->radioButton_gar->setChecked(true);
+    ui->radioButton_gar->setChecked(false);
 
     QDate yy = QDate::currentDate();
     yy = yy.addYears(1);

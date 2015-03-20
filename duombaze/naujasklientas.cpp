@@ -89,5 +89,6 @@ void NaujasKlientas::on_pushButton_clicked()
             ui->linformaciha->setText("");
             ui->lmiestas->setText("");
         }
+        this->close();
     }
 }
