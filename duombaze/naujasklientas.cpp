@@ -88,7 +88,11 @@ void NaujasKlientas::on_pushButton_clicked()
             ui->ltelefonas->setText("");
             ui->linformaciha->setText("");
             ui->lmiestas->setText("");
+
         }
+        QString title = "Gerai";
+        QString message = "Duomenys išsaugoti";
+        QMessageBox::information(this, title, message);
         this->close();
     }
 }

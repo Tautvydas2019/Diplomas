@@ -82,11 +82,21 @@ void NaujasModelis::on_pushButton_clicked()
             ui->lineEdit_2->setText("");
         }
         table_model->sort(2, Qt::AscendingOrder);
+        QString title = "Gerai";
+        QString message = "Duomenys išsaugoti";
+        QMessageBox::information(this, title, message);
     }
 }
 
+
 void NaujasModelis::on_pushButton_2_clicked()
 {
+
+    QMessageBox::StandardButton reply;
+     reply = QMessageBox::question(this, "Naikinti įrašą", "Tikrai naikinti įrašą",
+                                   QMessageBox::Yes|QMessageBox::No);
+    if (reply == QMessageBox::Yes) {
+
     QModelIndexList indexes = ui->tableView->selectionModel()->selection().indexes();
     QList<int> rows;
     for (QModelIndex &index : indexes)
@@ -100,7 +110,14 @@ void NaujasModelis::on_pushButton_2_clicked()
     {
         table_model->removeRow(row);
     }
+     }
+    else
+    {
+
+    }
+
     table_model->select();
+
 }
 
 void NaujasModelis::on_checkBox_stateChanged(int checked)

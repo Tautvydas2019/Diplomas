@@ -190,14 +190,14 @@
       </spacer>
      </item>
      <item row="3" column="3">
-      <widget class="QRadioButton" name="radioButton_gar">
+      <widget class="QCheckBox" name="checkBox_gar">
        <property name="text">
         <string>Garantija</string>
        </property>
       </widget>
      </item>
      <item row="4" column="3">
-      <widget class="QRadioButton" name="radioButton_nuom">
+      <widget class="QCheckBox" name="checkBox_nuom">
        <property name="text">
         <string>Nuoma</string>
        </property>

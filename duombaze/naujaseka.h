@@ -27,9 +27,11 @@ private slots:
 
     void on_toolButton_clicked();
 
-    void on_radioButton_gar_toggled(bool checked);
+    void on_checkBox_gar_stateChanged(int arg1);
 
-    void on_radioButton_nuom_toggled(bool checked);
+    void on_checkBox_nuom_stateChanged(int arg1);
+
+    void on_checkBox_place_stateChanged(int arg1);
 
 private:
 

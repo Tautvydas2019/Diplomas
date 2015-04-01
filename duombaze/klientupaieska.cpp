@@ -32,9 +32,10 @@ KlientuPaieska::KlientuPaieska(QWidget *parent, DatabaseManager *dbm) :
 
     ui->tableView->setModel(table_model);
     ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    ui->tableView->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Interactive);
-    ui->tableView->horizontalHeader()->setSectionResizeMode(2, QHeaderView::Interactive);
-    ui->tableView->horizontalHeader()->setSectionResizeMode(7, QHeaderView::Interactive);
+
+    ui->tableView->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
+    ui->tableView->horizontalHeader()->setSectionResizeMode(2, QHeaderView::ResizeToContents);
+    ui->tableView->horizontalHeader()->setSectionResizeMode(7, QHeaderView::ResizeToContents);
 
     ui->tableView->hideColumn(0);
     ui->tableView->hideColumn(3);

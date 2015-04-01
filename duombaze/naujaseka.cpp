@@ -16,6 +16,7 @@
 #include <QSqlError>
 #include <QMessageBox>
 #include <QDateTime>
+#include <QVariant>
 
 #include <QDebug>
 
@@ -46,15 +47,15 @@ NaujasEka::NaujasEka(QWidget *parent, DatabaseManager *dbm) :
     QDate date = QDate::currentDate();
     ui->dateEdit_reg->setDate(date);
     ui->dateEdit_nuom->setDate(date);
-    ui->dateEdit_prof->setDate(date);
-
-    ui->radioButton_gar->setChecked(false);
 
     QDate yy = QDate::currentDate();
     yy = yy.addYears(1);
     ui->dateEdit_gar->setDate(yy);
+     ui->dateEdit_prof->setDate(yy);
 
     ui->lineEdit_user->setReadOnly(true);
+    ui->dateEdit_nuom->setEnabled(false);
+    ui->dateEdit_gar->setEnabled(false);
 
     client_record = QSqlRecord();
 }
@@ -80,17 +81,24 @@ void NaujasEka::on_pushButton_save_clicked()
     QDate eka_reg_data = ui->dateEdit_reg->date();
     QDate eka_main_checkup = ui->dateEdit_prof->date();
 
-    bool eka_warranty = ui->radioButton_gar->isChecked();
+    bool eka_warranty = ui->checkBox_gar->isChecked();
     QDate eka_reg_warranty = eka_warranty ? ui->dateEdit_gar->date() : QDate();
 
-    bool eka_rent = ui->radioButton_nuom->isChecked();
+    bool eka_rent = ui->checkBox_nuom->isChecked();
     QDate eka_reg_rent = eka_rent ? ui->dateEdit_nuom->date() : QDate();
 
     QString eka_place_eka = ui->lineEdit_ekaplace->text();
     bool eka_place = ui->checkBox_place->isChecked();
 
+    if (eka_serial_number.isEmpty() || eka_place_eka.isEmpty())
+    {
+        QString title = "Neįvesti duomenys";
+        QString message = "Turite įvesti EKA korpuso numerį ir stovėjimo vietą!";
+        QMessageBox::warning(this, title, message);
+    }
+    else
+       {
     QSqlRecord record = eka_model->record();
-
     record.remove(0); //eka_id
     record.remove(12); //status
     record.remove(12); //eka_contract
@@ -119,6 +127,10 @@ void NaujasEka::on_pushButton_save_clicked()
     {
         dbm->promptSqlErrorMessage(this, eka_model->lastError());
     }
+    QString title = "Gerai";
+    QString message = "Duomenys išsaugoti";
+    QMessageBox::information(this, title, message);
+    }
 }
 
 void NaujasEka::setClient()
@@ -139,20 +151,44 @@ void NaujasEka::on_toolButton_clicked()
     client_search_dialog->exec();
 }
 
-void NaujasEka::on_radioButton_gar_toggled(bool checked)
+void NaujasEka::on_checkBox_gar_stateChanged(int checked)
 {
     if (checked)
-    {
-        ui->dateEdit_gar->setEnabled(true);
-        ui->dateEdit_nuom->setEnabled(false);
-    }
+        {
+            ui->dateEdit_gar->setEnabled(true);
+            ui->dateEdit_nuom->setEnabled(false);
+            ui->checkBox_nuom->setEnabled(false);
+        }
+    else
+        {
+            ui->dateEdit_gar->setEnabled(false);
+            ui->checkBox_nuom->setEnabled(true);
+        }
 }
 
-void NaujasEka::on_radioButton_nuom_toggled(bool checked)
+void NaujasEka::on_checkBox_nuom_stateChanged(int checked)
 {
     if (checked)
-    {
-        ui->dateEdit_gar->setEnabled(false);
-        ui->dateEdit_nuom->setEnabled(true);
-    }
+        {
+            ui->dateEdit_nuom->setEnabled(true);
+            ui->dateEdit_gar->setEnabled(false);
+            ui->checkBox_gar->setEnabled(false);
+        }
+    else
+        {
+            ui->dateEdit_nuom->setEnabled(false);
+            ui->checkBox_gar->setEnabled(true);
+        }
+}
+
+void NaujasEka::on_checkBox_place_stateChanged(int checked)
+{
+    if (checked)
+        {
+            ui->checkBox_place->setText("Kaimas");
+        }
+    else
+        {
+            ui->checkBox_place->setText("Miestas");
+        }
 }
