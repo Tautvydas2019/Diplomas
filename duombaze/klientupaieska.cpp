@@ -30,14 +30,13 @@ KlientuPaieska::KlientuPaieska(QWidget *parent, DatabaseManager *dbm) :
     table_model_eka->setEditStrategy(QSqlTableModel::OnFieldChange);
     table_model_eka->select();
 
-    ui->tableView_2->setModel(table_model_eka);
-
     table_model->setHeaderData(1, Qt::Horizontal, "Kliento pavadinimas");
     table_model->setHeaderData(2, Qt::Horizontal, "Įm. kodas");
     table_model->setHeaderData(7, Qt::Horizontal, "Miestas");
 
     ui->tableView->setModel(table_model);
     ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->tableView_2->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->tableView->setSelectionMode(QAbstractItemView::SingleSelection);
 
     ui->tableView->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
@@ -49,24 +48,6 @@ KlientuPaieska::KlientuPaieska(QWidget *parent, DatabaseManager *dbm) :
     ui->tableView->hideColumn(4);
     ui->tableView->hideColumn(5);
     ui->tableView->hideColumn(6);
-
-    ui->tableView_2->hideColumn(0);
-    ui->tableView_2->hideColumn(1);
-    ui->tableView_2->hideColumn(2);
-    ui->tableView_2->hideColumn(3);
-    ui->tableView_2->hideColumn(4);
-    ui->tableView_2->hideColumn(5);
-    ui->tableView_2->hideColumn(6);
-    ui->tableView_2->hideColumn(7);
-    ui->tableView_2->hideColumn(8);
-    ui->tableView_2->hideColumn(9);
-    ui->tableView_2->hideColumn(10);
-    ui->tableView_2->hideColumn(11);
-    ui->tableView_2->hideColumn(12);
-    ui->tableView_2->hideColumn(13);
-    ui->tableView_2->hideColumn(14);
-    ui->tableView_2->hideColumn(15);
-
 
     ui->line_pavadinimas->setReadOnly(true);
     ui->lineEdit_kodas->setReadOnly(true);
@@ -101,8 +82,10 @@ void KlientuPaieska::on_tableView_activated(const QModelIndex &index)
     ui->lineEdit_miestas->setText(record.value(7).toString());
     ui->lineEdit_telefonas->setText(record.value(5).toString());
     ui->textEdit_informacija->setText(record.value(6).toString());
-
     ui->pushButton->setEnabled(true);
+
+    //ui->tableView_2->setModel(table_model_eka);
+
 }
 
 void KlientuPaieska::on_lpaieska_textChanged(const QString &search_keyword)

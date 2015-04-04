@@ -10,6 +10,8 @@
 #include "ui_naujaseka.h"
 #include "klientupaieska.h"
 #include "ui_klientupaieska.h"
+#include "ekaediting.h"
+#include "ui_ekaediting.h"
 
 #include <QWidget>
 #include <QMainWindow>
@@ -69,4 +71,11 @@ void MainWindow::on_actionKlient_duomen_baz_triggered()
     KlientuPaieska nPaieska(this, dbm);
     nPaieska.setModal(true);
     nPaieska.exec();
+}
+
+void MainWindow::on_actionEKA_duomen_baz_triggered()
+{
+    EkaEditing nEkaEditing(this, dbm);
+    nEkaEditing.setModal(true);
+    nEkaEditing.exec();
 }

@@ -19,7 +19,8 @@ SOURCES += main.cpp\
     settings.cpp \
     databasemanager.cpp \
     naujaseka.cpp \
-    klientupaieska.cpp
+    klientupaieska.cpp \
+    ekaediting.cpp
 
 HEADERS  += mainwindow.h \
     naujasmodelis.h \
@@ -27,12 +28,14 @@ HEADERS  += mainwindow.h \
     settings.h \
     databasemanager.h \
     naujaseka.h \
-    klientupaieska.h
+    klientupaieska.h \
+    ekaediting.h
 
 FORMS    += mainwindow.ui \
     naujasmodelis.ui \
     naujasklientas.ui \
     naujaseka.ui \
-    klientupaieska.ui
+    klientupaieska.ui \
+    ekaediting.ui
 
 CONFIG += c++11

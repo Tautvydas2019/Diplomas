@@ -43,6 +43,7 @@ NaujasEka::NaujasEka(QWidget *parent, DatabaseManager *dbm) :
     eka_model->select();
 
     ui->tableView->setModel(eka_model);
+    ui->tableView->hide();
 
     QDate date = QDate::currentDate();
     ui->dateEdit_reg->setDate(date);

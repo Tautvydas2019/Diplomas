@@ -30,6 +30,7 @@ private slots:
     void on_pushButton_5_clicked();
 
 private:
+
     QSqlRecord current_record;
     Ui::KlientuPaieska *ui;
     DatabaseManager *dbm;

@@ -38,6 +38,7 @@
      <string>Peržiūra</string>
     </property>
     <addaction name="actionKlient_duomen_baz"/>
+    <addaction name="actionEKA_duomen_baz"/>
    </widget>
    <addaction name="menuFailas"/>
    <addaction name="menuPer_i_ra"/>
@@ -74,6 +75,11 @@
   <action name="actionKlient_duomen_baz">
    <property name="text">
     <string>Klientų duomenų bazė</string>
+   </property>
+  </action>
+  <action name="actionEKA_duomen_baz">
+   <property name="text">
+    <string>EKA duomenų bazė</string>
    </property>
   </action>
  </widget>

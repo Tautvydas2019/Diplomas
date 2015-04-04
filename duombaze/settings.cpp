@@ -18,6 +18,9 @@ const QString Settings::TEXT_NAUJASEKA_NAME =
 const QString Settings::TEXT_KLIENTUPAIESKA_NAME =
         "Klientų duomenų bazė";
 
+const QString Settings::TEXT_EKAEDITING_NAME =
+        "EKA duomenų bazė";
+
 const QString Settings::DB_TYPE =
         "QSQLITE";
 
@@ -58,7 +61,7 @@ const QList<QString> Settings::DB_TABLES = {
       "`rent` BOOLEAN,"
       "`reg_rent` DATE,"
       "`place_eka` VARCHAR(100),"
-      "`status` BOOLEAN,"
+      "`status` BOOLEAN DEFAULT Dirba,"
       "`contract` VARCHAR(1),"
       "`place` BOOLEAN"
     ");"
