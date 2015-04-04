@@ -72,6 +72,8 @@ void NaujasModelis::on_pushButton_clicked()
         record.setValue(0, QVariant(model_name));
         record.setValue(1, QVariant(model_letters));
 
+
+
         bool inserted = table_model->insertRecord(-1, record);
         if (!inserted)
         {
@@ -81,11 +83,13 @@ void NaujasModelis::on_pushButton_clicked()
         {
             ui->lineEdit->setText("");
             ui->lineEdit_2->setText("");
+
+            QString title = "Gerai";
+            QString message = "Duomenys išsaugoti";
+            QMessageBox::information(this, title, message);
+
         }
         table_model->sort(2, Qt::AscendingOrder);
-        QString title = "Gerai";
-        QString message = "Duomenys išsaugoti";
-        QMessageBox::information(this, title, message);
     }
 }
 

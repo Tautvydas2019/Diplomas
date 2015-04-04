@@ -74,6 +74,8 @@ void NaujasKlientas::on_pushButton_clicked()
         record.setValue(5, QVariant(client_addition_info));
         record.setValue(6, QVariant(client_city));
 
+
+
         bool inserted = table_model->insertRecord(-1, record);
         if (!inserted)
         {
@@ -89,10 +91,11 @@ void NaujasKlientas::on_pushButton_clicked()
             ui->linformaciha->setText("");
             ui->lmiestas->setText("");
 
+            QString title = "Gerai";
+            QString message = "Duomenys išsaugoti";
+            QMessageBox::information(this, title, message);
         }
-        QString title = "Gerai";
-        QString message = "Duomenys išsaugoti";
-        QMessageBox::information(this, title, message);
+
         this->close();
     }
 }
