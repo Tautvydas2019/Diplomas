@@ -21,10 +21,16 @@ KlientuPaieska::KlientuPaieska(QWidget *parent, DatabaseManager *dbm) :
     QWidget::setWindowTitle(Settings::TEXT_KLIENTUPAIESKA_NAME);
 
     table_model = new QSqlTableModel(ui->tableView, dbm->getDatabase());
-
     table_model->setTable(Settings::CLIENT_TABLE);
-    table_model->setEditStrategy(QSqlTableModel::OnManualSubmit);
+    table_model->setEditStrategy(QSqlTableModel::OnFieldChange);
     table_model->select();
+
+    table_model_eka = new QSqlTableModel(ui->tableView_2, dbm->getDatabase());
+    table_model_eka->setTable(Settings::EKA_TABLE);
+    table_model_eka->setEditStrategy(QSqlTableModel::OnFieldChange);
+    table_model_eka->select();
+
+    ui->tableView_2->setModel(table_model_eka);
 
     table_model->setHeaderData(1, Qt::Horizontal, "Kliento pavadinimas");
     table_model->setHeaderData(2, Qt::Horizontal, "Įm. kodas");
@@ -32,6 +38,7 @@ KlientuPaieska::KlientuPaieska(QWidget *parent, DatabaseManager *dbm) :
 
     ui->tableView->setModel(table_model);
     ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->tableView->setSelectionMode(QAbstractItemView::SingleSelection);
 
     ui->tableView->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
     ui->tableView->horizontalHeader()->setSectionResizeMode(2, QHeaderView::ResizeToContents);
@@ -42,6 +49,24 @@ KlientuPaieska::KlientuPaieska(QWidget *parent, DatabaseManager *dbm) :
     ui->tableView->hideColumn(4);
     ui->tableView->hideColumn(5);
     ui->tableView->hideColumn(6);
+
+    ui->tableView_2->hideColumn(0);
+    ui->tableView_2->hideColumn(1);
+    ui->tableView_2->hideColumn(2);
+    ui->tableView_2->hideColumn(3);
+    ui->tableView_2->hideColumn(4);
+    ui->tableView_2->hideColumn(5);
+    ui->tableView_2->hideColumn(6);
+    ui->tableView_2->hideColumn(7);
+    ui->tableView_2->hideColumn(8);
+    ui->tableView_2->hideColumn(9);
+    ui->tableView_2->hideColumn(10);
+    ui->tableView_2->hideColumn(11);
+    ui->tableView_2->hideColumn(12);
+    ui->tableView_2->hideColumn(13);
+    ui->tableView_2->hideColumn(14);
+    ui->tableView_2->hideColumn(15);
+
 
     ui->line_pavadinimas->setReadOnly(true);
     ui->lineEdit_kodas->setReadOnly(true);
@@ -99,4 +124,26 @@ void KlientuPaieska::on_pushButton_3_clicked()
     nKlientas.setModal(true);
     nKlientas.exec();
     table_model->select();
+}
+
+void KlientuPaieska::on_pushButton_5_clicked()
+{
+    QModelIndexList selected_indexes = ui->tableView->selectionModel()->selection().indexes();
+        if (selected_indexes.length() > 0) {
+
+            QModelIndex selected_index = selected_indexes.at(0);
+            int selected_row = selected_index.row();
+            QModelIndex target_index = table_model->index(selected_row, 1);
+            QString selected_client_name = table_model->data(target_index).toString();
+
+            QMessageBox::StandardButton reply;
+            reply = QMessageBox::question(this,
+                                          "Naikinti įrašą \"" + selected_client_name + "\"",
+                                          "Tikrai naikinti įrašą \"" + selected_client_name + "\"?",
+                                          QMessageBox::Yes|QMessageBox::No);
+            if (reply == QMessageBox::Yes) {
+                table_model->removeRow(selected_row);
+                table_model->select();
+        }
+    }
 }

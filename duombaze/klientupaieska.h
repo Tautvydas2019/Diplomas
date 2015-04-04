@@ -27,11 +27,14 @@ private slots:
 
     void on_pushButton_3_clicked();
 
+    void on_pushButton_5_clicked();
+
 private:
     QSqlRecord current_record;
     Ui::KlientuPaieska *ui;
     DatabaseManager *dbm;
     QSqlTableModel *table_model;
+    QSqlTableModel *table_model_eka;
 };
 
 #endif // KLIENTUPAIESKA_H

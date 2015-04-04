@@ -40,6 +40,7 @@ NaujasModelis::NaujasModelis(QWidget *parent, DatabaseManager *dbm) :
 
     ui->tableView->setModel(table_model);
     ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+     ui->tableView->setSelectionMode(QAbstractItemView::SingleSelection);
     ui->tableView->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
     ui->tableView->horizontalHeader()->setSectionResizeMode(2, QHeaderView::Interactive);
     ui->tableView->hideColumn(0);
@@ -91,33 +92,24 @@ void NaujasModelis::on_pushButton_clicked()
 
 void NaujasModelis::on_pushButton_2_clicked()
 {
+    QModelIndexList selected_indexes = ui->tableView->selectionModel()->selection().indexes();
+        if (selected_indexes.length() > 0) {
 
-    QMessageBox::StandardButton reply;
-     reply = QMessageBox::question(this, "Naikinti įrašą", "Tikrai naikinti įrašą",
-                                   QMessageBox::Yes|QMessageBox::No);
-    if (reply == QMessageBox::Yes) {
+            QModelIndex selected_index = selected_indexes.at(0);
+            int selected_row = selected_index.row();
+            QModelIndex target_index = table_model->index(selected_row, 1);
+            QString selected_model_name = table_model->data(target_index).toString();
 
-    QModelIndexList indexes = ui->tableView->selectionModel()->selection().indexes();
-    QList<int> rows;
-    for (QModelIndex &index : indexes)
-    {
-        if (!rows.contains(index.row()))
-        {
-            rows.append(index.row());
+            QMessageBox::StandardButton reply;
+            reply = QMessageBox::question(this,
+                                          "Naikinti įrašą \"" + selected_model_name + "\"",
+                                          "Tikrai naikinti įrašą \"" + selected_model_name + "\"?",
+                                          QMessageBox::Yes|QMessageBox::No);
+            if (reply == QMessageBox::Yes) {
+                table_model->removeRow(selected_row);
+                table_model->select();
         }
     }
-    for (int &row : rows)
-    {
-        table_model->removeRow(row);
-    }
-     }
-    else
-    {
-
-    }
-
-    table_model->select();
-
 }
 
 void NaujasModelis::on_checkBox_stateChanged(int checked)
