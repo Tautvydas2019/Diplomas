@@ -137,7 +137,6 @@ void KlientuPaieska::on_tableView_clicked(const QModelIndex &index)
     ui->pushButton->setEnabled(true);
 
     QString eka_filter = Settings::EKA_TABLE + ".client_id = '" + record.value(0).toString() + "'";
-    qDebug() << table_model_eka->lastError();
     table_model_eka->setFilter(eka_filter);
     table_model_eka->select();
 }
