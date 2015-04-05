@@ -3,14 +3,16 @@
 #include "settings.h"
 #include "databasemanager.h"
 #include "naujasklientas.h"
-#include "ui_naujasklientas.h"
 
 #include <QString>
 #include <QSqlTableModel>
+#include <QSqlRelationalTableModel>
+#include <QSqlRelation>
 #include <QSqlRecord>
 #include <QSqlQuery>
-#include <QDebug>
 #include <QMessageBox>
+
+#include <QDebug>
 
 KlientuPaieska::KlientuPaieska(QWidget *parent, DatabaseManager *dbm) :
     QDialog(parent),
@@ -25,9 +27,13 @@ KlientuPaieska::KlientuPaieska(QWidget *parent, DatabaseManager *dbm) :
     table_model->setEditStrategy(QSqlTableModel::OnFieldChange);
     table_model->select();
 
-    table_model_eka = new QSqlTableModel(ui->tableView_2, dbm->getDatabase());
+    table_model_eka = new QSqlRelationalTableModel(ui->tableView_2, dbm->getDatabase());
     table_model_eka->setTable(Settings::EKA_TABLE);
+    table_model_eka->setRelation(1, QSqlRelation(Settings::MODEL_TABLE, "model_id", "name"));
+    table_model_eka->setRelation(2, QSqlRelation(Settings::CLIENT_TABLE, "client_id", "name"));
+    table_model_eka->setJoinMode(QSqlRelationalTableModel::LeftJoin);
     table_model_eka->setEditStrategy(QSqlTableModel::OnFieldChange);
+    table_model_eka->setFilter("0=1");
     table_model_eka->select();
 
     table_model->setHeaderData(1, Qt::Horizontal, "Kliento pavadinimas");
@@ -36,7 +42,6 @@ KlientuPaieska::KlientuPaieska(QWidget *parent, DatabaseManager *dbm) :
 
     ui->tableView->setModel(table_model);
     ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    ui->tableView_2->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->tableView->setSelectionMode(QAbstractItemView::SingleSelection);
 
     ui->tableView->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
@@ -49,13 +54,17 @@ KlientuPaieska::KlientuPaieska(QWidget *parent, DatabaseManager *dbm) :
     ui->tableView->hideColumn(5);
     ui->tableView->hideColumn(6);
 
-    ui->line_pavadinimas->setReadOnly(true);
-    ui->lineEdit_kodas->setReadOnly(true);
-    ui->lineEdit_pvm->setReadOnly(true);
-    ui->lineEdit_adresas->setReadOnly(true);
-    ui->lineEdit_miestas->setReadOnly(true);
-    ui->textEdit_informacija->setReadOnly(true);
-    ui->lineEdit_telefonas->setReadOnly(true);
+    ui->tableView_2->setModel(table_model_eka);
+    ui->tableView_2->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->tableView_2->setSelectionMode(QAbstractItemView::SingleSelection);
+
+    ui->line_pavadinimas->setDisabled(true);
+    ui->lineEdit_kodas->setDisabled(true);
+    ui->lineEdit_pvm->setDisabled(true);
+    ui->lineEdit_adresas->setDisabled(true);
+    ui->lineEdit_miestas->setDisabled(true);
+    ui->textEdit_informacija->setDisabled(true);
+    ui->lineEdit_telefonas->setDisabled(true);
 
     ui->pushButton->setEnabled(false);
 
@@ -66,26 +75,6 @@ KlientuPaieska::KlientuPaieska(QWidget *parent, DatabaseManager *dbm) :
 KlientuPaieska::~KlientuPaieska()
 {
     delete ui;
-}
-
-void KlientuPaieska::on_tableView_activated(const QModelIndex &index)
-{
-    int row = index.row();
-    QSqlRecord record = table_model->record(row);
-
-    current_record = record;
-
-    ui->line_pavadinimas->setText(record.value(1).toString());
-    ui->lineEdit_kodas->setText(record.value(2).toString());
-    ui->lineEdit_pvm->setText(record.value(3).toString());
-    ui->lineEdit_adresas->setText(record.value(4).toString());
-    ui->lineEdit_miestas->setText(record.value(7).toString());
-    ui->lineEdit_telefonas->setText(record.value(5).toString());
-    ui->textEdit_informacija->setText(record.value(6).toString());
-    ui->pushButton->setEnabled(true);
-
-    //ui->tableView_2->setModel(table_model_eka);
-
 }
 
 void KlientuPaieska::on_lpaieska_textChanged(const QString &search_keyword)
@@ -129,4 +118,26 @@ void KlientuPaieska::on_pushButton_5_clicked()
                 table_model->select();
         }
     }
+}
+
+void KlientuPaieska::on_tableView_clicked(const QModelIndex &index)
+{
+    int row = index.row();
+    QSqlRecord record = table_model->record(row);
+
+    current_record = record;
+
+    ui->line_pavadinimas->setText(record.value(1).toString());
+    ui->lineEdit_kodas->setText(record.value(2).toString());
+    ui->lineEdit_pvm->setText(record.value(3).toString());
+    ui->lineEdit_adresas->setText(record.value(4).toString());
+    ui->lineEdit_miestas->setText(record.value(7).toString());
+    ui->lineEdit_telefonas->setText(record.value(5).toString());
+    ui->textEdit_informacija->setText(record.value(6).toString());
+    ui->pushButton->setEnabled(true);
+
+    QString eka_filter = Settings::EKA_TABLE + ".client_id = '" + record.value(0).toString() + "'";
+    qDebug() << table_model_eka->lastError();
+    table_model_eka->setFilter(eka_filter);
+    table_model_eka->select();
 }

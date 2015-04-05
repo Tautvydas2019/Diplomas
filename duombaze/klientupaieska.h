@@ -4,6 +4,7 @@
 #include <QDialog>
 #include "databasemanager.h"
 #include <QSqlTableModel>
+#include <QSqlRelationalTableModel>
 #include <QSqlRecord>
 
 namespace Ui {
@@ -21,13 +22,13 @@ public:
     QSqlRecord getCurrentClient();
 
 private slots:
-    void on_tableView_activated(const QModelIndex &index);
-
     void on_lpaieska_textChanged(const QString &arg1);
 
     void on_pushButton_3_clicked();
 
     void on_pushButton_5_clicked();
+
+    void on_tableView_clicked(const QModelIndex &index);
 
 private:
 
@@ -35,7 +36,7 @@ private:
     Ui::KlientuPaieska *ui;
     DatabaseManager *dbm;
     QSqlTableModel *table_model;
-    QSqlTableModel *table_model_eka;
+    QSqlRelationalTableModel *table_model_eka;
 };
 
 #endif // KLIENTUPAIESKA_H
