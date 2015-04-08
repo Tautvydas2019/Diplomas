@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     databasemanager.cpp \
     naujaseka.cpp \
     klientupaieska.cpp \
-    ekaediting.cpp
+    ekaediting.cpp \
+    myqsqlrelationaltablemodel.cpp
 
 HEADERS  += mainwindow.h \
     naujasmodelis.h \
@@ -29,7 +30,8 @@ HEADERS  += mainwindow.h \
     databasemanager.h \
     naujaseka.h \
     klientupaieska.h \
-    ekaediting.h
+    ekaediting.h \
+    myqsqlrelationaltablemodel.h
 
 FORMS    += mainwindow.ui \
     naujasmodelis.ui \

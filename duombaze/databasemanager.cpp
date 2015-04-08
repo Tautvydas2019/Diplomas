@@ -65,16 +65,7 @@ void DatabaseManager::dbError(const QSqlError &error)
 //Sukuria žinute apie sql klaidą
 void DatabaseManager::promptSqlErrorMessage(QWidget *parent, const QSqlError &error)
 {
-    if (error.number() == 19)
-    {
-        QString title = "Pasikartojantys duomenys";
-        QString message = "Įvedėte duomenis kurie jau yra duomenų bazėje";
-        QMessageBox::critical(parent, title, message);
-    }
-    else
-    {
-        QString title = "Nežinoma klaida";
-        QString message = error.text();
-        QMessageBox::critical(parent, title, message);
-    }
+    QString title = "Duomenų bazės klaida!";
+    QString message = "Įvyko duomenų bazės klaida: " + error.text();
+    QMessageBox::critical(parent, title, message);
 }

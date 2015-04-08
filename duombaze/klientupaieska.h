@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "databasemanager.h"
+#include "myqsqlrelationaltablemodel.h"
 #include <QSqlTableModel>
 #include <QSqlRelationalTableModel>
 #include <QSqlRecord>
@@ -41,7 +42,7 @@ private:
     Ui::KlientuPaieska *ui;
     DatabaseManager *dbm;
     QSqlTableModel *table_model;
-    QSqlRelationalTableModel *table_model_eka;
+    MyQSqlRelationalTableModel *table_model_eka;
     bool isEditButton;
 
     void updateTextEdits(const QModelIndex &index);

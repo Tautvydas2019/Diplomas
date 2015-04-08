@@ -4,7 +4,7 @@
 #include "databasemanager.h"
 #include "naujasklientas.h"
 #include "naujaseka.h"
-#include "ui_naujaseka.h"
+#include "myqsqlrelationaltablemodel.h"
 
 #include <QString>
 #include <QSqlTableModel>
@@ -31,7 +31,7 @@ KlientuPaieska::KlientuPaieska(QWidget *parent, DatabaseManager *dbm) :
     table_model->setEditStrategy(QSqlTableModel::OnManualSubmit);
     table_model->select();
 
-    table_model_eka = new QSqlRelationalTableModel(ui->tableView_2, dbm->getDatabase());
+    table_model_eka = new MyQSqlRelationalTableModel(ui->tableView_2, dbm->getDatabase());
     table_model_eka->setTable(Settings::EKA_TABLE);
     table_model_eka->setRelation(1, QSqlRelation(Settings::MODEL_TABLE, "model_id", "name"));
     table_model_eka->setRelation(2, QSqlRelation(Settings::CLIENT_TABLE, "client_id", "name"));
@@ -51,10 +51,10 @@ KlientuPaieska::KlientuPaieska(QWidget *parent, DatabaseManager *dbm) :
     table_model_eka->setHeaderData(5, Qt::Horizontal, "Registravimų kiekis");
     table_model_eka->setHeaderData(6, Qt::Horizontal, "Registravimo data");
     table_model_eka->setHeaderData(7, Qt::Horizontal, "Profilaktika");
-    table_model_eka->setHeaderData(9, Qt::Horizontal, "Garantija");
-    table_model_eka->setHeaderData(11, Qt::Horizontal, "Nuoma");
-    table_model_eka->setHeaderData(12, Qt::Horizontal, "EKA vieta");
-    table_model_eka->setHeaderData(13, Qt::Horizontal, "Būsena");
+    table_model_eka->setHeaderData(8, Qt::Horizontal, "Garantija");
+    table_model_eka->setHeaderData(9, Qt::Horizontal, "Nuoma");
+    table_model_eka->setHeaderData(10, Qt::Horizontal, "EKA vieta");
+    table_model_eka->setHeaderData(11, Qt::Horizontal, "Būsena");
 
     ui->tableView->setModel(table_model);
     ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -75,10 +75,8 @@ KlientuPaieska::KlientuPaieska(QWidget *parent, DatabaseManager *dbm) :
     ui->tableView_2->setSelectionMode(QAbstractItemView::SingleSelection);
 
     ui->tableView_2->hideColumn(0);
-    ui->tableView_2->hideColumn(8);
-    ui->tableView_2->hideColumn(10);
-    ui->tableView_2->hideColumn(14);
-    ui->tableView_2->hideColumn(15);
+    ui->tableView_2->hideColumn(12);
+    ui->tableView_2->hideColumn(13);
 
     ui->line_pavadinimas->setDisabled(true);
     ui->lineEdit_kodas->setDisabled(true);
@@ -271,4 +269,15 @@ void KlientuPaieska::updateTextEdits(const QModelIndex &index) {
     QString eka_filter = Settings::EKA_TABLE + ".client_id = '" + record.value(0).toString() + "'";
     table_model_eka->setFilter(eka_filter);
     table_model_eka->select();
+
+//    int row_count = table_model_eka->rowCount();
+//    for (int row = 0; row < row_count; row++) {
+//        QModelIndex checkup_date_index = table_model_eka->index(row, 7);
+//        QVariant checkup_date_variant = table_model_eka->data(checkup_date_index);
+//        QDate checkup_date = checkup_date_variant.toDate();
+//        QDate current_date = QDate::currentDate();
+//        if (true) {
+//            table_model_eka->setData(checkup_date_index, red, Qt::BackgroundColorRole);
+//        }
+//    }
 }

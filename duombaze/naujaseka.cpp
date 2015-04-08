@@ -52,7 +52,7 @@ NaujasEka::NaujasEka(QWidget *parent, DatabaseManager *dbm) :
     QDate yy = QDate::currentDate();
     yy = yy.addYears(1);
     ui->dateEdit_gar->setDate(yy);
-     ui->dateEdit_prof->setDate(yy);
+    ui->dateEdit_prof->setDate(yy);
 
     ui->lineEdit_user->setReadOnly(true);
     ui->dateEdit_nuom->setEnabled(false);
@@ -99,39 +99,40 @@ void NaujasEka::on_pushButton_save_clicked()
         QMessageBox::warning(this, title, message);
     }
     else
-       {
-    QSqlRecord record = eka_model->record();
-    record.remove(0); //eka_id
-    record.remove(12); //status
-    record.remove(12); //eka_contract
-
-    int i = 0;
-    record.setValue(i++, eka_model_id);
-    record.setValue(i++, eka_client_id);
-
-    record.setValue(i++, QVariant(eka_serial_number));
-    record.setValue(i++, QVariant(eka_certificate));
-    record.setValue(i++, QVariant(eka_count_of_use));
-    record.setValue(i++, QVariant(eka_reg_data));
-    record.setValue(i++, QVariant(eka_main_checkup));
-
-    record.setValue(i++, QVariant(eka_warranty));
-    record.setValue(i++, QVariant(eka_reg_warranty));
-
-    record.setValue(i++, QVariant(eka_rent));
-    record.setValue(i++, QVariant(eka_reg_rent));
-
-    record.setValue(i++, QVariant(eka_place_eka));
-    record.setValue(i++, QVariant(eka_place));
-
-    bool inserted = eka_model->insertRecord(-1, record);
-    if (!inserted)
     {
-        dbm->promptSqlErrorMessage(this, eka_model->lastError());
-    }
-    QString title = "Gerai";
-    QString message = "Duomenys išsaugoti";
-    QMessageBox::information(this, title, message);
+        QSqlRecord record = eka_model->record();
+        record.remove(0); //eka_id
+        record.remove(10); //status
+        record.remove(10); //eka_contract
+
+        int i = 0;
+        record.setValue(i++, eka_model_id);
+        record.setValue(i++, eka_client_id);
+
+        record.setValue(i++, QVariant(eka_serial_number));
+        record.setValue(i++, QVariant(eka_certificate));
+        record.setValue(i++, QVariant(eka_count_of_use));
+        record.setValue(i++, QVariant(eka_reg_data));
+        record.setValue(i++, QVariant(eka_main_checkup));
+
+        record.setValue(i++, QVariant(eka_reg_warranty));
+
+        record.setValue(i++, QVariant(eka_reg_rent));
+
+        record.setValue(i++, QVariant(eka_place_eka));
+        record.setValue(i++, QVariant(eka_place));
+
+        bool inserted = eka_model->insertRecord(-1, record);
+        if (!inserted)
+        {
+            dbm->promptSqlErrorMessage(this, eka_model->lastError());
+        }
+        else
+        {
+            QString title = "Gerai";
+            QString message = "Duomenys išsaugoti";
+            QMessageBox::information(this, title, message);
+        }
     }
 }
 
@@ -164,6 +165,9 @@ void NaujasEka::on_checkBox_gar_stateChanged(int checked)
     else
         {
             ui->dateEdit_gar->setEnabled(false);
+            QDate date = QDate::currentDate();
+            date = date.addYears(1);
+            ui->dateEdit_gar->setDate(date);
             ui->checkBox_nuom->setEnabled(true);
         }
 }
@@ -179,6 +183,8 @@ void NaujasEka::on_checkBox_nuom_stateChanged(int checked)
     else
         {
             ui->dateEdit_nuom->setEnabled(false);
+            QDate date = QDate::currentDate();
+            ui->dateEdit_nuom->setDate(date);
             ui->checkBox_gar->setEnabled(true);
         }
 }
