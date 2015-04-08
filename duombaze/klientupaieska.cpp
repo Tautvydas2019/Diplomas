@@ -3,6 +3,8 @@
 #include "settings.h"
 #include "databasemanager.h"
 #include "naujasklientas.h"
+#include "naujaseka.h"
+#include "ui_naujaseka.h"
 
 #include <QString>
 #include <QSqlTableModel>
@@ -11,8 +13,10 @@
 #include <QSqlRecord>
 #include <QSqlQuery>
 #include <QMessageBox>
+#include <QVariant>
 
 #include <QDebug>
+
 
 KlientuPaieska::KlientuPaieska(QWidget *parent, DatabaseManager *dbm) :
     QDialog(parent),
@@ -40,6 +44,20 @@ KlientuPaieska::KlientuPaieska(QWidget *parent, DatabaseManager *dbm) :
     table_model->setHeaderData(2, Qt::Horizontal, "Įm. kodas");
     table_model->setHeaderData(7, Qt::Horizontal, "Miestas");
 
+    table_model_eka->setHeaderData(1, Qt::Horizontal, "Modelis");
+    table_model_eka->setHeaderData(2, Qt::Horizontal, "Klientas ");
+    table_model_eka->setHeaderData(3, Qt::Horizontal, "EKA numeris");
+    table_model_eka->setHeaderData(4, Qt::Horizontal, "Pasas");
+    table_model_eka->setHeaderData(5, Qt::Horizontal, "Registravimų kiekis");
+    table_model_eka->setHeaderData(6, Qt::Horizontal, "Registravimo data");
+    table_model_eka->setHeaderData(7, Qt::Horizontal, "Profilaktika");
+    table_model_eka->setHeaderData(9, Qt::Horizontal, "Garantija");
+    table_model_eka->setHeaderData(11, Qt::Horizontal, "Nuoma");
+    table_model_eka->setHeaderData(12, Qt::Horizontal, "EKA vieta");
+    table_model_eka->setHeaderData(13, Qt::Horizontal, "Būsena");
+
+
+
     ui->tableView->setModel(table_model);
     ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->tableView->setSelectionMode(QAbstractItemView::SingleSelection);
@@ -58,6 +76,12 @@ KlientuPaieska::KlientuPaieska(QWidget *parent, DatabaseManager *dbm) :
     ui->tableView_2->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->tableView_2->setSelectionMode(QAbstractItemView::SingleSelection);
 
+    ui->tableView_2->hideColumn(0);
+    ui->tableView_2->hideColumn(8);
+    ui->tableView_2->hideColumn(10);
+    ui->tableView_2->hideColumn(14);
+    ui->tableView_2->hideColumn(15);
+
     ui->line_pavadinimas->setDisabled(true);
     ui->lineEdit_kodas->setDisabled(true);
     ui->lineEdit_pvm->setDisabled(true);
@@ -69,6 +93,7 @@ KlientuPaieska::KlientuPaieska(QWidget *parent, DatabaseManager *dbm) :
     ui->pushButton->setEnabled(false);
 
     current_record = QSqlRecord();
+    current_record_eka = QSqlRecord();
 
 }
 
@@ -124,8 +149,10 @@ void KlientuPaieska::on_tableView_clicked(const QModelIndex &index)
 {
     int row = index.row();
     QSqlRecord record = table_model->record(row);
+    QSqlRecord record_eka = table_model_eka->record();
 
     current_record = record;
+    current_record_eka = record_eka;
 
     ui->line_pavadinimas->setText(record.value(1).toString());
     ui->lineEdit_kodas->setText(record.value(2).toString());
@@ -139,4 +166,43 @@ void KlientuPaieska::on_tableView_clicked(const QModelIndex &index)
     QString eka_filter = Settings::EKA_TABLE + ".client_id = '" + record.value(0).toString() + "'";
     table_model_eka->setFilter(eka_filter);
     table_model_eka->select();
+
+    QVariant eka_warranty = record.value(8).toString();
+    QVariant eka_rent = record.value(10).toString();
+     //qDebug() << eka_warranty;
+    if (eka_warranty == false)
+        {
+            ui->tableView_2->hideColumn(9);
+            qDebug() << eka_warranty;
+        }
+
+    if (eka_rent == false)
+        {
+            ui->tableView_2->hideColumn(11);
+            qDebug() << eka_rent;
+        }
+}
+
+void KlientuPaieska::on_checkBox_stateChanged(int checked)
+{
+    if (checked)
+    {
+        ui->line_pavadinimas->setDisabled(false);
+        ui->lineEdit_kodas->setDisabled(false);
+        ui->lineEdit_pvm->setDisabled(false);
+        ui->lineEdit_adresas->setDisabled(false);
+        ui->lineEdit_miestas->setDisabled(false);
+        ui->textEdit_informacija->setDisabled(false);
+        ui->lineEdit_telefonas->setDisabled(false);
+    }
+    else
+    {
+        ui->line_pavadinimas->setDisabled(true);
+        ui->lineEdit_kodas->setDisabled(true);
+        ui->lineEdit_pvm->setDisabled(true);
+        ui->lineEdit_adresas->setDisabled(true);
+        ui->lineEdit_miestas->setDisabled(true);
+        ui->textEdit_informacija->setDisabled(true);
+        ui->lineEdit_telefonas->setDisabled(true);
+    }
 }

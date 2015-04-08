@@ -89,6 +89,7 @@ void NaujasEka::on_pushButton_save_clicked()
     QDate eka_reg_rent = eka_rent ? ui->dateEdit_nuom->date() : QDate();
 
     QString eka_place_eka = ui->lineEdit_ekaplace->text();
+
     bool eka_place = ui->checkBox_place->isChecked();
 
     if (eka_serial_number.isEmpty() || eka_place_eka.isEmpty())

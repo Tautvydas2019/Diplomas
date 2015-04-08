@@ -30,9 +30,12 @@ private slots:
 
     void on_tableView_clicked(const QModelIndex &index);
 
+    void on_checkBox_stateChanged(int arg1);
+
 private:
 
     QSqlRecord current_record;
+    QSqlRecord current_record_eka;
     Ui::KlientuPaieska *ui;
     DatabaseManager *dbm;
     QSqlTableModel *table_model;
