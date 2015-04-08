@@ -243,16 +243,16 @@
       </widget>
      </item>
      <item>
-      <widget class="QCheckBox" name="checkBox">
+      <widget class="QPushButton" name="pushButton_4">
        <property name="text">
-        <string>Redaguoti</string>
+        <string>Išsaugoti</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_4">
+      <widget class="QPushButton" name="pushButton_atsaukti">
        <property name="text">
-        <string>Išsaugoti</string>
+        <string>Atšaukti</string>
        </property>
       </widget>
      </item>
@@ -299,7 +299,7 @@
      <item>
       <widget class="QPushButton" name="pushButton_2">
        <property name="text">
-        <string>Atšaukti</string>
+        <string>Uždaryti</string>
        </property>
       </widget>
      </item>

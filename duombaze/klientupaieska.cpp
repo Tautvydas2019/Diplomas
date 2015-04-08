@@ -28,7 +28,7 @@ KlientuPaieska::KlientuPaieska(QWidget *parent, DatabaseManager *dbm) :
 
     table_model = new QSqlTableModel(ui->tableView, dbm->getDatabase());
     table_model->setTable(Settings::CLIENT_TABLE);
-    table_model->setEditStrategy(QSqlTableModel::OnFieldChange);
+    table_model->setEditStrategy(QSqlTableModel::OnManualSubmit);
     table_model->select();
 
     table_model_eka = new QSqlRelationalTableModel(ui->tableView_2, dbm->getDatabase());
@@ -36,7 +36,7 @@ KlientuPaieska::KlientuPaieska(QWidget *parent, DatabaseManager *dbm) :
     table_model_eka->setRelation(1, QSqlRelation(Settings::MODEL_TABLE, "model_id", "name"));
     table_model_eka->setRelation(2, QSqlRelation(Settings::CLIENT_TABLE, "client_id", "name"));
     table_model_eka->setJoinMode(QSqlRelationalTableModel::LeftJoin);
-    table_model_eka->setEditStrategy(QSqlTableModel::OnFieldChange);
+    table_model_eka->setEditStrategy(QSqlTableModel::OnManualSubmit);
     table_model_eka->setFilter("0=1");
     table_model_eka->select();
 
@@ -55,8 +55,6 @@ KlientuPaieska::KlientuPaieska(QWidget *parent, DatabaseManager *dbm) :
     table_model_eka->setHeaderData(11, Qt::Horizontal, "Nuoma");
     table_model_eka->setHeaderData(12, Qt::Horizontal, "EKA vieta");
     table_model_eka->setHeaderData(13, Qt::Horizontal, "Būsena");
-
-
 
     ui->tableView->setModel(table_model);
     ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -91,10 +89,13 @@ KlientuPaieska::KlientuPaieska(QWidget *parent, DatabaseManager *dbm) :
     ui->lineEdit_telefonas->setDisabled(true);
 
     ui->pushButton->setEnabled(false);
+    ui->pushButton_4->setText("Redaguoti");
 
     current_record = QSqlRecord();
     current_record_eka = QSqlRecord();
 
+    isEditButton = true;
+    ui->pushButton_atsaukti->setHidden(true);
 }
 
 KlientuPaieska::~KlientuPaieska()
@@ -140,6 +141,7 @@ void KlientuPaieska::on_pushButton_5_clicked()
                                           QMessageBox::Yes|QMessageBox::No);
             if (reply == QMessageBox::Yes) {
                 table_model->removeRow(selected_row);
+                table_model->submitAll();
                 table_model->select();
         }
     }
@@ -147,6 +149,109 @@ void KlientuPaieska::on_pushButton_5_clicked()
 
 void KlientuPaieska::on_tableView_clicked(const QModelIndex &index)
 {
+    updateTextEdits(index);
+}
+
+
+void KlientuPaieska::on_pushButton_4_clicked()
+{
+    QModelIndexList selected_indexes = ui->tableView->selectionModel()->selection().indexes();
+    if (isEditButton)
+    {
+        if (selected_indexes.length() > 0) {
+            ui->line_pavadinimas->setDisabled(false);
+            ui->lineEdit_kodas->setDisabled(false);
+            ui->lineEdit_pvm->setDisabled(false);
+            ui->lineEdit_adresas->setDisabled(false);
+            ui->lineEdit_miestas->setDisabled(false);
+            ui->textEdit_informacija->setDisabled(false);
+            ui->lineEdit_telefonas->setDisabled(false);
+            ui->tableView->setDisabled(true);
+
+            isEditButton = false;
+            ui->pushButton_4->setText("Išsaugoti");
+            ui->pushButton_atsaukti->setHidden(false);
+        } else {
+            //notice kad nieko nepazymeta
+        }
+    }
+    else
+    {
+        ui->line_pavadinimas->setDisabled(true);
+        ui->lineEdit_kodas->setDisabled(true);
+        ui->lineEdit_pvm->setDisabled(true);
+        ui->lineEdit_adresas->setDisabled(true);
+        ui->lineEdit_miestas->setDisabled(true);
+        ui->textEdit_informacija->setDisabled(true);
+        ui->lineEdit_telefonas->setDisabled(true);
+        ui->tableView->setDisabled(false);
+
+        if (selected_indexes.length() > 0) {
+            QModelIndex selected_index = selected_indexes.at(0);
+            int selected_row = selected_index.row();
+
+            int i = 1;
+            QVariant client_name = QVariant(ui->line_pavadinimas->text());
+            QModelIndex cn_index = table_model->index(selected_row, i++);
+            table_model->setData(cn_index, client_name);
+
+            QVariant code = QVariant(ui->lineEdit_kodas->text());
+            QModelIndex c_index = table_model->index(selected_row, i++);
+            table_model->setData(c_index, code);
+
+            QVariant vat = QVariant(ui->lineEdit_pvm->text());
+            QModelIndex vat_index = table_model->index(selected_row, i++);
+            table_model->setData(vat_index, vat);
+
+            QVariant address = QVariant(ui->lineEdit_adresas->text());
+            QModelIndex a_index = table_model->index(selected_row, i++);
+            table_model->setData(a_index, address);
+
+            QVariant tel_number = QVariant(ui->lineEdit_telefonas->text());
+            QModelIndex tn_index = table_model->index(selected_row, i++);
+            table_model->setData(tn_index, tel_number);
+
+            QVariant add_info = QVariant(ui->textEdit_informacija->toPlainText());
+            QModelIndex ai_index = table_model->index(selected_row, i++);
+            table_model->setData(ai_index, add_info);
+
+            QVariant city = QVariant(ui->lineEdit_miestas->text());
+            QModelIndex ct_index = table_model->index(selected_row, i++);
+            table_model->setData(ct_index, city);
+
+            table_model->submitAll();
+            table_model->select();
+        }
+        ui->pushButton_atsaukti->setHidden(true);
+        ui->pushButton_4->setText("Redaguoti");
+        isEditButton = true;
+    }
+}
+
+void KlientuPaieska::on_pushButton_atsaukti_clicked()
+{
+
+    ui->line_pavadinimas->setDisabled(true);
+    ui->lineEdit_kodas->setDisabled(true);
+    ui->lineEdit_pvm->setDisabled(true);
+    ui->lineEdit_adresas->setDisabled(true);
+    ui->lineEdit_miestas->setDisabled(true);
+    ui->textEdit_informacija->setDisabled(true);
+    ui->lineEdit_telefonas->setDisabled(true);
+    ui->tableView->setDisabled(false);
+
+    QModelIndexList selected_indexes = ui->tableView->selectionModel()->selection().indexes();
+    if (selected_indexes.length() > 0) {
+        QModelIndex selected_index = selected_indexes.at(0);
+        updateTextEdits(selected_index);
+     }
+
+    ui->pushButton_atsaukti->setHidden(true);
+    ui->pushButton_4->setText("Redaguoti");
+    isEditButton = true;
+}
+
+void KlientuPaieska::updateTextEdits(const QModelIndex &index) {
     int row = index.row();
     QSqlRecord record = table_model->record(row);
     QSqlRecord record_eka = table_model_eka->record();
@@ -166,43 +271,4 @@ void KlientuPaieska::on_tableView_clicked(const QModelIndex &index)
     QString eka_filter = Settings::EKA_TABLE + ".client_id = '" + record.value(0).toString() + "'";
     table_model_eka->setFilter(eka_filter);
     table_model_eka->select();
-
-    QVariant eka_warranty = record.value(8).toString();
-    QVariant eka_rent = record.value(10).toString();
-     //qDebug() << eka_warranty;
-    if (eka_warranty == false)
-        {
-            ui->tableView_2->hideColumn(9);
-            qDebug() << eka_warranty;
-        }
-
-    if (eka_rent == false)
-        {
-            ui->tableView_2->hideColumn(11);
-            qDebug() << eka_rent;
-        }
-}
-
-void KlientuPaieska::on_checkBox_stateChanged(int checked)
-{
-    if (checked)
-    {
-        ui->line_pavadinimas->setDisabled(false);
-        ui->lineEdit_kodas->setDisabled(false);
-        ui->lineEdit_pvm->setDisabled(false);
-        ui->lineEdit_adresas->setDisabled(false);
-        ui->lineEdit_miestas->setDisabled(false);
-        ui->textEdit_informacija->setDisabled(false);
-        ui->lineEdit_telefonas->setDisabled(false);
-    }
-    else
-    {
-        ui->line_pavadinimas->setDisabled(true);
-        ui->lineEdit_kodas->setDisabled(true);
-        ui->lineEdit_pvm->setDisabled(true);
-        ui->lineEdit_adresas->setDisabled(true);
-        ui->lineEdit_miestas->setDisabled(true);
-        ui->textEdit_informacija->setDisabled(true);
-        ui->lineEdit_telefonas->setDisabled(true);
-    }
 }

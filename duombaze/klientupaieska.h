@@ -30,7 +30,9 @@ private slots:
 
     void on_tableView_clicked(const QModelIndex &index);
 
-    void on_checkBox_stateChanged(int arg1);
+    void on_pushButton_4_clicked();
+
+    void on_pushButton_atsaukti_clicked();
 
 private:
 
@@ -40,6 +42,9 @@ private:
     DatabaseManager *dbm;
     QSqlTableModel *table_model;
     QSqlRelationalTableModel *table_model_eka;
+    bool isEditButton;
+
+    void updateTextEdits(const QModelIndex &index);
 };
 
 #endif // KLIENTUPAIESKA_H
