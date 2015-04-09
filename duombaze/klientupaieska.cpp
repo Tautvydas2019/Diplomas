@@ -74,17 +74,22 @@ KlientuPaieska::KlientuPaieska(QWidget *parent, DatabaseManager *dbm) :
     ui->tableView_2->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->tableView_2->setSelectionMode(QAbstractItemView::SingleSelection);
 
+    for (int i = 0; i < 13; i++){
+        ui->tableView_2->horizontalHeader()->setSectionResizeMode(i, QHeaderView::ResizeToContents);
+    }
+
+
     ui->tableView_2->hideColumn(0);
     ui->tableView_2->hideColumn(12);
     ui->tableView_2->hideColumn(13);
 
-    ui->line_pavadinimas->setDisabled(true);
-    ui->lineEdit_kodas->setDisabled(true);
-    ui->lineEdit_pvm->setDisabled(true);
-    ui->lineEdit_adresas->setDisabled(true);
-    ui->lineEdit_miestas->setDisabled(true);
-    ui->textEdit_informacija->setDisabled(true);
-    ui->lineEdit_telefonas->setDisabled(true);
+    ui->line_pavadinimas->setReadOnly(true);
+    ui->lineEdit_kodas->setReadOnly(true);
+    ui->lineEdit_pvm->setReadOnly(true);
+    ui->lineEdit_adresas->setReadOnly(true);
+    ui->lineEdit_miestas->setReadOnly(true);
+    ui->textEdit_informacija->setReadOnly(true);
+    ui->lineEdit_telefonas->setReadOnly(true);
 
     ui->pushButton->setEnabled(false);
     ui->pushButton_4->setText("Redaguoti");
@@ -157,13 +162,13 @@ void KlientuPaieska::on_pushButton_4_clicked()
     if (isEditButton)
     {
         if (selected_indexes.length() > 0) {
-            ui->line_pavadinimas->setDisabled(false);
-            ui->lineEdit_kodas->setDisabled(false);
-            ui->lineEdit_pvm->setDisabled(false);
-            ui->lineEdit_adresas->setDisabled(false);
-            ui->lineEdit_miestas->setDisabled(false);
-            ui->textEdit_informacija->setDisabled(false);
-            ui->lineEdit_telefonas->setDisabled(false);
+            ui->line_pavadinimas->setReadOnly(false);
+            ui->lineEdit_kodas->setReadOnly(false);
+            ui->lineEdit_pvm->setReadOnly(false);
+            ui->lineEdit_adresas->setReadOnly(false);
+            ui->lineEdit_miestas->setReadOnly(false);
+            ui->textEdit_informacija->setReadOnly(false);
+            ui->lineEdit_telefonas->setReadOnly(false);
             ui->tableView->setDisabled(true);
 
             isEditButton = false;
@@ -175,13 +180,13 @@ void KlientuPaieska::on_pushButton_4_clicked()
     }
     else
     {
-        ui->line_pavadinimas->setDisabled(true);
-        ui->lineEdit_kodas->setDisabled(true);
-        ui->lineEdit_pvm->setDisabled(true);
-        ui->lineEdit_adresas->setDisabled(true);
-        ui->lineEdit_miestas->setDisabled(true);
-        ui->textEdit_informacija->setDisabled(true);
-        ui->lineEdit_telefonas->setDisabled(true);
+        ui->line_pavadinimas->setReadOnly(true);
+        ui->lineEdit_kodas->setReadOnly(true);
+        ui->lineEdit_pvm->setReadOnly(true);
+        ui->lineEdit_adresas->setReadOnly(true);
+        ui->lineEdit_miestas->setReadOnly(true);
+        ui->textEdit_informacija->setReadOnly(true);
+        ui->lineEdit_telefonas->setReadOnly(true);
         ui->tableView->setDisabled(false);
 
         if (selected_indexes.length() > 0) {
@@ -229,13 +234,13 @@ void KlientuPaieska::on_pushButton_4_clicked()
 void KlientuPaieska::on_pushButton_atsaukti_clicked()
 {
 
-    ui->line_pavadinimas->setDisabled(true);
-    ui->lineEdit_kodas->setDisabled(true);
-    ui->lineEdit_pvm->setDisabled(true);
-    ui->lineEdit_adresas->setDisabled(true);
-    ui->lineEdit_miestas->setDisabled(true);
-    ui->textEdit_informacija->setDisabled(true);
-    ui->lineEdit_telefonas->setDisabled(true);
+    ui->line_pavadinimas->setReadOnly(true);
+    ui->lineEdit_kodas->setReadOnly(true);
+    ui->lineEdit_pvm->setReadOnly(true);
+    ui->lineEdit_adresas->setReadOnly(true);
+    ui->lineEdit_miestas->setReadOnly(true);
+    ui->textEdit_informacija->setReadOnly(true);
+    ui->lineEdit_telefonas->setReadOnly(true);
     ui->tableView->setDisabled(false);
 
     QModelIndexList selected_indexes = ui->tableView->selectionModel()->selection().indexes();
@@ -269,15 +274,4 @@ void KlientuPaieska::updateTextEdits(const QModelIndex &index) {
     QString eka_filter = Settings::EKA_TABLE + ".client_id = '" + record.value(0).toString() + "'";
     table_model_eka->setFilter(eka_filter);
     table_model_eka->select();
-
-//    int row_count = table_model_eka->rowCount();
-//    for (int row = 0; row < row_count; row++) {
-//        QModelIndex checkup_date_index = table_model_eka->index(row, 7);
-//        QVariant checkup_date_variant = table_model_eka->data(checkup_date_index);
-//        QDate checkup_date = checkup_date_variant.toDate();
-//        QDate current_date = QDate::currentDate();
-//        if (true) {
-//            table_model_eka->setData(checkup_date_index, red, Qt::BackgroundColorRole);
-//        }
-//    }
 }

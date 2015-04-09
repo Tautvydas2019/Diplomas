@@ -79,3 +79,39 @@ void MainWindow::on_actionEKA_duomen_baz_triggered()
     nEkaEditing.setModal(true);
     nEkaEditing.exec();
 }
+
+
+void MainWindow::on_pushButton_model_clicked()
+{
+    NaujasModelis nModel(this, dbm);
+    nModel.setModal(true);
+    nModel.exec();
+}
+
+void MainWindow::on_pushButton_client_clicked()
+{
+    NaujasKlientas nKlientas(this, dbm);
+    nKlientas.setModal(true);
+    nKlientas.exec();
+}
+
+void MainWindow::on_pushButton_eka_clicked()
+{
+    NaujasEka nEka(this, dbm);
+    nEka.setModal(true);
+    nEka.exec();
+}
+
+void MainWindow::on_pushButton_clientedit_clicked()
+{
+    KlientuPaieska nPaieska(this, dbm);
+    nPaieska.setModal(true);
+    nPaieska.exec();
+}
+
+void MainWindow::on_pushButton_ekaedit_clicked()
+{
+    EkaEditing nEkaEditing(this, dbm);
+    nEkaEditing.setModal(true);
+    nEkaEditing.exec();
+}

@@ -31,6 +31,16 @@ private slots:
 
     void on_actionEKA_duomen_baz_triggered();
 
+    void on_pushButton_model_clicked();
+
+    void on_pushButton_client_clicked();
+
+    void on_pushButton_eka_clicked();
+
+    void on_pushButton_clientedit_clicked();
+
+    void on_pushButton_ekaedit_clicked();
+
 private:
     Ui::MainWindow *ui;
     DatabaseManager *dbm;

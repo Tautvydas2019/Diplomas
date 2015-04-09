@@ -20,12 +20,24 @@ public:
 
 private slots:
 
-    void on_lineEdit_textChanged(const QString &arg1);
+    void on_lineEdit_search_textChanged(const QString &filter);
+
+    void on_tableView_activated(const QModelIndex &index);
+
+    void on_pushButton_delete_clicked();
+
+    void on_pushButton_edit_clicked();
+
+    void on_pushButton_atsaukti_clicked();
 
 private:
     Ui::EkaEditing *ui;
     DatabaseManager *dbm;
     QSqlTableModel *table_model;
+    QSqlRecord current_record;
+    bool isEditButton;
+
+    void updateTextEdits(const QModelIndex &index);
 };
 
 #endif // EKAEDITING_H
