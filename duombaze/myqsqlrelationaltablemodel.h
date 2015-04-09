@@ -12,7 +12,7 @@ public:
 
     using QSqlRelationalTableModel::QSqlRelationalTableModel;
 public:
-    QVariant data(const QModelIndex & index, int role) const;
+    QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const;
 };
 
 #endif // MYQSQLRELATIONALTABLEMODEL_H

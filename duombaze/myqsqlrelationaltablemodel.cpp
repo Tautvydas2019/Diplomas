@@ -10,7 +10,7 @@
 
 #include <QDebug>
 
-QVariant MyQSqlRelationalTableModel::data(const QModelIndex & index, int role = Qt::DisplayRole) const {
+QVariant MyQSqlRelationalTableModel::data(const QModelIndex & index, int role) const {
     QVariant value = QSqlRelationalTableModel::data(index, role);
 
     if (role == Qt::TextColorRole) {

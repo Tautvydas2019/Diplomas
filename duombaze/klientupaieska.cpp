@@ -5,6 +5,7 @@
 #include "naujasklientas.h"
 #include "naujaseka.h"
 #include "myqsqlrelationaltablemodel.h"
+#include "ekaediting.h"
 
 #include <QString>
 #include <QSqlTableModel>

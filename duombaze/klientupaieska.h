@@ -1,9 +1,10 @@
 #ifndef KLIENTUPAIESKA_H
 #define KLIENTUPAIESKA_H
 
-#include <QDialog>
 #include "databasemanager.h"
 #include "myqsqlrelationaltablemodel.h"
+
+#include <QDialog>
 #include <QSqlTableModel>
 #include <QSqlRelationalTableModel>
 #include <QSqlRecord>

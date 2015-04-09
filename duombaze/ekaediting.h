@@ -2,9 +2,13 @@
 #define EKAEDITING_H
 
 #include "databasemanager.h"
+#include "klientupaieska.h"
+#include "myqsqlrelationaltablemodel.h"
+
 #include <QDialog>
-#include <QSqlTableModel>
+#include <QSqlQueryModel>
 #include <QSqlRecord>
+#include <QWidget>
 
 namespace Ui {
 class EkaEditing;
@@ -30,11 +34,18 @@ private slots:
 
     void on_pushButton_atsaukti_clicked();
 
+    void setClient();
+
+    void on_toolButton_client2_clicked();
+
 private:
     Ui::EkaEditing *ui;
     DatabaseManager *dbm;
-    QSqlTableModel *table_model;
+    MyQSqlRelationalTableModel *table_model;
+    QSqlQueryModel *client_info_model;
     QSqlRecord current_record;
+    KlientuPaieska *client_search_dialog;
+    QSqlRecord client_record;
     bool isEditButton;
 
     void updateTextEdits(const QModelIndex &index);

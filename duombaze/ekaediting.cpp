@@ -4,9 +4,10 @@
 #include "ui_klientupaieska.h"
 #include "settings.h"
 #include "databasemanager.h"
+#include "myqsqlrelationaltablemodel.h"
 
 #include <QString>
-#include <QSqlTableModel>
+#include <QSqlQueryModel>
 #include <QSqlRecord>
 #include <QSqlQuery>
 #include <QDebug>
@@ -21,10 +22,15 @@ EkaEditing::EkaEditing(QWidget *parent, DatabaseManager *dbm) :
     ui->setupUi(this);
     QWidget::setWindowTitle(Settings::TEXT_EKAEDITING_NAME);
 
-    table_model = new QSqlTableModel(ui->tableView, dbm->getDatabase());
+    table_model = new MyQSqlRelationalTableModel(ui->tableView, dbm->getDatabase());
     table_model->setTable(Settings::EKA_TABLE);
+    table_model->setRelation(1, QSqlRelation(Settings::MODEL_TABLE, "model_id", "name"));
+    table_model->setRelation(2, QSqlRelation(Settings::CLIENT_TABLE, "client_id", "name"));
+    table_model->setJoinMode(QSqlRelationalTableModel::LeftJoin);
     table_model->setEditStrategy(QSqlTableModel::OnManualSubmit);
     table_model->select();
+
+    client_info_model = new QSqlQueryModel(this);
 
     ui->tableView->setModel(table_model);
     ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -54,6 +60,7 @@ EkaEditing::EkaEditing(QWidget *parent, DatabaseManager *dbm) :
     ui->pushButton_atsaukti->setHidden(true);
 
     current_record = QSqlRecord();
+    client_record = QSqlRecord();
 }
 
 
@@ -79,16 +86,32 @@ void EkaEditing::on_tableView_activated(const QModelIndex &index)
 
     current_record = record;
 
+    ui->lineEdit_client->setText(record.value(2).toString());
     ui->lineEdit_model->setText(record.value(1).toString());
     ui->lineEdit_serial->setText(record.value(3).toString());
     ui->lineEdit_certificate->setText(record.value(4).toString());
     ui->lineEdit_howmany->setText(record.value(5).toString());
     ui->dateEdit_reg->setDate(record.value(6).toDate());
     ui->dateEdit_prof->setDate(record.value(7).toDate());
-    ui->dateEdit_warranty->setDate(record.value(8).toDate());
-    ui->dateEdit_rent->setDate(record.value(9).toDate());
+    QDate warranty_date = (record.value(8).toString().isEmpty()) ? QDate(2000, 1, 1) : record.value(8).toDate();
+    ui->dateEdit_warranty->setDate(warranty_date);
+    QDate rent_date = (record.value(9).toString().isEmpty()) ? QDate(2000, 1, 1) : record.value(9).toDate();
+    ui->dateEdit_rent->setDate(rent_date);
     ui->lineEdit_ekaplace->setText(record.value(10).toString());
-    ui->lineEdit_status->setText(record.value(13).toString());
+    ui->lineEdit_status->setText(record.value(11).toString());
+
+    QString eka_id = record.value(0).toString();
+    client_info_model->setQuery("SELECT " + Settings::CLIENT_TABLE + ".* FROM `" + Settings::EKA_TABLE + "` LEFT JOIN " + Settings::CLIENT_TABLE
+        + " ON " + Settings::EKA_TABLE + ".client_id = " + Settings::CLIENT_TABLE + ".client_id WHERE `eka_id` = '" + eka_id + "';");
+
+    QSqlRecord client = client_info_model->record(0);
+    client_record = client;
+    ui->lineEdit_client->setText(client.value(1).toString());
+    ui->lineEdit_code->setText(client.value(2).toString());
+    ui->lineEdit_vat->setText(client.value(3).toString());
+    ui->lineEdit_address->setText(client.value(4).toString());
+    ui->lineEdit_city->setText(client.value(7).toString());
+    ui->lineEdit_tel->setText(client.value(5).toString());
 }
 
 void EkaEditing::on_pushButton_delete_clicked()
@@ -98,10 +121,10 @@ void EkaEditing::on_pushButton_delete_clicked()
 
             QModelIndex selected_index = selected_indexes.at(0);
             int selected_row = selected_index.row();
-            QModelIndex target_index_serial = table_model->index(selected_row, 3);
-            QModelIndex target_index_model = table_model->index(selected_row, 1);
-            QString selected_serial_name = table_model->data(target_index_serial ).toString();
-            QString selected_model_name = table_model->data(target_index_model ).toString();
+            const QModelIndex target_index_serial = table_model->index(selected_row, 3);
+            const QModelIndex target_index_model = table_model->index(selected_row, 1);
+            QString selected_serial_name = table_model->data(target_index_serial).toString();
+            QString selected_model_name = table_model->data(target_index_model).toString();
 
             QMessageBox::StandardButton reply;
             reply = QMessageBox::question(this,
@@ -171,6 +194,10 @@ void EkaEditing::on_pushButton_edit_clicked()
         if (selected_indexes.length() > 0) {
             QModelIndex selected_index = selected_indexes.at(0);
             int selected_row = selected_index.row();
+
+            QVariant client = client_record.value(0);
+            QModelIndex client_index = table_model->index(selected_row, 2);
+            table_model->setData(client_index, client);
 
             QVariant serial = QVariant(ui->lineEdit_serial->text());
             QModelIndex serial_index = table_model->index(selected_row, 3);
@@ -257,4 +284,28 @@ void EkaEditing::updateTextEdits(const QModelIndex &index) {
     ui->lineEdit_ekaplace->setText(record.value(10).toString());
     ui->lineEdit_status->setText(record.value(13).toString());
 
+}
+
+void EkaEditing::setClient()
+{
+    QSqlRecord client = client_search_dialog->getCurrentClient();
+    if (!client.isEmpty())
+    {
+        client_record = client;
+        ui->lineEdit_client->setText(client.value(1).toString());
+        ui->lineEdit_code->setText(client.value(2).toString());
+        ui->lineEdit_vat->setText(client.value(3).toString());
+        ui->lineEdit_address->setText(client.value(4).toString());
+        ui->lineEdit_city->setText(client.value(7).toString());
+        ui->lineEdit_tel->setText(client.value(5).toString());
+    }
+}
+
+
+void EkaEditing::on_toolButton_client2_clicked()
+{
+    client_search_dialog = new KlientuPaieska(this, dbm);
+    client_search_dialog->setModal(true);
+    connect(client_search_dialog, SIGNAL(accepted()), this, SLOT(setClient()));
+    client_search_dialog->exec();
 }
