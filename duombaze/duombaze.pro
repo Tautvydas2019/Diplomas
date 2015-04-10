@@ -11,6 +11,8 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = duombaze
 TEMPLATE = app
 
+SUBDIRS += \
+    qdbf
 
 SOURCES += main.cpp\
         mainwindow.cpp \
@@ -21,7 +23,8 @@ SOURCES += main.cpp\
     naujaseka.cpp \
     klientupaieska.cpp \
     ekaediting.cpp \
-    myqsqlrelationaltablemodel.cpp
+    myqsqlrelationaltablemodel.cpp \
+    importdbf.cpp
 
 HEADERS  += mainwindow.h \
     naujasmodelis.h \
@@ -31,13 +34,17 @@ HEADERS  += mainwindow.h \
     naujaseka.h \
     klientupaieska.h \
     ekaediting.h \
-    myqsqlrelationaltablemodel.h
+    myqsqlrelationaltablemodel.h \
+    importdbf.h
 
 FORMS    += mainwindow.ui \
     naujasmodelis.ui \
     naujasklientas.ui \
     naujaseka.ui \
     klientupaieska.ui \
-    ekaediting.ui
+    ekaediting.ui \
+    importdbf.ui
+
+include(qdbf/qdbf_static.pri)
 
 CONFIG += c++11

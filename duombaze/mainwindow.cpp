@@ -12,6 +12,7 @@
 #include "ui_klientupaieska.h"
 #include "ekaediting.h"
 #include "ui_ekaediting.h"
+#include "importdbf.h"
 
 #include <QWidget>
 #include <QMainWindow>
@@ -114,4 +115,11 @@ void MainWindow::on_pushButton_ekaedit_clicked()
     EkaEditing nEkaEditing(this, dbm);
     nEkaEditing.setModal(true);
     nEkaEditing.exec();
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+    ImportDbf nImportDbf(this, dbm);
+    nImportDbf.setModal(true);
+    nImportDbf.exec();
 }
