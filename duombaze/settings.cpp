@@ -65,6 +65,52 @@ const QList<QString> Settings::DB_TABLES = {
     ");"
 };
 
+const QList<QString> Settings::TEMP_DB_TABLES = {
+
+    "CREATE TABLE IF NOT EXISTS `temp_model` ("
+      "`temp_model_id` INTEGER PRIMARY KEY AUTOINCREMENT,"
+      "`MODEL` TEXT,"
+      "`LETTER` TEXT"
+    ");",
+
+    "CREATE TABLE IF NOT EXISTS `temp_client` ("
+      "`temp_client_id` INTEGER PRIMARY KEY AUTOINCREMENT,"
+      "`PIRKEJES` TEXT,"
+      "`KODAS` INTEGER,"
+      "`PVMKODAS` INTEGER,"
+      "`ADRESAS` TEXT,"
+      "`TELEFONAS` TEXT,"
+      "`INFO` TEXT,"
+      "`STATUS` NUMERIC"
+     ");",
+
+    "CREATE TABLE IF NOT EXISTS `temp_eka` ("
+      "`temp_eka_id` INTEGER PRIMARY KEY AUTOINCREMENT, "
+      "`SPEC` INTEGER,"
+      "`KIEK` INTEGER,"
+      "`REG_DATA` NUMERIC,"
+      "`GAR_DATA` NUMERIC,"
+      "`GAR_TYPE` NUMERIC,"
+      "`PROF_DATA` NUMERIC,"
+      "`KASA` INTEGER,"
+      "`TPASAS` TEXT,"
+      "`IB_IA` INTEGER,"
+      "`P_USER` TEXT,"
+      "`P_KODAS` INTEGER,"
+      "`USE` TEXT,"
+      "`VILLAGE` NUMERIC,"
+      "`NUOMA` NUMERIC,"
+      "`NUO_DATA` NUMERIC,"
+      "`SF` NUMERIC,"
+      "`SUMA` INTEGER,"
+      "`SUMA_YRA` INTEGER,"
+      "`IKI` NUMERIC,"
+      "`DONT` NUMERIC,"
+      "`DONT_DATA` NUMERIC"
+    ");"
+};
+
+
 const QString Settings::CLIENT_TABLE =
         "client";
 
@@ -73,4 +119,13 @@ const QString Settings::MODEL_TABLE =
 
 const QString Settings::EKA_TABLE =
         "eka";
+
+const QString Settings::TEMP_CLIENT_TABLE =
+        "temp_client";
+
+const QString Settings::TEMP_MODEL_TABLE =
+        "temp_model";
+
+const QString Settings::TEMP_EKA_TABLE =
+        "temp_eka";
 
