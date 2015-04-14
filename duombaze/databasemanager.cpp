@@ -173,7 +173,10 @@ void DatabaseManager::importDbfClientRecord(const QDbfRecord &record, int fix_en
     for (int i = 0; i < record.count(); i++)
     {
         QVariant value = record.value(i);
-        value = fixEncoding(value, fix_enc_type);
+        if (value.type() == QVariant::String)
+        {
+            value = fixEncoding(value, fix_enc_type);
+        }
         query.bindValue(i, value);
     }
     if (!query.exec())
@@ -193,7 +196,10 @@ void DatabaseManager::importDbfModelRecord(const QDbfRecord &record, int fix_enc
     for (int i = 0; i < record.count(); i++)
     {
         QVariant value = record.value(i);
-        value = fixEncoding(value, fix_enc_type);
+        if (value.type() == QVariant::String)
+        {
+            value = fixEncoding(value, fix_enc_type);
+        }
         query.bindValue(i, value);
     }
     if (!query.exec())
@@ -222,7 +228,10 @@ void DatabaseManager::importDbfEkaRecord(QMap<QString, QVariant> &record, int fi
     for (QString &key : record.keys())
     {
         QVariant value = record.value(key);
-        value = fixEncoding(value, fix_enc_type);
+        if (value.type() == QVariant::String)
+        {
+            value = fixEncoding(value, fix_enc_type);
+        }
         record.insert(key, value);
     }
 
