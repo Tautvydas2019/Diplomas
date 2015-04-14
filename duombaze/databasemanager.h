@@ -6,6 +6,9 @@
 #include <QSqlDatabase>
 #include <QSqlError>
 #include <QWidget>
+#include <QString>
+#include <QVariant>
+#include <QMap>
 
 using namespace QDbf;
 
@@ -15,14 +18,19 @@ protected:
     QSqlDatabase db;
     void createTables();
     void dbError(const QSqlError &);
+    QVariant fixEncoding(const QVariant &value, int type);
 public:
     DatabaseManager();
     ~DatabaseManager();
     QSqlDatabase getDatabase();
     void createTempTables();
-    void importDbfClientRecord(const QDbfRecord &record);
-    void importDbfEkaRecord(const QDbfRecord &record);
-    void importDbfModelRecord(const QDbfRecord &record);
+    void deleteTempTablesData();
+    void deleteTempClientTableData();
+    void deleteTempEkaTableData();
+    void deleteTempModelTableData();
+    void importDbfClientRecord(const QDbfRecord &record, int fix_enc_type = 0);
+    void importDbfEkaRecord(QMap<QString, QVariant> &record, int fix_enc_type = 0);
+    void importDbfModelRecord(const QDbfRecord &record, int fix_enc_type = 0);
     void init();
     void promptSqlErrorMessage(QWidget *parent, const QSqlError &error);
 };

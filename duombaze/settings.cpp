@@ -99,6 +99,8 @@ const QList<QString> Settings::TEMP_DB_TABLES = {
       "`P_KODAS` INTEGER,"
       "`USE` TEXT,"
       "`VILLAGE` NUMERIC,"
+      "`DELKO` NUMERIC,"
+      "`KADA` NUMERIC,"
       "`NUOMA` NUMERIC,"
       "`NUO_DATA` NUMERIC,"
       "`SF` NUMERIC,"

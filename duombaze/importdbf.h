@@ -34,6 +34,12 @@ private slots:
 
     void on_pushButton_addToDb_clicked();
 
+    void on_pushButton_deleteEka_clicked();
+
+    void on_pushButton_deleteClient_clicked();
+
+    void on_pushButton_deleteModel_clicked();
+
 private:
     Ui::ImportDbf *ui;
     DatabaseManager *dbm;
