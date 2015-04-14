@@ -119,9 +119,10 @@ void DatabaseManager::deleteTempModelTableData()
 
 QVariant DatabaseManager::fixEncoding(const QVariant &value, int type)
 {
+    QString s_value = value.toString();
+    s_value = s_value.trimmed();
     if (type == 1)
     {
-        QString s_value = value.toString();
         s_value.replace("Ū", "Ė");
         s_value.replace("ė", "Ū");
         s_value.replace("¹", "ą");
@@ -139,11 +140,9 @@ QVariant DatabaseManager::fixEncoding(const QVariant &value, int type)
         s_value.replace("", "Š");
         s_value.replace("ē", "Ų");
         s_value.replace("ˇ", "Ž");
-        return QVariant(s_value);
     }
     else if (type == 2)
     {
-        QString s_value = value.toString();
         s_value.replace("ō", "ų");
         s_value.replace("", "š");
         s_value.replace("ć", "ę");
@@ -155,12 +154,8 @@ QVariant DatabaseManager::fixEncoding(const QVariant &value, int type)
         s_value.replace("Ņ", "Ų");
         s_value.replace("Ś", "Ū");
         s_value.replace("Ż", "Ž");
-        return QVariant(s_value);
     }
-    else
-    {
-        return value;
-    }
+    return QVariant(s_value);
 }
 
 void DatabaseManager::importDbfClientRecord(const QDbfRecord &record, int fix_enc_type)

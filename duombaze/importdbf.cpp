@@ -124,7 +124,7 @@ void ImportDbf::on_toolButton_model_clicked()
     {
         ui->lineEdit_model->setText(file_name);
         ui->pushButton_model->setEnabled(true);
-        ui->comboBox_client->setCurrentIndex(0);
+        ui->comboBox_model->setCurrentIndex(0);
     }
     else
     {
