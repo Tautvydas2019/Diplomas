@@ -132,6 +132,7 @@ void NaujasEka::on_pushButton_save_clicked()
             QString title = "Gerai";
             QString message = "Duomenys išsaugoti";
             QMessageBox::information(this, title, message);
+            this->close();
         }
     }
 }

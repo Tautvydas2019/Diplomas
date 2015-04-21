@@ -36,24 +36,49 @@ EkaEditing::EkaEditing(QWidget *parent, DatabaseManager *dbm) :
     ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     ui->tableView->setSelectionMode(QAbstractItemView::SingleSelection);
 
-    ui->lineEdit_address->setDisabled(true);
-    ui->lineEdit_certificate->setDisabled(true);
-    ui->lineEdit_city->setDisabled(true);
-    ui->lineEdit_client->setDisabled(true);
-    ui->lineEdit_code->setDisabled(true);
-    ui->lineEdit_ekaplace->setDisabled(true);
-    ui->lineEdit_howmany->setDisabled(true);
-    ui->lineEdit_model->setDisabled(true);
-    ui->lineEdit_serial->setDisabled(true);
-    ui->lineEdit_tel->setDisabled(true);
-    ui->lineEdit_vat->setDisabled(true);
+    table_model->setHeaderData(3, Qt::Horizontal, "EKA numeris");
+    table_model->setHeaderData(10, Qt::Horizontal, "Stovėjimo adresas");
+    table_model->setHeaderData(11, Qt::Horizontal, "Veikla");
+
+    ui->tableView->horizontalHeader()->setSectionResizeMode(3, QHeaderView::ResizeToContents);
+    ui->tableView->horizontalHeader()->setSectionResizeMode(10, QHeaderView::ResizeToContents);
+    ui->tableView->horizontalHeader()->setSectionResizeMode(11, QHeaderView::ResizeToContents);
+
+    ui->tableView->hideColumn(0);
+    ui->tableView->hideColumn(1);
+    ui->tableView->hideColumn(2);
+    ui->tableView->hideColumn(4);
+    ui->tableView->hideColumn(5);
+    ui->tableView->hideColumn(6);
+    ui->tableView->hideColumn(7);
+    ui->tableView->hideColumn(8);
+    ui->tableView->hideColumn(9);
+    ui->tableView->hideColumn(12);
+    ui->tableView->hideColumn(13);
+
+    ui->lineEdit_address->setReadOnly(true);
+    ui->lineEdit_certificate->setReadOnly(true);
+    ui->lineEdit_city->setReadOnly(true);
+    ui->lineEdit_client->setReadOnly(true);
+    ui->lineEdit_code->setReadOnly(true);
+    ui->lineEdit_ekaplace->setReadOnly(true);
+    ui->lineEdit_howmany->setReadOnly(true);
+    ui->lineEdit_model->setReadOnly(true);
+    ui->lineEdit_serial->setReadOnly(true);
+    ui->lineEdit_tel->setReadOnly(true);
+    ui->lineEdit_vat->setReadOnly(true);
 
     ui->dateEdit_prof->setDisabled(true);
     ui->dateEdit_reg->setDisabled(true);
     ui->dateEdit_rent->setDisabled(true);
     ui->dateEdit_warranty->setDisabled(true);
+    ui->checkBox_rent->setDisabled(true);
+    ui->checkBox_warranty->setDisabled(true);
+    ui->checkBox_status->setDisabled(true);
+    ui->toolButton_client2->setDisabled(true);
 
-    ui->lineEdit_status->setDisabled(true);
+    ui->lineEdit_status->setReadOnly(true);
+
 
     ui->pushButton_edit->setText("Redaguoti");
     isEditButton = true;
@@ -71,8 +96,8 @@ EkaEditing::~EkaEditing()
 
 void EkaEditing::on_lineEdit_search_textChanged(const QString &search_keyword)
 {
-    QString filter = "`serial_number` LIKE '%" + search_keyword + "%' OR `status` LIKE '%" + search_keyword
-            + "%' OR `place_eka` LIKE '%" + search_keyword + "%'";
+    QString filter = "`serial_number` LIKE '%" + search_keyword + "%' OR `place_eka` LIKE '%" + search_keyword +
+            "%' OR `status` LIKE '%" + search_keyword + "%'";
     table_model->setFilter(filter);
     table_model->select();
 }
@@ -146,22 +171,26 @@ void EkaEditing::on_pushButton_edit_clicked()
     if (isEditButton)
     {
         if (selected_indexes.length() > 0) {
-            ui->lineEdit_address->setDisabled(false);
-            ui->lineEdit_certificate->setDisabled(false);
-            ui->lineEdit_city->setDisabled(false);
-            ui->lineEdit_client->setDisabled(false);
-            ui->lineEdit_code->setDisabled(false);
-            ui->lineEdit_ekaplace->setDisabled(false);
-            ui->lineEdit_howmany->setDisabled(false);
-            ui->lineEdit_model->setDisabled(false);
-            ui->lineEdit_serial->setDisabled(false);
-            ui->lineEdit_tel->setDisabled(false);
-            ui->lineEdit_vat->setDisabled(false);
+            ui->lineEdit_address->setReadOnly(true);
+            ui->lineEdit_certificate->setReadOnly(false);
+            ui->lineEdit_city->setReadOnly(true);
+            ui->lineEdit_client->setReadOnly(true);
+            ui->lineEdit_code->setReadOnly(true);
+            ui->lineEdit_ekaplace->setReadOnly(false);
+            ui->lineEdit_howmany->setReadOnly(false);
+            ui->lineEdit_model->setReadOnly(true);
+            ui->lineEdit_serial->setReadOnly(false);
+            ui->lineEdit_tel->setReadOnly(true);
+            ui->lineEdit_vat->setReadOnly(true);
             ui->dateEdit_prof->setDisabled(false);
             ui->dateEdit_reg->setDisabled(false);
             ui->dateEdit_rent->setDisabled(false);
             ui->dateEdit_warranty->setDisabled(false);
-            ui->lineEdit_status->setDisabled(false);
+            ui->lineEdit_status->setReadOnly(true);
+            ui->checkBox_rent->setDisabled(false);
+            ui->checkBox_warranty->setDisabled(false);
+            ui->checkBox_status->setDisabled(false);
+            ui->toolButton_client2->setDisabled(false);
             ui->tableView->setDisabled(true);
 
             isEditButton = false;
@@ -173,22 +202,26 @@ void EkaEditing::on_pushButton_edit_clicked()
     }
     else
     {
-        ui->lineEdit_address->setDisabled(true);
-        ui->lineEdit_certificate->setDisabled(true);
-        ui->lineEdit_city->setDisabled(true);
-        ui->lineEdit_client->setDisabled(true);
-        ui->lineEdit_code->setDisabled(true);
-        ui->lineEdit_ekaplace->setDisabled(true);
-        ui->lineEdit_howmany->setDisabled(true);
-        ui->lineEdit_model->setDisabled(true);
-        ui->lineEdit_serial->setDisabled(true);
-        ui->lineEdit_tel->setDisabled(true);
-        ui->lineEdit_vat->setDisabled(true);
+        ui->lineEdit_address->setReadOnly(true);
+        ui->lineEdit_certificate->setReadOnly(true);
+        ui->lineEdit_city->setReadOnly(true);
+        ui->lineEdit_client->setReadOnly(true);
+        ui->lineEdit_code->setReadOnly(true);
+        ui->lineEdit_ekaplace->setReadOnly(true);
+        ui->lineEdit_howmany->setReadOnly(true);
+        ui->lineEdit_model->setReadOnly(true);
+        ui->lineEdit_serial->setReadOnly(true);
+        ui->lineEdit_tel->setReadOnly(true);
+        ui->lineEdit_vat->setReadOnly(true);
         ui->dateEdit_prof->setDisabled(true);
         ui->dateEdit_reg->setDisabled(true);
         ui->dateEdit_rent->setDisabled(true);
         ui->dateEdit_warranty->setDisabled(true);
-        ui->lineEdit_status->setDisabled(true);
+        ui->lineEdit_status->setReadOnly(true);
+        ui->checkBox_rent->setDisabled(true);
+        ui->checkBox_warranty->setDisabled(true);
+        ui->checkBox_status->setDisabled(true);
+        ui->toolButton_client2->setDisabled(true);
         ui->tableView->setDisabled(false);
 
         if (selected_indexes.length() > 0) {
@@ -219,13 +252,18 @@ void EkaEditing::on_pushButton_edit_clicked()
             QModelIndex warranty_index = table_model->index(selected_row, 8);
             table_model->setData(warranty_index, warranty);
 
-            QVariant add_info = QVariant(ui->dateEdit_rent->date());
-            QModelIndex ai_index = table_model->index(selected_row, 9);
-            table_model->setData(ai_index, add_info);
+            QVariant rent = QVariant(ui->dateEdit_rent->date());
+            QModelIndex rent_index = table_model->index(selected_row, 9);
+            table_model->setData(rent_index, rent);
 
             QVariant ekaplace = QVariant(ui->lineEdit_ekaplace->text());
             QModelIndex ekaplace_index = table_model->index(selected_row, 10);
             table_model->setData(ekaplace_index, ekaplace);
+
+            QVariant status = QVariant(ui->lineEdit_status->text());
+            QModelIndex status_index = table_model->index(selected_row, 11);
+            table_model->setData(status_index, status);
+
 
             table_model->submitAll();
             table_model->select();
@@ -238,22 +276,26 @@ void EkaEditing::on_pushButton_edit_clicked()
 
 void EkaEditing::on_pushButton_atsaukti_clicked()
 {
-    ui->lineEdit_address->setDisabled(true);
-    ui->lineEdit_certificate->setDisabled(true);
-    ui->lineEdit_city->setDisabled(true);
-    ui->lineEdit_client->setDisabled(true);
-    ui->lineEdit_code->setDisabled(true);
-    ui->lineEdit_ekaplace->setDisabled(true);
-    ui->lineEdit_howmany->setDisabled(true);
-    ui->lineEdit_model->setDisabled(true);
-    ui->lineEdit_serial->setDisabled(true);
-    ui->lineEdit_tel->setDisabled(true);
-    ui->lineEdit_vat->setDisabled(true);
+    ui->lineEdit_address->setReadOnly(true);
+    ui->lineEdit_certificate->setReadOnly(true);
+    ui->lineEdit_city->setReadOnly(true);
+    ui->lineEdit_client->setReadOnly(true);
+    ui->lineEdit_code->setReadOnly(true);
+    ui->lineEdit_ekaplace->setReadOnly(true);
+    ui->lineEdit_howmany->setReadOnly(true);
+    ui->lineEdit_model->setReadOnly(true);
+    ui->lineEdit_serial->setReadOnly(true);
+    ui->lineEdit_tel->setReadOnly(true);
+    ui->lineEdit_vat->setReadOnly(true);
     ui->dateEdit_prof->setDisabled(true);
     ui->dateEdit_reg->setDisabled(true);
     ui->dateEdit_rent->setDisabled(true);
     ui->dateEdit_warranty->setDisabled(true);
-    ui->lineEdit_status->setDisabled(true);
+    ui->lineEdit_status->setReadOnly(true);
+    ui->checkBox_rent->setDisabled(true);
+    ui->checkBox_warranty->setDisabled(true);
+    ui->checkBox_status->setDisabled(true);
+    ui->toolButton_client2->setDisabled(true);
     ui->tableView->setDisabled(false);
 
     QModelIndexList selected_indexes = ui->tableView->selectionModel()->selection().indexes();
@@ -282,7 +324,7 @@ void EkaEditing::updateTextEdits(const QModelIndex &index) {
     ui->dateEdit_warranty->setDate(record.value(8).toDate());
     ui->dateEdit_rent->setDate(record.value(9).toDate());
     ui->lineEdit_ekaplace->setText(record.value(10).toString());
-    ui->lineEdit_status->setText(record.value(13).toString());
+    ui->lineEdit_status->setText(record.value(11).toString());
 
 }
 
@@ -308,4 +350,59 @@ void EkaEditing::on_toolButton_client2_clicked()
     client_search_dialog->setModal(true);
     connect(client_search_dialog, SIGNAL(accepted()), this, SLOT(setClient()));
     client_search_dialog->exec();
+}
+
+void EkaEditing::on_checkBox_warranty_stateChanged(int checked)
+{
+
+    if (checked)
+        {
+            ui->dateEdit_warranty->setEnabled(true);
+            QDate date = QDate::currentDate();
+            date = date.addYears(1);
+            ui->dateEdit_warranty->setDate(date);
+            ui->dateEdit_rent->setEnabled(false);
+            ui->checkBox_rent->setEnabled(false);
+        }
+    else
+        {
+            QDate date;
+            date.setDate(2001, 1, 1);
+            ui->dateEdit_warranty->setDate(date);
+            ui->dateEdit_warranty->setEnabled(false);
+            ui->checkBox_rent->setEnabled(true);
+        }
+
+}
+
+void EkaEditing::on_checkBox_rent_stateChanged(int checked)
+{
+    if (checked)
+        {
+            ui->dateEdit_rent->setEnabled(true);
+            QDate date = QDate::currentDate();
+            date = date.addYears(1);
+            ui->dateEdit_rent->setDate(date);
+            ui->dateEdit_warranty->setEnabled(false);
+            ui->checkBox_warranty->setEnabled(false);
+        }
+    else
+        {
+           QDate date;
+           date.setDate(2001, 1, 1);
+           ui->dateEdit_rent->setDate(date);
+           ui->dateEdit_warranty->setEnabled(false);
+           ui->checkBox_rent->setEnabled(true);
+
+        }
+}
+
+void EkaEditing::on_checkBox_status_stateChanged(int checked)
+{
+    if (checked){
+        ui->lineEdit_status->setText("Nedirba");
+    }
+    else {
+        ui->lineEdit_status->setText("Dirba");
+    }
 }

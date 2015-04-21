@@ -36,6 +36,8 @@ private slots:
 
     void on_pushButton_atsaukti_clicked();
 
+    void on_pushButton_callekaediting_clicked();
+
 private:
 
     QSqlRecord current_record;

@@ -51,11 +51,11 @@ KlientuPaieska::KlientuPaieska(QWidget *parent, DatabaseManager *dbm) :
     table_model_eka->setHeaderData(4, Qt::Horizontal, "Pasas");
     table_model_eka->setHeaderData(5, Qt::Horizontal, "Registravimų kiekis");
     table_model_eka->setHeaderData(6, Qt::Horizontal, "Registravimo data");
-    table_model_eka->setHeaderData(7, Qt::Horizontal, "Profilaktika");
+    table_model_eka->setHeaderData(7, Qt::Horizontal, "Sutartis");
     table_model_eka->setHeaderData(8, Qt::Horizontal, "Garantija");
     table_model_eka->setHeaderData(9, Qt::Horizontal, "Nuoma");
     table_model_eka->setHeaderData(10, Qt::Horizontal, "EKA vieta");
-    table_model_eka->setHeaderData(11, Qt::Horizontal, "Būsena");
+    table_model_eka->setHeaderData(11, Qt::Horizontal, "Veikla");
 
     ui->tableView->setModel(table_model);
     ui->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -275,4 +275,11 @@ void KlientuPaieska::updateTextEdits(const QModelIndex &index) {
     QString eka_filter = Settings::EKA_TABLE + ".client_id = '" + record.value(0).toString() + "'";
     table_model_eka->setFilter(eka_filter);
     table_model_eka->select();
+}
+
+void KlientuPaieska::on_pushButton_callekaediting_clicked()
+{
+    EkaEditing nEkaEditing(this, dbm);
+    nEkaEditing.setModal(true);
+    nEkaEditing.exec();
 }

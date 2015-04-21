@@ -89,6 +89,9 @@
            <height>0</height>
           </size>
          </property>
+         <property name="maxLength">
+          <number>100</number>
+         </property>
          <property name="echoMode">
           <enum>QLineEdit::Normal</enum>
          </property>
@@ -103,6 +106,9 @@
        </item>
        <item row="1" column="1">
         <widget class="QLineEdit" name="lineEdit_kodas">
+         <property name="maxLength">
+          <number>10</number>
+         </property>
          <property name="echoMode">
           <enum>QLineEdit::Normal</enum>
          </property>
@@ -117,6 +123,9 @@
        </item>
        <item row="2" column="1">
         <widget class="QLineEdit" name="lineEdit_pvm">
+         <property name="maxLength">
+          <number>20</number>
+         </property>
          <property name="echoMode">
           <enum>QLineEdit::Normal</enum>
          </property>
@@ -131,6 +140,9 @@
        </item>
        <item row="3" column="1">
         <widget class="QLineEdit" name="lineEdit_adresas">
+         <property name="maxLength">
+          <number>100</number>
+         </property>
          <property name="echoMode">
           <enum>QLineEdit::Normal</enum>
          </property>
@@ -145,6 +157,9 @@
        </item>
        <item row="4" column="1">
         <widget class="QLineEdit" name="lineEdit_miestas">
+         <property name="maxLength">
+          <number>20</number>
+         </property>
          <property name="echoMode">
           <enum>QLineEdit::Normal</enum>
          </property>
@@ -159,6 +174,9 @@
        </item>
        <item row="5" column="1">
         <widget class="QLineEdit" name="lineEdit_telefonas">
+         <property name="maxLength">
+          <number>15</number>
+         </property>
          <property name="echoMode">
           <enum>QLineEdit::Normal</enum>
          </property>
@@ -286,6 +304,13 @@ p, li { white-space: pre-wrap; }
    </item>
    <item row="4" column="0" colspan="2">
     <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <widget class="QPushButton" name="pushButton_callekaediting">
+       <property name="text">
+        <string>EKA redagavimas</string>
+       </property>
+      </widget>
+     </item>
      <item>
       <spacer name="horizontalSpacer_4">
        <property name="orientation">

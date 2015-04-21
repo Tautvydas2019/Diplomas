@@ -38,6 +38,12 @@ private slots:
 
     void on_toolButton_client2_clicked();
 
+    void on_checkBox_warranty_stateChanged(int arg1);
+
+    void on_checkBox_rent_stateChanged(int arg1);
+
+    void on_checkBox_status_stateChanged(int arg1);
+
 private:
     Ui::EkaEditing *ui;
     DatabaseManager *dbm;
