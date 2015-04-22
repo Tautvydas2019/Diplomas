@@ -48,3 +48,5 @@ FORMS    += mainwindow.ui \
 include(qdbf/qdbf_static.pri)
 
 CONFIG += c++11
+
+RC_ICONS += program_icon.ico
