@@ -86,6 +86,8 @@ const QList<QString> Settings::TEMP_DB_TABLES = {
 
     "CREATE TABLE IF NOT EXISTS `temp_eka` ("
       "`temp_eka_id` INTEGER PRIMARY KEY AUTOINCREMENT, "
+      "`temp_model_id` INTEGER,"
+      "`temp_client_id` INTEGER,"
       "`SPEC` INTEGER,"
       "`KIEK` INTEGER,"
       "`REG_DATA` NUMERIC,"

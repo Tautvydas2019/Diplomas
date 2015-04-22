@@ -104,7 +104,7 @@ void EkaEditing::on_lineEdit_search_textChanged(const QString &search_keyword)
 
 
 
-void EkaEditing::on_tableView_activated(const QModelIndex &index)
+void EkaEditing::on_tableView_clicked(const QModelIndex &index)
 {
     int row = index.row();
     QSqlRecord record = table_model->record(row);
@@ -340,6 +340,8 @@ void EkaEditing::setClient()
         ui->lineEdit_address->setText(client.value(4).toString());
         ui->lineEdit_city->setText(client.value(7).toString());
         ui->lineEdit_tel->setText(client.value(5).toString());
+        int reg_quantity = ui->lineEdit_howmany->text().toInt() + 1;
+        ui->lineEdit_howmany->setText(QString::number(reg_quantity));
     }
 }
 

@@ -26,8 +26,6 @@ private slots:
 
     void on_lineEdit_search_textChanged(const QString &filter);
 
-    void on_tableView_activated(const QModelIndex &index);
-
     void on_pushButton_delete_clicked();
 
     void on_pushButton_edit_clicked();
@@ -43,6 +41,8 @@ private slots:
     void on_checkBox_rent_stateChanged(int arg1);
 
     void on_checkBox_status_stateChanged(int arg1);
+
+    void on_tableView_clicked(const QModelIndex &index);
 
 private:
     Ui::EkaEditing *ui;

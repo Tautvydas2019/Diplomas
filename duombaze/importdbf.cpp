@@ -59,6 +59,8 @@ ImportDbf::ImportDbf(QWidget *parent, DatabaseManager *dbm) :
     ui->tableView_model->setModel(model_model);
     ui->tableView_client->setModel(client_model);
     ui->tableView_eka->hideColumn(0);
+    ui->tableView_eka->hideColumn(1);
+    ui->tableView_eka->hideColumn(2);
     ui->tableView_model->hideColumn(0);
     ui->tableView_client->hideColumn(0);
 }
