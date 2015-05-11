@@ -14,6 +14,7 @@ public:
    static const QString TEXT_NAUJASEKA_NAME;
    static const QString TEXT_KLIENTUPAIESKA_NAME;
    static const QString TEXT_EKAEDITING_NAME;
+   static const QString TEXT_REPORT_NAME;
    static const QList<QString> DB_TABLES;
    static const QList<QString> TEMP_DB_TABLES;
    static const QString CLIENT_TABLE;

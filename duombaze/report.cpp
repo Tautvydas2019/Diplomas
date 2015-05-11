@@ -20,6 +20,7 @@ Report::Report(QWidget *parent, DatabaseManager *dbm) :
 {
     this->dbm = dbm;
     ui->setupUi(this);
+    QWidget::setWindowTitle(Settings::TEXT_REPORT_NAME);
 
     model_model = new QSqlTableModel(this, dbm->getDatabase());
     model_model->setTable(Settings::MODEL_TABLE);
