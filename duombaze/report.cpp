@@ -140,7 +140,8 @@ void Report::on_pushButton_clicked()
     doc.print(&printer);
     printer.newPage();
     doc.clear();
-    QDesktopServices::openUrl(QUrl(directory + file_name));
+    QUrl open_url = QUrl::fromLocalFile(directory + file_name);
+    QDesktopServices::openUrl(open_url);
 }
 
 void Report::on_pushButton_2_clicked()
@@ -227,7 +228,8 @@ void Report::on_pushButton_2_clicked()
     doc.print(&printer);
     printer.newPage();
     doc.clear();
-    QDesktopServices::openUrl(QUrl(directory + file_name));
+    QUrl open_url = QUrl::fromLocalFile(directory + file_name);
+    QDesktopServices::openUrl(open_url);
 }
 
 void Report::on_pushButton_3_clicked()
@@ -331,7 +333,8 @@ void Report::on_pushButton_3_clicked()
     doc.print(&printer);
     printer.newPage();
     doc.clear();
-    QDesktopServices::openUrl(QUrl(directory + file_name));
+    QUrl open_url = QUrl::fromLocalFile(directory + file_name);
+    QDesktopServices::openUrl(open_url);
 }
 
 void Report::on_pushButton_4_clicked()
@@ -433,5 +436,6 @@ void Report::on_pushButton_4_clicked()
     doc.print(&printer);
     printer.newPage();
     doc.clear();
-    QDesktopServices::openUrl(QUrl(directory + file_name));
+    QUrl open_url = QUrl::fromLocalFile(directory + file_name);
+    QDesktopServices::openUrl(open_url);
 }
