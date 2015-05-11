@@ -58,6 +58,11 @@ NaujasEka::NaujasEka(QWidget *parent, DatabaseManager *dbm) :
     ui->dateEdit_nuom->setEnabled(false);
     ui->dateEdit_gar->setEnabled(false);
 
+    ui->dateEdit_nuom->setDisplayFormat("yyyy-MM-dd");
+    ui->dateEdit_gar->setDisplayFormat("yyyy-MM-dd");
+    ui->dateEdit_prof->setDisplayFormat("yyyy-MM-dd");
+    ui->dateEdit_reg->setDisplayFormat("yyyy-MM-dd");
+
     client_record = QSqlRecord();
 }
 
@@ -83,10 +88,10 @@ void NaujasEka::on_pushButton_save_clicked()
     QDate eka_main_checkup = ui->dateEdit_prof->date();
 
     bool eka_warranty = ui->checkBox_gar->isChecked();
-    QDate eka_reg_warranty = eka_warranty ? ui->dateEdit_gar->date() : QDate();
+    QString eka_reg_warranty = eka_warranty ? ui->dateEdit_gar->date().toString("yyyy-MM-dd") : "";
 
     bool eka_rent = ui->checkBox_nuom->isChecked();
-    QDate eka_reg_rent = eka_rent ? ui->dateEdit_nuom->date() : QDate();
+    QString eka_reg_rent = eka_rent ? ui->dateEdit_nuom->date().toString("yyyy-MM-dd") : "";
 
     QString eka_place_eka = ui->lineEdit_ekaplace->text();
 

@@ -17,12 +17,12 @@ class DatabaseManager
 protected:
     QSqlDatabase db;
     void createTables();
-    void dbError(const QSqlError &);
     QVariant fixEncoding(const QVariant &value, int type);
 public:
     DatabaseManager();
     ~DatabaseManager();
     QSqlDatabase getDatabase();
+    void dbError(const QSqlError &);
     void createTempTables();
     void deleteTempTablesData();
     void deleteTempClientTableData();

@@ -13,6 +13,7 @@
 #include "ekaediting.h"
 #include "ui_ekaediting.h"
 #include "importdbf.h"
+#include "report.h"
 
 #include <QWidget>
 #include <QMainWindow>
@@ -30,8 +31,9 @@ MainWindow::MainWindow(QWidget *parent) :
     QWidget::setWindowTitle(Settings::TEXT_MAINWINDOW_NAME);
     dbm = new DatabaseManager();
     dbm->init();
-}
 
+    ui->pushButton->hide();
+}
 MainWindow::~MainWindow()
 {
     delete ui;
@@ -122,4 +124,11 @@ void MainWindow::on_pushButton_clicked()
     ImportDbf nImportDbf(this, dbm);
     nImportDbf.setModal(true);
     nImportDbf.exec();
+}
+
+void MainWindow::on_pushButton_3_clicked()
+{
+    Report nReport(this, dbm);
+    nReport.setModal(true);
+    nReport.exec();
 }

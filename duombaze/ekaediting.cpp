@@ -72,6 +72,10 @@ EkaEditing::EkaEditing(QWidget *parent, DatabaseManager *dbm) :
     ui->dateEdit_reg->setDisabled(true);
     ui->dateEdit_rent->setDisabled(true);
     ui->dateEdit_warranty->setDisabled(true);
+    ui->dateEdit_prof->setDisplayFormat("yyyy-MM-dd");
+    ui->dateEdit_reg->setDisplayFormat("yyyy-MM-dd");
+    ui->dateEdit_rent->setDisplayFormat("yyyy-MM-dd");
+    ui->dateEdit_warranty->setDisplayFormat("yyyy-MM-dd");
     ui->checkBox_rent->setDisabled(true);
     ui->checkBox_warranty->setDisabled(true);
     ui->checkBox_status->setDisabled(true);
@@ -137,6 +141,32 @@ void EkaEditing::on_tableView_clicked(const QModelIndex &index)
     ui->lineEdit_address->setText(client.value(4).toString());
     ui->lineEdit_city->setText(client.value(7).toString());
     ui->lineEdit_tel->setText(client.value(5).toString());
+
+    QVariant rent_date_check = record.value(9);
+
+    bool oldState = ui->checkBox_rent->blockSignals(true);
+    ui->checkBox_rent->setChecked(false);
+    ui->checkBox_rent->blockSignals(oldState);
+
+    oldState = ui->checkBox_warranty->blockSignals(true);
+    ui->checkBox_warranty->setChecked(false);
+    ui->checkBox_warranty->blockSignals(oldState);
+
+    if (rent_date_check.toString().size() > 0)
+    {
+        oldState = ui->checkBox_rent->blockSignals(true);
+        ui->checkBox_rent->setChecked(true);
+        ui->checkBox_rent->blockSignals(oldState);
+        ui->checkBox_rent->setDisabled(true);
+    }
+    QVariant warranty_date_check = record.value(8);
+    if (warranty_date_check.toString().size() > 0)
+    {
+        oldState = ui->checkBox_warranty->blockSignals(true);
+        ui->checkBox_warranty->setChecked(true);
+        ui->checkBox_warranty->blockSignals(oldState);
+        ui->checkBox_warranty->setDisabled(true);
+    }
 }
 
 void EkaEditing::on_pushButton_delete_clicked()
@@ -184,8 +214,8 @@ void EkaEditing::on_pushButton_edit_clicked()
             ui->lineEdit_vat->setReadOnly(true);
             ui->dateEdit_prof->setDisabled(false);
             ui->dateEdit_reg->setDisabled(false);
-            ui->dateEdit_rent->setDisabled(false);
-            ui->dateEdit_warranty->setDisabled(false);
+            ui->dateEdit_rent->setDisabled(true);
+            ui->dateEdit_warranty->setDisabled(true);
             ui->lineEdit_status->setReadOnly(true);
             ui->checkBox_rent->setDisabled(false);
             ui->checkBox_warranty->setDisabled(false);
@@ -196,6 +226,15 @@ void EkaEditing::on_pushButton_edit_clicked()
             isEditButton = false;
             ui->pushButton_edit->setText("Išsaugoti");
             ui->pushButton_atsaukti->setHidden(false);
+
+            if (ui->checkBox_rent->isChecked()) {
+                ui->dateEdit_rent->setDisabled(false);
+                ui->dateEdit_warranty->setDisabled(true);
+            }
+            if (ui->checkBox_warranty->isChecked()) {
+                ui->dateEdit_warranty->setDisabled(false);
+                ui->dateEdit_rent->setDisabled(true);
+            }
         } else {
             //notice kad nieko nepazymeta
         }
@@ -249,10 +288,12 @@ void EkaEditing::on_pushButton_edit_clicked()
             table_model->setData(prof_index, prof);
 
             QVariant warranty = QVariant(ui->dateEdit_warranty->date());
+            warranty = ui->checkBox_warranty->isChecked() ? warranty : QVariant("");
             QModelIndex warranty_index = table_model->index(selected_row, 8);
             table_model->setData(warranty_index, warranty);
 
             QVariant rent = QVariant(ui->dateEdit_rent->date());
+            rent = ui->checkBox_rent->isChecked() ? rent : QVariant("");
             QModelIndex rent_index = table_model->index(selected_row, 9);
             table_model->setData(rent_index, rent);
 
@@ -359,19 +400,28 @@ void EkaEditing::on_checkBox_warranty_stateChanged(int checked)
 
     if (checked)
         {
-            ui->dateEdit_warranty->setEnabled(true);
+
             QDate date = QDate::currentDate();
             date = date.addYears(1);
             ui->dateEdit_warranty->setDate(date);
+
+            ui->dateEdit_warranty->setEnabled(true);
+
             ui->dateEdit_rent->setEnabled(false);
             ui->checkBox_rent->setEnabled(false);
+            bool oldState = ui->checkBox_rent->blockSignals(true);
+            ui->checkBox_rent->setChecked(false);
+            ui->checkBox_rent->blockSignals(oldState);
         }
     else
         {
             QDate date;
             date.setDate(2001, 1, 1);
             ui->dateEdit_warranty->setDate(date);
+
             ui->dateEdit_warranty->setEnabled(false);
+
+            ui->dateEdit_rent->setEnabled(false);
             ui->checkBox_rent->setEnabled(true);
         }
 
@@ -381,21 +431,27 @@ void EkaEditing::on_checkBox_rent_stateChanged(int checked)
 {
     if (checked)
         {
-            ui->dateEdit_rent->setEnabled(true);
             QDate date = QDate::currentDate();
-            date = date.addYears(1);
             ui->dateEdit_rent->setDate(date);
+
+            ui->dateEdit_rent->setEnabled(true);
+
             ui->dateEdit_warranty->setEnabled(false);
             ui->checkBox_warranty->setEnabled(false);
+            bool oldState = ui->checkBox_warranty->blockSignals(true);
+            ui->checkBox_warranty->setChecked(false);
+            ui->checkBox_warranty->blockSignals(oldState);
         }
     else
         {
            QDate date;
            date.setDate(2001, 1, 1);
            ui->dateEdit_rent->setDate(date);
-           ui->dateEdit_warranty->setEnabled(false);
-           ui->checkBox_rent->setEnabled(true);
 
+           ui->dateEdit_rent->setEnabled(false);
+
+           ui->dateEdit_warranty->setEnabled(false);
+           ui->checkBox_warranty->setEnabled(true);
         }
 }
 

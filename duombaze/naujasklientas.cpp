@@ -39,6 +39,7 @@ NaujasKlientas::NaujasKlientas(QWidget *parent, DatabaseManager *dbm) :
 
     ui->tableView->setModel(table_model);
     ui->tableView->hide();
+
 }
 
 NaujasKlientas::~NaujasKlientas()

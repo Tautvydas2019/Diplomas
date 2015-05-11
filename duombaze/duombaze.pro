@@ -5,8 +5,12 @@
 #-------------------------------------------------
 
 QT       += core gui sql
+QT       += printsupport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
+
+
 
 TARGET = duombaze
 TEMPLATE = app
@@ -24,7 +28,8 @@ SOURCES += main.cpp\
     klientupaieska.cpp \
     ekaediting.cpp \
     myqsqlrelationaltablemodel.cpp \
-    importdbf.cpp
+    importdbf.cpp \
+    report.cpp
 
 HEADERS  += mainwindow.h \
     naujasmodelis.h \
@@ -35,7 +40,8 @@ HEADERS  += mainwindow.h \
     klientupaieska.h \
     ekaediting.h \
     myqsqlrelationaltablemodel.h \
-    importdbf.h
+    importdbf.h \
+    report.h
 
 FORMS    += mainwindow.ui \
     naujasmodelis.ui \
@@ -43,10 +49,12 @@ FORMS    += mainwindow.ui \
     naujaseka.ui \
     klientupaieska.ui \
     ekaediting.ui \
-    importdbf.ui
+    importdbf.ui \
+    report.ui
 
 include(qdbf/qdbf_static.pri)
 
 CONFIG += c++11
 
 RC_ICONS += program_icon.ico
+
