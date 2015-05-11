@@ -21,6 +21,9 @@ const QString Settings::TEXT_KLIENTUPAIESKA_NAME =
 const QString Settings::TEXT_EKAEDITING_NAME =
         "EKA duomenų bazė";
 
+const QString Settings::TEXT_REPORT_NAME =
+        "Ataskaitos";
+
 const QString Settings::DB_TYPE =
         "QSQLITE";
 
