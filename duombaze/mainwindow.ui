@@ -185,6 +185,7 @@
     </property>
     <addaction name="actionKlient_duomen_baz"/>
     <addaction name="actionEKA_duomen_baz"/>
+    <addaction name="actionAtaskaitos"/>
    </widget>
    <addaction name="menuFailas"/>
    <addaction name="menuPer_i_ra"/>
@@ -226,6 +227,11 @@
   <action name="actionEKA_duomen_baz">
    <property name="text">
     <string>EKA duomenų bazė</string>
+   </property>
+  </action>
+  <action name="actionAtaskaitos">
+   <property name="text">
+    <string>Ataskaitos</string>
    </property>
   </action>
  </widget>

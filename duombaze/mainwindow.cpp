@@ -132,3 +132,10 @@ void MainWindow::on_pushButton_3_clicked()
     nReport.setModal(true);
     nReport.exec();
 }
+
+void MainWindow::on_actionAtaskaitos_triggered()
+{
+    Report nReport(this, dbm);
+    nReport.setModal(true);
+    nReport.exec();
+}
