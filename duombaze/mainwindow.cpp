@@ -32,7 +32,7 @@ MainWindow::MainWindow(QWidget *parent) :
     dbm = new DatabaseManager();
     dbm->init();
 
-    ui->pushButton->hide();
+    //ui->pushButton->hide();
 }
 MainWindow::~MainWindow()
 {
