@@ -45,20 +45,9 @@
            </size>
           </property>
           <property name="text">
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/master
            <string>Klientų duomenų bazė</string>
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;Duomenų įvedimas&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-<<<<<<< HEAD
->>>>>>> 6df2df2c21344519001b6019ce36602c51320a34
-=======
            <string>Klientu paieška/redagavimas</string>
->>>>>>> parent of 66024b7... finished dbf importing, need testing
-=======
->>>>>>> origin/master
           </property>
          </widget>
         </item>
@@ -77,20 +66,9 @@
            </size>
           </property>
           <property name="text">
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/master
            <string>EKA duomenų bazė</string>
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;Duomenų redagavimas&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-<<<<<<< HEAD
->>>>>>> 6df2df2c21344519001b6019ce36602c51320a34
-=======
            <string>EKA paieška/redagavimas</string>
->>>>>>> parent of 66024b7... finished dbf importing, need testing
-=======
->>>>>>> origin/master
           </property>
          </widget>
         </item>
