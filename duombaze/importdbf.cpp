@@ -220,9 +220,14 @@ void ImportDbf::on_pushButton_model_clicked()
 void ImportDbf::on_pushButton_addToDb_clicked()
 {
     int total_data = 0;
-    total_data += model_table.size();
-    total_data += eka_table.size();
-    total_data += client_table.size();
+    int total_models = model_table.size() < 0 ? 0 : model_table.size();
+    int total_ekas = eka_table.size() < 0 ? 0 : eka_table.size();
+    int total_clients = client_table.size() < 0 ? 0 : client_table.size();
+    total_data = total_models + total_ekas + total_clients;
+
+    int current_clients = 0;
+    int current_models = 0;
+    int current_ekas = 0;
 
     ui->progressBar->setVisible(true);
     ui->progressBar->setValue(0);
@@ -280,6 +285,7 @@ void ImportDbf::on_pushButton_addToDb_clicked()
                 dbm->dbError(insert_query.lastError());
             }
             QVariant client_id = insert_query.lastInsertId();
+            current_clients++;
             //qDebug() << "client update";
             QSqlQuery update_query;
             QString update_sql = "UPDATE `" + Settings::TEMP_EKA_TABLE + "` SET `temp_client_id` = ? WHERE `P_KODAS` = ?;";
@@ -331,6 +337,7 @@ void ImportDbf::on_pushButton_addToDb_clicked()
             dbm->dbError(insert_query.lastError());
         }
         import_model_id = insert_query.lastInsertId();
+        current_models++;
     }
     else
     {
@@ -387,6 +394,7 @@ void ImportDbf::on_pushButton_addToDb_clicked()
             dbm->dbError(insert_query.lastError());
         }
         import_client_id = insert_query.lastInsertId();
+        current_clients++;
     }
     else
     {
@@ -471,6 +479,7 @@ void ImportDbf::on_pushButton_addToDb_clicked()
             {
                 dbm->dbError(insert_query.lastError());
             }
+            current_ekas++;
         }
         //qDebug() << "eka delete";
         QSqlQuery delete_query;
@@ -525,6 +534,7 @@ void ImportDbf::on_pushButton_addToDb_clicked()
             {
                 dbm->dbError(insert_query.lastError());
             }
+            current_models++;
         }
         //qDebug() << "model delete";
         QSqlQuery delete_query;
@@ -543,6 +553,12 @@ void ImportDbf::on_pushButton_addToDb_clicked()
     eka_model->select();
     client_model->select();
     ui->progressBar->setVisible(false);
+    QString title = "Baigtas Importavimas";
+    QString message = "<h2>Importavimas baigtas</h2><strong>Importuota:</strong><ul><li>" +
+            QString::number(current_clients) + " iš " + QString::number(total_clients) + " klientų.</li><li>" +
+            QString::number(current_ekas) + " iš " + QString::number(total_ekas) + " EKA.</li><li>" +
+            QString::number(current_models) + " iš " + QString::number(total_models) + " modelių.</li></ul>";
+    QMessageBox::information(this, title, message);
 }
 
 
