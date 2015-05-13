@@ -11,6 +11,8 @@
 #include <QString>
 #include <QMessageBox>
 #include <QSqlRecord>
+#include <QDate>
+
 
 #include <QDebug>
 
