@@ -110,6 +110,12 @@
          </item>
          <item>
           <widget class="QLineEdit" name="ladresas">
+           <property name="minimumSize">
+            <size>
+             <width>200</width>
+             <height>0</height>
+            </size>
+           </property>
            <property name="maximumSize">
             <size>
              <width>300</width>

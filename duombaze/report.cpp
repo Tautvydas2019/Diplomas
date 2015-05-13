@@ -442,3 +442,8 @@ void Report::on_pushButton_4_clicked()
     QUrl open_url = QUrl::fromLocalFile(directory + file_name);
     QDesktopServices::openUrl(open_url);
 }
+
+void Report::on_pushButton_6_clicked()
+{
+
+}
