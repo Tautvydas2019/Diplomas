@@ -22,11 +22,8 @@
         <item row="0" column="0">
          <widget class="QLabel" name="label_insert">
           <property name="text">
-<<<<<<< HEAD
            <string>Klientų duomenų bazė</string>
-=======
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;Duomenų įvedimas&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
->>>>>>> 6df2df2c21344519001b6019ce36602c51320a34
           </property>
          </widget>
         </item>
@@ -146,11 +143,8 @@
         <item row="0" column="0">
          <widget class="QLabel" name="label_edit">
           <property name="text">
-<<<<<<< HEAD
            <string>EKA duomenų bazė</string>
-=======
            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;Duomenų redagavimas&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
->>>>>>> 6df2df2c21344519001b6019ce36602c51320a34
           </property>
          </widget>
         </item>
