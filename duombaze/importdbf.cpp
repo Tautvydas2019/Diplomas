@@ -218,11 +218,37 @@ void ImportDbf::on_pushButton_model_clicked()
 
 void ImportDbf::on_pushButton_addToDb_clicked()
 {
-    int total_data = 0;
-    int total_models = model_table.size() < 0 ? 0 : model_table.size();
-    int total_ekas = eka_table.size() < 0 ? 0 : eka_table.size();
-    int total_clients = client_table.size() < 0 ? 0 : client_table.size();
-    total_data = total_models + total_ekas + total_clients;
+    QSqlQuery count_query;
+    QString count_sql = "SELECT COUNT(*) AS total FROM `" + Settings::TEMP_CLIENT_TABLE + "`;";
+    count_query.prepare(count_sql);
+    if (!count_query.exec())
+    {
+        dbm->dbError(count_query.lastError());
+    }
+    count_query.next();
+    int total_clients = count_query.value("total").toInt();
+
+    count_query.clear();
+    count_sql = "SELECT COUNT(*) AS total FROM `" + Settings::TEMP_MODEL_TABLE + "`;";
+    count_query.prepare(count_sql);
+    if (!count_query.exec())
+    {
+        dbm->dbError(count_query.lastError());
+    }
+    count_query.next();
+    int total_models = count_query.value("total").toInt();
+
+    count_query.clear();
+    count_sql = "SELECT COUNT(*) AS total FROM `" + Settings::TEMP_EKA_TABLE + "`;";
+    count_query.prepare(count_sql);
+    if (!count_query.exec())
+    {
+        dbm->dbError(count_query.lastError());
+    }
+    count_query.next();
+    int total_ekas = count_query.value("total").toInt();
+
+    int total_data = total_models + total_ekas + total_clients;
 
     int current_clients = 0;
     int current_models = 0;
@@ -453,7 +479,7 @@ void ImportDbf::on_pushButton_addToDb_clicked()
             QVariant reg_warranty = select_query.value("GAR_DATA");
             QVariant reg_rent = select_query.value("NUO_DATA");
             QVariant place_eka = select_query.value("USE");
-            QVariant status = select_query.value("DONT").toBool() ? QVariant("Dirba") : QVariant("Nedirba");
+            QVariant status = select_query.value("DONT").toBool() ? QVariant("Nedirba") : QVariant("Dirba");
             QVariant contract = QVariant("");
             QVariant place = select_query.value("VILLAGE").toBool() ? QVariant(false) : QVariant(true);
             //qDebug() << "eka insert";
