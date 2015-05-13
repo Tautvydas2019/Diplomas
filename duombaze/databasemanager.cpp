@@ -268,7 +268,7 @@ void DatabaseManager::importDbfEkaRecord(QMap<QString, QVariant> &record, int fi
 //Parašo duomenų bazės klaidą
 void DatabaseManager::dbError(const QSqlError &error)
 {
-    qFatal(error.text().toStdString().c_str());
+    qDebug() << (error.text().toStdString().c_str());
 }
 
 //Sukuria žinute apie sql klaidą
