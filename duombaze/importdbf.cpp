@@ -14,7 +14,6 @@
 #include <QSqlTableModel>
 #include <QMap>
 #include <QSqlQuery>
-#include <QSqlRecord>
 
 #include <QDebug>
 
