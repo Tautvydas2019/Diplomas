@@ -45,7 +45,7 @@
            </size>
           </property>
           <property name="text">
-           <string>Klientu paieška/redagavimas</string>
+           <string>Klientų duomenų bazė</string>
           </property>
          </widget>
         </item>
@@ -64,7 +64,7 @@
            </size>
           </property>
           <property name="text">
-           <string>EKA paieška/redagavimas</string>
+           <string>EKA duomenų bazė</string>
           </property>
          </widget>
         </item>
@@ -216,7 +216,7 @@
   </action>
   <action name="actionU_daryti">
    <property name="text">
-    <string>Uždaryti</string>
+    <string>Baigti darbą</string>
    </property>
   </action>
   <action name="actionKlient_duomen_baz">

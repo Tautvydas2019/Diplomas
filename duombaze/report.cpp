@@ -349,11 +349,12 @@ void Report::on_pushButton_4_clicked()
     QSqlQuery query;
     QString sql = "SELECT COUNT(*) AS total FROM `" + Settings::EKA_TABLE + "` AS e "
                   "LEFT JOIN `" + Settings::CLIENT_TABLE + "` AS c ON e.client_id = c.client_id "
-                  "WHERE e.model_id = ? AND e.status = ?;";
+                  "WHERE e.model_id = ? AND DATE(e.main_checkup) <= DATE(?) AND e.status = ?;";
 
     query.prepare(sql);
     query.bindValue(0, eka_model_id.toString());
-    query.bindValue(1, "Nedirba");
+    query.bindValue(1, date.toString());
+    query.bindValue(2, "Nedirba");
 
     QString total;
     if (!query.exec())
@@ -372,12 +373,13 @@ void Report::on_pushButton_4_clicked()
 
     sql = "SELECT e.serial_number, c.name, e.place_eka, e.main_checkup  FROM `" + Settings::EKA_TABLE + "` AS e "
                   "LEFT JOIN `" + Settings::CLIENT_TABLE + "` AS c ON e.client_id = c.client_id "
-                  "WHERE e.model_id = ?  AND e.status = ?;";
+                  "WHERE e.model_id = ? AND DATE(e.main_checkup) <= DATE(?) AND e.status = ?;";
 
 
     query.prepare(sql);
     query.bindValue(0, eka_model_id.toString());
-    query.bindValue(1, "Nedirba");
+    query.bindValue(1, date.toString());
+    query.bindValue(2, "Nedirba");
 
     if (!query.exec())
     {
